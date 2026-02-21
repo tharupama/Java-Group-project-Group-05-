@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import javax.swing.table.DefaultTableModel;
 import org.mindrot.jbcrypt.BCrypt;
+import java.sql.ResultSet;
 
 /**
  *
@@ -58,13 +59,9 @@ public class AccountController {
         return results>0;
            
        }else{
-                String sql = "Update account SET name=?, contact=?, email=?, role=? WHERE id=?";
+        String sql = "Update account SET name=?, contact=?, email=?, role=? WHERE id=?";
         Connection conn = DbConnection.getInstance().getConn();
         PreparedStatement pst = conn.prepareStatement(sql);
-        
-        
-        
-        
         pst.setString(1, account.getName());
         pst.setInt(2, account.getContact());
         pst.setString(3, account.getEmail());
@@ -77,6 +74,38 @@ public class AccountController {
         return results>0;
            
        }
+    }
+
+    public static boolean deleteAccount(String id) throws ClassNotFoundException, SQLException {
+        String sql = "DELETE FROM account WHERE id = ?";
+        Connection conn = DbConnection.getInstance().getConn();
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1,id);
+        
+        int result = pst.executeUpdate();
+        
+        return result>0;
+    }
+
+    public static void search(String text, DefaultTableModel dtm) throws ClassNotFoundException, SQLException {
+        String sql = "SELECT * FROM account WHERE id LIKE ? OR name LIKE ? OR contact LIKE ? OR email LIKE ? OR role LIKE ?";
+        
+        Connection conn = DbConnection.getInstance().getConn();
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1,"%"+text+"%");
+        pst.setString(2,"%"+text+"%");
+        pst.setString(3,"%"+text+"%");
+        pst.setString(4,"%"+text+"%");
+        pst.setString(5,"%"+text+"%");
+        ResultSet result = pst.executeQuery();
+        dtm.setRowCount(0);
+        if(result!=null){
+            System.out.println("thinawa");
+        }
+        while(result.next()){
+            
+            dtm.addRow(new Object[]{result.getString("id"), result.getString("name"),result.getString("contact"),result.getString("email"),result.getString("role")});
+        }
     }
    
  
