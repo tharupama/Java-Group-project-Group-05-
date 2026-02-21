@@ -4,6 +4,13 @@
  */
 package com.codecrew.admin.view;
 
+import com.codecrew.admin.controller.AccountController;
+import com.codecrew.admin.model.AccountModel;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author USER
@@ -31,19 +38,19 @@ public class AdminPanel extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        idBox = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        nameBox = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        contactBox = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        emailBox = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        roleBox = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        passwordBox = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        saveBtn = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
@@ -84,9 +91,15 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel9.setOpaque(true);
         jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 140, 40));
 
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 122, 300, 40));
+        idBox.setBackground(new java.awt.Color(255, 51, 51));
+        idBox.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        idBox.setForeground(new java.awt.Color(255, 255, 255));
+        idBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idBoxActionPerformed(evt);
+            }
+        });
+        jPanel2.add(idBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 122, 300, 40));
 
         jLabel10.setBackground(new java.awt.Color(255, 204, 0));
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -96,9 +109,10 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel10.setOpaque(true);
         jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 140, 40));
 
-        jTextField2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jTextField2.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel2.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 170, 300, 40));
+        nameBox.setBackground(new java.awt.Color(255, 51, 51));
+        nameBox.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        nameBox.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel2.add(nameBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 170, 300, 40));
 
         jLabel11.setBackground(new java.awt.Color(255, 204, 0));
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -108,9 +122,10 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel11.setOpaque(true);
         jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 140, 40));
 
-        jTextField3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel2.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, 300, 40));
+        contactBox.setBackground(new java.awt.Color(255, 51, 51));
+        contactBox.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        contactBox.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel2.add(contactBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, 300, 40));
 
         jLabel12.setBackground(new java.awt.Color(255, 204, 0));
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -120,9 +135,10 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel12.setOpaque(true);
         jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 140, 40));
 
-        jTextField4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jTextField4.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel2.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 270, 300, 40));
+        emailBox.setBackground(new java.awt.Color(255, 51, 51));
+        emailBox.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        emailBox.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel2.add(emailBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 270, 300, 40));
 
         jLabel13.setBackground(new java.awt.Color(255, 204, 0));
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -132,9 +148,10 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel13.setOpaque(true);
         jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, 140, 40));
 
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lecturer", "Student", "Technical officer", " " }));
-        jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 370, 300, 40));
+        roleBox.setBackground(new java.awt.Color(255, 51, 51));
+        roleBox.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        roleBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lecturer", "Student", "Technical officer", "Admin", " " }));
+        jPanel2.add(roleBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 370, 300, 40));
 
         jLabel14.setBackground(new java.awt.Color(255, 204, 0));
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -144,9 +161,10 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel14.setOpaque(true);
         jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, 140, 40));
 
-        jTextField5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jTextField5.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel2.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 320, 300, 40));
+        passwordBox.setBackground(new java.awt.Color(255, 51, 51));
+        passwordBox.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        passwordBox.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel2.add(passwordBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 320, 300, 40));
 
         jButton1.setBackground(new java.awt.Color(153, 0, 0));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -159,11 +177,16 @@ public class AdminPanel extends javax.swing.JFrame {
         });
         jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 500, 120, 40));
 
-        jButton2.setBackground(new java.awt.Color(102, 255, 0));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(0, 0, 0));
-        jButton2.setText("Save");
-        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 120, 40));
+        saveBtn.setBackground(new java.awt.Color(102, 255, 0));
+        saveBtn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        saveBtn.setForeground(new java.awt.Color(0, 0, 0));
+        saveBtn.setText("Save");
+        saveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveBtnActionPerformed(evt);
+            }
+        });
+        jPanel2.add(saveBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 120, 40));
 
         jButton3.setBackground(new java.awt.Color(255, 204, 0));
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -272,6 +295,26 @@ public class AdminPanel extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField6ActionPerformed
 
+    private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
+        AccountModel accountModel = new AccountModel(idBox.getText(),nameBox.getText(), Integer.parseInt(contactBox.getText()), emailBox.getText(), passwordBox.getText(),roleBox.getSelectedItem().toString());
+        try {
+            boolean affectedRows = AccountController.saveAccount(accountModel);
+            if(affectedRows==true){
+                JOptionPane.showMessageDialog(rootPane, "Account saved sucessfully !");
+            }
+            
+            // TODO add your handling code here:
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_saveBtnActionPerformed
+
+    private void idBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idBoxActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -308,12 +351,13 @@ public class AdminPanel extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField contactBox;
+    private javax.swing.JTextField emailBox;
+    private javax.swing.JTextField idBox;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -336,11 +380,10 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField nameBox;
+    private javax.swing.JTextField passwordBox;
+    private javax.swing.JComboBox<String> roleBox;
+    private javax.swing.JButton saveBtn;
     // End of variables declaration//GEN-END:variables
 }
