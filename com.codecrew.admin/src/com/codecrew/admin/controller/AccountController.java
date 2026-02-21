@@ -35,6 +35,49 @@ public class AccountController {
     
         return results>0;
     }
+
+    public static boolean updateAccount(AccountModel account) throws SQLException, ClassNotFoundException {
+       if(account.getPassword()!= null){
+           String sql = "Update account SET name=?, contact=?, email=?, password=?, role=? WHERE id=?";
+        Connection conn = DbConnection.getInstance().getConn();
+        PreparedStatement pst = conn.prepareStatement(sql);
+        
+        String hashedPassword = BCrypt.hashpw(account.getPassword(), BCrypt.gensalt(12));
+        
+        
+        pst.setString(1, account.getName());
+        pst.setInt(2, account.getContact());
+        pst.setString(3, account.getEmail());
+        pst.setString(4, hashedPassword);
+        pst.setString(5, account.getRole());
+        pst.setString(6, account.getId());
+        
+        int results = pst.executeUpdate();
+        
+    
+        return results>0;
+           
+       }else{
+                String sql = "Update account SET name=?, contact=?, email=?, role=? WHERE id=?";
+        Connection conn = DbConnection.getInstance().getConn();
+        PreparedStatement pst = conn.prepareStatement(sql);
+        
+        
+        
+        
+        pst.setString(1, account.getName());
+        pst.setInt(2, account.getContact());
+        pst.setString(3, account.getEmail());
+        
+        pst.setString(4, account.getRole());
+        pst.setString(5, account.getId());
+        
+        int results = pst.executeUpdate();
+    
+        return results>0;
+           
+       }
+    }
    
  
     

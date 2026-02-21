@@ -86,8 +86,8 @@ public class AdminPanel extends javax.swing.JFrame {
         passwordBox = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         saveBtn = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        updateBtn = new javax.swing.JButton();
+        deleteBtn = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         accountTable = new javax.swing.JTable();
@@ -223,17 +223,27 @@ public class AdminPanel extends javax.swing.JFrame {
         });
         jPanel2.add(saveBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 120, 40));
 
-        jButton3.setBackground(new java.awt.Color(255, 204, 0));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(0, 0, 0));
-        jButton3.setText("Update");
-        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 450, 120, 40));
+        updateBtn.setBackground(new java.awt.Color(255, 204, 0));
+        updateBtn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        updateBtn.setForeground(new java.awt.Color(0, 0, 0));
+        updateBtn.setText("Update");
+        updateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateBtnActionPerformed(evt);
+            }
+        });
+        jPanel2.add(updateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 450, 120, 40));
 
-        jButton4.setBackground(new java.awt.Color(255, 0, 0));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(0, 0, 0));
-        jButton4.setText("Delete");
-        jPanel2.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 450, 120, 40));
+        deleteBtn.setBackground(new java.awt.Color(255, 0, 0));
+        deleteBtn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        deleteBtn.setForeground(new java.awt.Color(0, 0, 0));
+        deleteBtn.setText("Delete");
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnActionPerformed(evt);
+            }
+        });
+        jPanel2.add(deleteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 450, 120, 40));
 
         jButton5.setBackground(new java.awt.Color(255, 51, 0));
         jButton5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -340,7 +350,10 @@ public class AdminPanel extends javax.swing.JFrame {
         try {
             boolean affectedRows = AccountController.saveAccount(accountModel);
             if(affectedRows==true){
+                tableLoad();
                 JOptionPane.showMessageDialog(rootPane, "Account saved sucessfully !");
+            }else{
+            JOptionPane.showMessageDialog(rootPane, "save error !");
             }
             
             // TODO add your handling code here:
@@ -358,6 +371,29 @@ public class AdminPanel extends javax.swing.JFrame {
     private void accountTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountTableMouseClicked
         tableToFields();// TODO add your handling code here:
     }//GEN-LAST:event_accountTableMouseClicked
+
+    private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
+       AccountModel accountModel = new AccountModel(idBox.getText(),nameBox.getText(), Integer.parseInt(contactBox.getText()), emailBox.getText(), passwordBox.getText(),roleBox.getSelectedItem().toString());
+        try {
+            boolean affectedRows = AccountController.updateAccount(accountModel);
+            if(affectedRows==true){
+            tableLoad();
+            JOptionPane.showMessageDialog(rootPane, "Account updated sucessfully !");
+            }else{
+            JOptionPane.showMessageDialog(rootPane, "update error !");
+            }
+            // TODO add your handling code here:
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_updateBtnActionPerformed
+
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        String id = idBox.getText();
+        
+    }//GEN-LAST:event_deleteBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -403,11 +439,10 @@ public class AdminPanel extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable accountTable;
     private javax.swing.JTextField contactBox;
+    private javax.swing.JButton deleteBtn;
     private javax.swing.JTextField emailBox;
     private javax.swing.JTextField idBox;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -435,5 +470,6 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JTextField passwordBox;
     private javax.swing.JComboBox<String> roleBox;
     private javax.swing.JButton saveBtn;
+    private javax.swing.JButton updateBtn;
     // End of variables declaration//GEN-END:variables
 }
