@@ -119,9 +119,17 @@ public class AdminLogin extends javax.swing.JFrame {
         pWord = pWordBox.getText();
         
         if(uName.equals("admin")&&pWord.equals("admin123")){
-            AdminPanel a = new AdminPanel();
-            a.setVisible(true);
-            this.dispose();
+            AdminPanel a;
+            try {
+                a = new AdminPanel();
+                a.setVisible(true);
+                this.dispose();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(AdminLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminLogin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         
         }else{
         JOptionPane.showMessageDialog(null,"usernaem or password incorrect");

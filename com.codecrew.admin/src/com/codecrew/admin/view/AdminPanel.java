@@ -5,12 +5,16 @@
 package com.codecrew.admin.view;
 
 import com.codecrew.admin.controller.AccountController;
+import com.codecrew.admin.db.DbConnection;
 import com.codecrew.admin.model.AccountModel;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author USER
@@ -20,9 +24,40 @@ public class AdminPanel extends javax.swing.JFrame {
     /**
      * Creates new form AdminPanel
      */
-    public AdminPanel() {
+    public AdminPanel() throws ClassNotFoundException, SQLException {
         initComponents();
         this.setLocationRelativeTo(null);
+        tableLoad();
+    }
+    
+    public void tableToFields(){
+    int selectedRow = accountTable.getSelectedRow();
+    idBox.setText(accountTable.getValueAt(selectedRow, 0).toString());
+    nameBox.setText(accountTable.getValueAt(selectedRow, 1).toString());
+    contactBox.setText(accountTable.getValueAt(selectedRow, 2).toString());
+    emailBox.setText(accountTable.getValueAt(selectedRow, 3).toString());
+    roleBox.setSelectedItem(accountTable.getValueAt(selectedRow, 4).toString());
+    }
+    
+    public void tableLoad() throws ClassNotFoundException, SQLException{
+        DefaultTableModel dtm = (DefaultTableModel) accountTable.getModel();
+        dtm.setRowCount(0);
+    Connection conn = DbConnection.getInstance().getConn();
+    String sql = "SELECT * FROM account";
+    PreparedStatement pst = conn.prepareStatement(sql);
+    ResultSet result = pst.executeQuery();
+    
+    while(result.next()){
+    String id = result.getString("id");
+    String name = result.getString("name");
+    String contact = result.getString("contact");
+    String email = result.getString("email");
+    String role = result.getString("role");
+    
+    
+    dtm.addRow(new Object[]{id,name,contact,email,role});
+    }
+    
     }
 
     /**
@@ -55,7 +90,7 @@ public class AdminPanel extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        accountTable = new javax.swing.JTable();
         jTextField6 = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -206,7 +241,7 @@ public class AdminPanel extends javax.swing.JFrame {
         jButton5.setText("Clear");
         jPanel2.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 500, 120, 40));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        accountTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -217,7 +252,12 @@ public class AdminPanel extends javax.swing.JFrame {
                 "id", "name", "contact", "email", "role"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        accountTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                accountTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(accountTable);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(542, 110, 640, 490));
 
@@ -315,6 +355,10 @@ public class AdminPanel extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_idBoxActionPerformed
 
+    private void accountTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountTableMouseClicked
+        tableToFields();// TODO add your handling code here:
+    }//GEN-LAST:event_accountTableMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -345,12 +389,19 @@ public class AdminPanel extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdminPanel().setVisible(true);
+                try {
+                    new AdminPanel().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable accountTable;
     private javax.swing.JTextField contactBox;
     private javax.swing.JTextField emailBox;
     private javax.swing.JTextField idBox;
@@ -379,7 +430,6 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField nameBox;
     private javax.swing.JTextField passwordBox;
