@@ -4,6 +4,17 @@
  */
 package com.codecrew.admin.view;
 
+
+
+import com.codecrew.admin.db.DbConnection;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
+
 /**
  *
  * @author USER
@@ -15,6 +26,7 @@ public class AdminLogin extends javax.swing.JFrame {
      */
     public AdminLogin() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -99,7 +111,23 @@ public class AdminLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-        // TODO add your handling code here:
+       
+        String uName;
+        String pWord;
+        
+        uName = uNameBox.getText();
+        pWord = pWordBox.getText();
+        
+        if(uName.equals("admin")&&pWord.equals("admin123")){
+            AdminPanel a = new AdminPanel();
+            a.setVisible(true);
+            this.dispose();
+        
+        }else{
+        JOptionPane.showMessageDialog(null,"usernaem or password incorrect");
+        }
+         
+        
     }//GEN-LAST:event_loginBtnActionPerformed
 
     /**
