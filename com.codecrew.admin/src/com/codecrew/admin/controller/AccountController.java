@@ -19,7 +19,7 @@ import java.sql.ResultSet;
  */
 public class AccountController {
     public static boolean saveAccount(AccountModel account) throws ClassNotFoundException, SQLException{
-        String sql = "INSERT INTO account VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO account VALUES (?,?,?,?,?,?,?)";
         Connection conn = DbConnection.getInstance().getConn();
         PreparedStatement pst = conn.prepareStatement(sql);
         
@@ -31,6 +31,7 @@ public class AccountController {
         pst.setString(4, account.getEmail());
         pst.setString(5, hashedPassword);
         pst.setString(6, account.getRole());
+        pst.setString(7, account.getDept());
         
         int results = pst.executeUpdate();
     
@@ -39,7 +40,7 @@ public class AccountController {
 
     public static boolean updateAccount(AccountModel account) throws SQLException, ClassNotFoundException {
        if(account.getPassword()!= null){
-           String sql = "Update account SET name=?, contact=?, email=?, password=?, role=? WHERE id=?";
+           String sql = "Update account SET name=?, contact=?, email=?, password=?, role=?, department=? WHERE id=?";
         Connection conn = DbConnection.getInstance().getConn();
         PreparedStatement pst = conn.prepareStatement(sql);
         
@@ -52,6 +53,7 @@ public class AccountController {
         pst.setString(4, hashedPassword);
         pst.setString(5, account.getRole());
         pst.setString(6, account.getId());
+        pst.setString(7, account.getDept());
         
         int results = pst.executeUpdate();
         
@@ -59,7 +61,7 @@ public class AccountController {
         return results>0;
            
        }else{
-        String sql = "Update account SET name=?, contact=?, email=?, role=? WHERE id=?";
+        String sql = "Update account SET name=?, contact=?, email=?, role=?, department=? WHERE id=?";
         Connection conn = DbConnection.getInstance().getConn();
         PreparedStatement pst = conn.prepareStatement(sql);
         pst.setString(1, account.getName());
@@ -68,6 +70,7 @@ public class AccountController {
         
         pst.setString(4, account.getRole());
         pst.setString(5, account.getId());
+        pst.setString(6, account.getDept());
         
         int results = pst.executeUpdate();
     
@@ -88,7 +91,7 @@ public class AccountController {
     }
 
     public static void search(String text, DefaultTableModel dtm) throws ClassNotFoundException, SQLException {
-        String sql = "SELECT * FROM account WHERE id LIKE ? OR name LIKE ? OR contact LIKE ? OR email LIKE ? OR role LIKE ?";
+        String sql = "SELECT * FROM account WHERE id LIKE ? OR name LIKE ? OR contact LIKE ? OR email LIKE ? OR role LIKE ? OR department LIKE ?";
         
         Connection conn = DbConnection.getInstance().getConn();
         PreparedStatement pst = conn.prepareStatement(sql);
@@ -97,6 +100,7 @@ public class AccountController {
         pst.setString(3,"%"+text+"%");
         pst.setString(4,"%"+text+"%");
         pst.setString(5,"%"+text+"%");
+        pst.setString(6,"%"+text+"%");
         ResultSet result = pst.executeQuery();
         dtm.setRowCount(0);
         if(result!=null){
@@ -104,7 +108,7 @@ public class AccountController {
         }
         while(result.next()){
             
-            dtm.addRow(new Object[]{result.getString("id"), result.getString("name"),result.getString("contact"),result.getString("email"),result.getString("role")});
+            dtm.addRow(new Object[]{result.getString("id"), result.getString("name"),result.getString("contact"),result.getString("email"),result.getString("role"),result.getString("department")});
         }
     }
 
@@ -121,9 +125,9 @@ public class AccountController {
     String contact = result.getString("contact");
     String email = result.getString("email");
     String role = result.getString("role");
+    String dept = result.getString("department");
     
-    
-    dtm.addRow(new Object[]{id,name,contact,email,role});
+    dtm.addRow(new Object[]{id,name,contact,email,role,dept});
     }
     }
 

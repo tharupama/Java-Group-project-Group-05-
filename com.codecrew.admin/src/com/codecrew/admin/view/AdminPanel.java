@@ -37,6 +37,7 @@ public class AdminPanel extends javax.swing.JFrame {
         emailBox.setText("");
         passwordBox.setText("");
         roleBox.setSelectedIndex(0);
+        deptBox.setSelectedIndex(0);
     }
     
     public void tableToFields(){
@@ -46,6 +47,8 @@ public class AdminPanel extends javax.swing.JFrame {
     contactBox.setText(accountTable.getValueAt(selectedRow, 2).toString());
     emailBox.setText(accountTable.getValueAt(selectedRow, 3).toString());
     roleBox.setSelectedItem(accountTable.getValueAt(selectedRow, 4).toString());
+    deptBox.setSelectedItem(accountTable.getValueAt(selectedRow, 5).toString());
+
     }
     
     public void tableLoad() throws ClassNotFoundException, SQLException{
@@ -86,6 +89,8 @@ public class AdminPanel extends javax.swing.JFrame {
         accountTable = new javax.swing.JTable();
         searchBox = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
+        deptBox = new javax.swing.JComboBox<>();
+        jLabel16 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -203,7 +208,7 @@ public class AdminPanel extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 500, 120, 40));
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 540, 120, 40));
 
         saveBtn.setBackground(new java.awt.Color(102, 255, 0));
         saveBtn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -214,7 +219,7 @@ public class AdminPanel extends javax.swing.JFrame {
                 saveBtnActionPerformed(evt);
             }
         });
-        jPanel2.add(saveBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 120, 40));
+        jPanel2.add(saveBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 490, 120, 40));
 
         updateBtn.setBackground(new java.awt.Color(255, 204, 0));
         updateBtn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -225,7 +230,7 @@ public class AdminPanel extends javax.swing.JFrame {
                 updateBtnActionPerformed(evt);
             }
         });
-        jPanel2.add(updateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 450, 120, 40));
+        jPanel2.add(updateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 490, 120, 40));
 
         deleteBtn.setBackground(new java.awt.Color(255, 0, 0));
         deleteBtn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -236,7 +241,7 @@ public class AdminPanel extends javax.swing.JFrame {
                 deleteBtnActionPerformed(evt);
             }
         });
-        jPanel2.add(deleteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 450, 120, 40));
+        jPanel2.add(deleteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 490, 120, 40));
 
         jButton5.setBackground(new java.awt.Color(255, 51, 0));
         jButton5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -247,17 +252,17 @@ public class AdminPanel extends javax.swing.JFrame {
                 jButton5ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 500, 120, 40));
+        jPanel2.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 540, 120, 40));
 
         accountTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "id", "name", "contact", "email", "role"
+                "id", "name", "contact", "email", "role", "department"
             }
         ));
         accountTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -291,6 +296,19 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel15.setText("Search");
         jLabel15.setOpaque(true);
         jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 30, 140, 30));
+
+        deptBox.setBackground(new java.awt.Color(255, 51, 51));
+        deptBox.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        deptBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECT", "ICT", "ET", "BST", "MULTIDISCIPLINARY", " " }));
+        jPanel2.add(deptBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 420, 300, 40));
+
+        jLabel16.setBackground(new java.awt.Color(255, 204, 0));
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel16.setText("Department");
+        jLabel16.setOpaque(true);
+        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 420, 140, 40));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/codecrew/admin/view/university-of-ruhuna.jpg"))); // NOI18N
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, -1, 638));
@@ -350,7 +368,7 @@ public class AdminPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_searchBoxActionPerformed
 
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
-        AccountModel accountModel = new AccountModel(idBox.getText(),nameBox.getText(), Integer.parseInt(contactBox.getText()), emailBox.getText(), passwordBox.getText(),roleBox.getSelectedItem().toString());
+        AccountModel accountModel = new AccountModel(idBox.getText(),nameBox.getText(), Integer.parseInt(contactBox.getText()), emailBox.getText(), passwordBox.getText(),roleBox.getSelectedItem().toString(),deptBox.getSelectedItem().toString());
         try {
             boolean affectedRows = AccountController.saveAccount(accountModel);
             if(affectedRows==true){
@@ -380,7 +398,7 @@ public class AdminPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_accountTableMouseClicked
 
     private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
-       AccountModel accountModel = new AccountModel(idBox.getText(),nameBox.getText(), Integer.parseInt(contactBox.getText()), emailBox.getText(), passwordBox.getText(),roleBox.getSelectedItem().toString());
+       AccountModel accountModel = new AccountModel(idBox.getText(),nameBox.getText(), Integer.parseInt(contactBox.getText()), emailBox.getText(), passwordBox.getText(),roleBox.getSelectedItem().toString(), deptBox.getSelectedItem().toString());
         try {
             boolean affectedRows = AccountController.updateAccount(accountModel);
             if(affectedRows==true){
@@ -483,6 +501,7 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JTable accountTable;
     private javax.swing.JTextField contactBox;
     private javax.swing.JButton deleteBtn;
+    private javax.swing.JComboBox<String> deptBox;
     private javax.swing.JTextField emailBox;
     private javax.swing.JTextField idBox;
     private javax.swing.JButton jButton1;
@@ -494,6 +513,7 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
