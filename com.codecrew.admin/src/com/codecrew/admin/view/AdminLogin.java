@@ -6,6 +6,8 @@ package com.codecrew.admin.view;
 
 
 
+import com.codecrew.admin.auth.Auth;
+import com.codecrew.admin.controller.AccountController;
 import com.codecrew.admin.db.DbConnection;
 
 import java.sql.Connection;
@@ -13,6 +15,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import java.sql.ResultSet;
 
 
 /**
@@ -111,31 +114,31 @@ public class AdminLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-       
-        String uName;
-        String pWord;
         
-        uName = uNameBox.getText();
-        pWord = pWordBox.getText();
+        String uName = uNameBox.getText();
+        String pWord = pWordBox.getText();
         
-        if(uName.equals("admin")&&pWord.equals("admin123")){
-            AdminPanel a;
-            try {
-                a = new AdminPanel();
-                a.setVisible(true);
-                this.dispose();
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(AdminLogin.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(AdminLogin.class.getName()).log(Level.SEVERE, null, ex);
+        ResultSet authenticatedUser;
+  
+        try {
+            authenticatedUser = Auth.getAuth(uName,pWord);
+            if(authenticatedUser==null){
+                JOptionPane.showMessageDialog(rootPane, "username or password incorrect !");
             }
+            if(authenticatedUser.getString("role").equals("Admin")){
+                AdminPanel ap = new AdminPanel();
+                ap.setVisible(true);
+                this.dispose();
             
-        
-        }else{
-        JOptionPane.showMessageDialog(null,"usernaem or password incorrect");
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "you are not a admin !");
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AdminLogin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
-         
-        
+ 
     }//GEN-LAST:event_loginBtnActionPerformed
 
     /**

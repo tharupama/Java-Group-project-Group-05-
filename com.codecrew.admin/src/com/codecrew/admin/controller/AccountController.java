@@ -107,6 +107,27 @@ public class AccountController {
             dtm.addRow(new Object[]{result.getString("id"), result.getString("name"),result.getString("contact"),result.getString("email"),result.getString("role")});
         }
     }
+
+    public static void tableLoad(DefaultTableModel dtm) throws ClassNotFoundException, SQLException {
+                dtm.setRowCount(0);
+    Connection conn = DbConnection.getInstance().getConn();
+    String sql = "SELECT * FROM account";
+    PreparedStatement pst = conn.prepareStatement(sql);
+    ResultSet result = pst.executeQuery();
+    
+    while(result.next()){
+    String id = result.getString("id");
+    String name = result.getString("name");
+    String contact = result.getString("contact");
+    String email = result.getString("email");
+    String role = result.getString("role");
+    
+    
+    dtm.addRow(new Object[]{id,name,contact,email,role});
+    }
+    }
+
+
    
  
     
