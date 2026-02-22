@@ -434,7 +434,7 @@
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="542" y="110" width="640" height="490"/>
+                  <AbsoluteConstraints x="512" y="110" width="670" height="490"/>
                 </Constraint>
               </Constraints>
 
@@ -442,6 +442,12 @@
               <SubComponents>
                 <Component class="javax.swing.JTable" name="accountTable">
                   <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="0" green="0" red="0" type="rgb"/>
+                    </Property>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="6" rowCount="4">
                         <Column editable="true" title="id" type="java.lang.Object"/>
@@ -548,13 +554,12 @@
                   <Font name="Segoe UI" size="24" style="1"/>
                 </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="6">
-                    <StringItem index="0" value="SELECT"/>
-                    <StringItem index="1" value="ICT"/>
-                    <StringItem index="2" value="ET"/>
-                    <StringItem index="3" value="BST"/>
-                    <StringItem index="4" value="MULTIDISCIPLINARY"/>
-                    <StringItem index="5" value=" "/>
+                  <StringArray count="5">
+                    <StringItem index="0" value="ICT"/>
+                    <StringItem index="1" value="ET"/>
+                    <StringItem index="2" value="BST"/>
+                    <StringItem index="3" value="MULTIDISCIPLINARY"/>
+                    <StringItem index="4" value=" "/>
                   </StringArray>
                 </Property>
               </Properties>

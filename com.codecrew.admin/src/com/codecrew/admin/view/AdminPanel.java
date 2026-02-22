@@ -254,6 +254,8 @@ public class AdminPanel extends javax.swing.JFrame {
         });
         jPanel2.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 540, 120, 40));
 
+        accountTable.setBackground(new java.awt.Color(255, 255, 255));
+        accountTable.setForeground(new java.awt.Color(0, 0, 0));
         accountTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -272,7 +274,7 @@ public class AdminPanel extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(accountTable);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(542, 110, 640, 490));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(512, 110, 670, 490));
 
         searchBox.setBackground(new java.awt.Color(255, 255, 255));
         searchBox.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -299,7 +301,7 @@ public class AdminPanel extends javax.swing.JFrame {
 
         deptBox.setBackground(new java.awt.Color(255, 51, 51));
         deptBox.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        deptBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECT", "ICT", "ET", "BST", "MULTIDISCIPLINARY", " " }));
+        deptBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ICT", "ET", "BST", "MULTIDISCIPLINARY", " " }));
         jPanel2.add(deptBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 420, 300, 40));
 
         jLabel16.setBackground(new java.awt.Color(255, 204, 0));
@@ -376,7 +378,7 @@ public class AdminPanel extends javax.swing.JFrame {
                 clearBox(); 
                 JOptionPane.showMessageDialog(rootPane, "Account saved sucessfully !");
             }else{
-            JOptionPane.showMessageDialog(rootPane, "save error !");
+            JOptionPane.showMessageDialog(rootPane, accountModel.getName()+" already exists !");
             }
             
             // TODO add your handling code here:

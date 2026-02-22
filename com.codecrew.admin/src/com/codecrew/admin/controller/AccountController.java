@@ -20,10 +20,14 @@ import java.sql.ResultSet;
 public class AccountController {
     public static boolean saveAccount(AccountModel account) throws ClassNotFoundException, SQLException{
         String sql = "INSERT INTO account VALUES (?,?,?,?,?,?,?)";
+        String sql2 = "SELECT name from account where name = ?";
         Connection conn = DbConnection.getInstance().getConn();
         PreparedStatement pst = conn.prepareStatement(sql);
-        
-        String hashedPassword = BCrypt.hashpw(account.getPassword(), BCrypt.gensalt(12));
+        PreparedStatement pst2 = conn.prepareStatement(sql2);
+        pst2.setString(1, account.getName());
+        ResultSet rs =  pst2.executeQuery();
+        if(!rs.next()){
+            String hashedPassword = BCrypt.hashpw(account.getPassword(), BCrypt.gensalt(12));
         
         pst.setString(1, account.getId());
         pst.setString(2, account.getName());
@@ -36,47 +40,54 @@ public class AccountController {
         int results = pst.executeUpdate();
     
         return results>0;
+        }else{
+            return false;
+        }
+        
+        
+        
     }
 
     public static boolean updateAccount(AccountModel account) throws SQLException, ClassNotFoundException {
-       if(account.getPassword()!= null){
-           String sql = "Update account SET name=?, contact=?, email=?, password=?, role=?, department=? WHERE id=?";
         Connection conn = DbConnection.getInstance().getConn();
-        PreparedStatement pst = conn.prepareStatement(sql);
-        
-        String hashedPassword = BCrypt.hashpw(account.getPassword(), BCrypt.gensalt(12));
-        
-        
-        pst.setString(1, account.getName());
-        pst.setInt(2, account.getContact());
-        pst.setString(3, account.getEmail());
-        pst.setString(4, hashedPassword);
-        pst.setString(5, account.getRole());
-        pst.setString(6, account.getId());
-        pst.setString(7, account.getDept());
-        
-        int results = pst.executeUpdate();
-        
-    
-        return results>0;
-           
-       }else{
-        String sql = "Update account SET name=?, contact=?, email=?, role=?, department=? WHERE id=?";
-        Connection conn = DbConnection.getInstance().getConn();
-        PreparedStatement pst = conn.prepareStatement(sql);
-        pst.setString(1, account.getName());
-        pst.setInt(2, account.getContact());
-        pst.setString(3, account.getEmail());
-        
-        pst.setString(4, account.getRole());
-        pst.setString(5, account.getId());
-        pst.setString(6, account.getDept());
-        
-        int results = pst.executeUpdate();
-    
-        return results>0;
-           
-       }
+        if (account.getPassword() != null) {
+            String sql = "Update account SET name=?, contact=?, email=?, password=?, role=?, department=? WHERE id=?";
+
+            PreparedStatement pst = conn.prepareStatement(sql);
+
+            String hashedPassword = BCrypt.hashpw(account.getPassword(), BCrypt.gensalt(12));
+
+            pst.setString(1, account.getName());
+            pst.setInt(2, account.getContact());
+            pst.setString(3, account.getEmail());
+            pst.setString(4, hashedPassword);
+            pst.setString(5, account.getRole());
+            
+            pst.setString(6, account.getDept());
+            pst.setString(7, account.getId());
+
+            int results = pst.executeUpdate();
+
+            return results > 0;
+
+        } else {
+            String sql = "Update account SET name=?, contact=?, email=?, role=?, department=? WHERE id=?";
+
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, account.getName());
+            pst.setInt(2, account.getContact());
+            pst.setString(3, account.getEmail());
+
+            pst.setString(4, account.getRole());
+            
+            pst.setString(5, account.getDept());
+            pst.setString(6, account.getId());
+
+            int results = pst.executeUpdate();
+
+            return results > 0;
+
+        }
     }
 
     public static boolean deleteAccount(String id) throws ClassNotFoundException, SQLException {
