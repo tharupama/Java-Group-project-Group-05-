@@ -19,14 +19,14 @@ import org.mindrot.jbcrypt.BCrypt;
 public class Auth {
 
     public static ResultSet getAuth(String uName, String pWord) throws ClassNotFoundException, SQLException {
-        String sql = "SELECT * FROM account where name = ?";
+        String sql = "SELECT * FROM user where Uname = ?";
         Connection conn = DbConnection.getInstance().getConn();
         PreparedStatement pst = conn.prepareStatement(sql);
         pst.setString(1, uName);
         ResultSet result = pst.executeQuery();
         
         if(result.next()){
-            String storedHash = result.getString("password");
+            String storedHash = result.getString("Password");
 
             boolean pCheck = BCrypt.checkpw(pWord, storedHash);
             

@@ -20,7 +20,7 @@ import java.sql.ResultSet;
 public class AccountController {
     public static boolean saveAccount(AccountModel account) throws ClassNotFoundException, SQLException{
         String sql = "INSERT INTO user VALUES (?,?,?,?,?,?,?)";
-        String sql2 = "SELECT name from account where name = ?";
+        String sql2 = "SELECT Uname from user where Uname = ?";
         Connection conn = DbConnection.getInstance().getConn();
         PreparedStatement pst = conn.prepareStatement(sql);
         PreparedStatement pst2 = conn.prepareStatement(sql2);
@@ -51,7 +51,7 @@ public class AccountController {
     public static boolean updateAccount(AccountModel account) throws SQLException, ClassNotFoundException {
         Connection conn = DbConnection.getInstance().getConn();
         if (account.getPassword() != null) {
-            String sql = "Update account SET name=?, contact=?, email=?, password=?, role=?, department=? WHERE id=?";
+            String sql = "Update user SET Uname=?, Contact=?, Email=?, Password=?, Role=?, Department=? WHERE U_Id=?";
 
             PreparedStatement pst = conn.prepareStatement(sql);
 
@@ -71,7 +71,7 @@ public class AccountController {
             return results > 0;
 
         } else {
-            String sql = "Update account SET name=?, contact=?, email=?, role=?, department=? WHERE id=?";
+            String sql = "Update user SET Uname=?, Contact=?, Email=?, Role=?, Department=? WHERE U_Id=?";
 
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, account.getName());
@@ -91,7 +91,7 @@ public class AccountController {
     }
 
     public static boolean deleteAccount(String id) throws ClassNotFoundException, SQLException {
-        String sql = "DELETE FROM account WHERE id = ?";
+        String sql = "DELETE FROM user WHERE U_Id = ?";
         Connection conn = DbConnection.getInstance().getConn();
         PreparedStatement pst = conn.prepareStatement(sql);
         pst.setString(1,id);
@@ -102,7 +102,7 @@ public class AccountController {
     }
 
     public static void search(String text, DefaultTableModel dtm) throws ClassNotFoundException, SQLException {
-        String sql = "SELECT * FROM account WHERE id LIKE ? OR name LIKE ? OR contact LIKE ? OR email LIKE ? OR role LIKE ? OR department LIKE ?";
+        String sql = "SELECT * FROM user WHERE U_Id LIKE ? OR Uname LIKE ? OR Contact LIKE ? OR Email LIKE ? OR Role LIKE ? OR Department LIKE ?";
         
         Connection conn = DbConnection.getInstance().getConn();
         PreparedStatement pst = conn.prepareStatement(sql);
@@ -119,24 +119,24 @@ public class AccountController {
         }
         while(result.next()){
             
-            dtm.addRow(new Object[]{result.getString("id"), result.getString("name"),result.getString("contact"),result.getString("email"),result.getString("role"),result.getString("department")});
+            dtm.addRow(new Object[]{result.getString("U_Id"), result.getString("Uname"),result.getString("Contact"),result.getString("Email"),result.getString("Role"),result.getString("Department")});
         }
     }
 
     public static void tableLoad(DefaultTableModel dtm) throws ClassNotFoundException, SQLException {
                 dtm.setRowCount(0);
     Connection conn = DbConnection.getInstance().getConn();
-    String sql = "SELECT * FROM account";
+    String sql = "SELECT * FROM user";
     PreparedStatement pst = conn.prepareStatement(sql);
     ResultSet result = pst.executeQuery();
     
     while(result.next()){
-    String id = result.getString("id");
-    String name = result.getString("name");
-    String contact = result.getString("contact");
-    String email = result.getString("email");
-    String role = result.getString("role");
-    String dept = result.getString("department");
+    String id = result.getString("U_Id");
+    String name = result.getString("Uname");
+    String contact = result.getString("Contact");
+    String email = result.getString("Email");
+    String role = result.getString("Role");
+    String dept = result.getString("Department");
     
     dtm.addRow(new Object[]{id,name,contact,email,role,dept});
     }

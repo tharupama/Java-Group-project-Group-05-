@@ -125,7 +125,7 @@ public class AdminLogin extends javax.swing.JFrame {
             if(authenticatedUser==null){
                 JOptionPane.showMessageDialog(rootPane, "username or password incorrect !");
             }
-            if(authenticatedUser.getString("role").equals("Admin")){
+            if(authenticatedUser.getString("Role").equals("Admin")){
                 AdminPanel ap = new AdminPanel();
                 ap.setVisible(true);
                 this.dispose();
