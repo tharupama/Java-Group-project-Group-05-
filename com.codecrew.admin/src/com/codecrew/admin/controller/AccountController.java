@@ -19,7 +19,7 @@ import java.sql.ResultSet;
  */
 public class AccountController {
     public static boolean saveAccount(AccountModel account) throws ClassNotFoundException, SQLException{
-        String sql = "INSERT INTO account VALUES (?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO user VALUES (?,?,?,?,?,?,?)";
         String sql2 = "SELECT name from account where name = ?";
         Connection conn = DbConnection.getInstance().getConn();
         PreparedStatement pst = conn.prepareStatement(sql);
