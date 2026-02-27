@@ -153,5 +153,73 @@ public static AccountController getInstance(){
     pst.close();
     }
 
+    public void tableLoadRole(DefaultTableModel dtm, String uRole) throws ClassNotFoundException, SQLException {
+                       dtm.setRowCount(0);
+    Connection conn = DbConnection.getInstance().getConn();
+    String sql = "SELECT * FROM user WHERE Role = ?";
+    PreparedStatement pst = conn.prepareStatement(sql);
+    pst.setString(1, uRole);
+    ResultSet result = pst.executeQuery();
+    
+    while(result.next()){
+    String id = result.getString("U_Id");
+    String name = result.getString("Uname");
+    String contact = result.getString("Contact");
+    String email = result.getString("Email");
+    String role = result.getString("Role");
+    String dept = result.getString("Department");
+    
+    dtm.addRow(new Object[]{id,name,contact,email,role,dept});
+    }
+    pst.close();
+    
+    }
+
+    public void tableLoadDept(DefaultTableModel dtm,String department) throws ClassNotFoundException, SQLException {
+                               dtm.setRowCount(0);
+    Connection conn = DbConnection.getInstance().getConn();
+    String sql = "SELECT * FROM user WHERE Department = ?";
+    PreparedStatement pst = conn.prepareStatement(sql);
+    
+    pst.setString(1, department);
+    ResultSet result = pst.executeQuery();
+    
+    while(result.next()){
+    String id = result.getString("U_Id");
+    String name = result.getString("Uname");
+    String contact = result.getString("Contact");
+    String email = result.getString("Email");
+    String role = result.getString("Role");
+    String dept = result.getString("Department");
+    
+    dtm.addRow(new Object[]{id,name,contact,email,role,dept});
+    }
+    pst.close();
+        
+    }
+
+    public void tableLoad(DefaultTableModel dtm, String uRole, String department) throws ClassNotFoundException, SQLException {
+                        dtm.setRowCount(0);
+    Connection conn = DbConnection.getInstance().getConn();
+    String sql = "SELECT * FROM user WHERE Role = ? AND Department = ?";
+    PreparedStatement pst = conn.prepareStatement(sql);
+    pst.setString(1, uRole);
+    pst.setString(2, department);
+    ResultSet result = pst.executeQuery();
+    
+    while(result.next()){
+    String id = result.getString("U_Id");
+    String name = result.getString("Uname");
+    String contact = result.getString("Contact");
+    String email = result.getString("Email");
+    String role = result.getString("Role");
+    String dept = result.getString("Department");
+    
+    dtm.addRow(new Object[]{id,name,contact,email,role,dept});
+    }
+    pst.close();
+        
+    }
+
     
 }

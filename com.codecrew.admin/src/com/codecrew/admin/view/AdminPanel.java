@@ -55,6 +55,20 @@ public class AdminPanel extends javax.swing.JFrame {
         DefaultTableModel dtm = (DefaultTableModel) accountTable.getModel();
         AccountController.getInstance().tableLoad(dtm);
     }
+    
+    public void tableLoad(String role, String department) throws ClassNotFoundException, SQLException{
+        DefaultTableModel dtm = (DefaultTableModel) accountTable.getModel();
+        AccountController.getInstance().tableLoad(dtm,role,department);
+    }
+    
+    public void tableLoadRole(String role) throws ClassNotFoundException, SQLException{
+        DefaultTableModel dtm = (DefaultTableModel) accountTable.getModel();
+        AccountController.getInstance().tableLoadRole(dtm,role);
+    }
+     public void tableLoadDept(String department) throws ClassNotFoundException, SQLException{
+        DefaultTableModel dtm = (DefaultTableModel) accountTable.getModel();
+        AccountController.getInstance().tableLoadDept(dtm, department);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -91,6 +105,12 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         deptBox = new javax.swing.JComboBox<>();
         jLabel16 = new javax.swing.JLabel();
+        departmentCombo = new javax.swing.JComboBox<>();
+        jLabel17 = new javax.swing.JLabel();
+        roleCombo = new javax.swing.JComboBox<>();
+        jLabel18 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel19 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -274,7 +294,7 @@ public class AdminPanel extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(accountTable);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(512, 110, 670, 490));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(512, 200, 670, 400));
 
         searchBox.setBackground(new java.awt.Color(255, 255, 255));
         searchBox.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -289,7 +309,7 @@ public class AdminPanel extends javax.swing.JFrame {
                 searchBoxKeyReleased(evt);
             }
         });
-        jPanel2.add(searchBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 60, 450, 40));
+        jPanel2.add(searchBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 50, 450, 40));
 
         jLabel15.setBackground(new java.awt.Color(0, 255, 255));
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -297,7 +317,7 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setText("Search");
         jLabel15.setOpaque(true);
-        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 30, 140, 30));
+        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 20, 140, 30));
 
         deptBox.setBackground(new java.awt.Color(255, 51, 51));
         deptBox.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -311,6 +331,57 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel16.setText("Department");
         jLabel16.setOpaque(true);
         jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 420, 140, 40));
+
+        departmentCombo.setBackground(new java.awt.Color(255, 255, 255));
+        departmentCombo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        departmentCombo.setForeground(new java.awt.Color(0, 0, 0));
+        departmentCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "ICT", "ET", "BST", "MULTIDISCIPLINARY", " " }));
+        departmentCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                departmentComboActionPerformed(evt);
+            }
+        });
+        jPanel2.add(departmentCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 150, 200, 40));
+
+        jLabel17.setBackground(new java.awt.Color(102, 0, 204));
+        jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel17.setText("Department");
+        jLabel17.setOpaque(true);
+        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 130, 200, 20));
+
+        roleCombo.setBackground(new java.awt.Color(255, 255, 255));
+        roleCombo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        roleCombo.setForeground(new java.awt.Color(0, 0, 0));
+        roleCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Lecturer", "Student", "Technical Officer", "Admin" }));
+        roleCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                roleComboActionPerformed(evt);
+            }
+        });
+        jPanel2.add(roleCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 150, 200, 40));
+
+        jLabel18.setBackground(new java.awt.Color(102, 0, 204));
+        jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel18.setText("Role");
+        jLabel18.setOpaque(true);
+        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 130, 200, 20));
+
+        jPanel1.setBackground(new java.awt.Color(204, 204, 0));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel19.setBackground(new java.awt.Color(153, 204, 0));
+        jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel19.setText("Filter");
+        jLabel19.setOpaque(true);
+        jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 6, 110, 30));
+
+        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 90, 450, 110));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/codecrew/admin/view/university-of-ruhuna.jpg"))); // NOI18N
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, -1, 638));
@@ -458,6 +529,88 @@ public class AdminPanel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_searchBoxKeyReleased
 
+    private void roleComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roleComboActionPerformed
+       
+       String role = (String) roleCombo.getSelectedItem();
+       String department = (String) departmentCombo.getSelectedItem();
+       
+       if(role.equals("All") && department.equals("All")){
+           try {
+               tableLoad();
+           } catch (ClassNotFoundException ex) {
+               Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+           } catch (SQLException ex) {
+               Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+           }
+       }else if(department.equals("All")){         
+           try {
+               tableLoadRole(role);
+           } catch (ClassNotFoundException ex) {
+               Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+           } catch (SQLException ex) {
+               Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+           }
+       }else if(role.equals("All")){
+                try {
+                tableLoadDept(department);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+           try {
+               tableLoad(role,department);
+           } catch (ClassNotFoundException ex) {
+               Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+           } catch (SQLException ex) {
+               Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+           }
+       }
+    }//GEN-LAST:event_roleComboActionPerformed
+
+    private void departmentComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_departmentComboActionPerformed
+        
+        String department = (String) departmentCombo.getSelectedItem();
+        String role = (String) roleCombo.getSelectedItem();
+  
+              if(department.equals("All")&& role.equals("All")){
+           try {
+               tableLoad();
+           } catch (ClassNotFoundException ex) {
+               Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+           } catch (SQLException ex) {
+               Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+           }
+       }else if(role.equals("All")){
+            try {
+                tableLoadDept(department);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+       }else if(department.equals("All")){
+           try {
+               tableLoadRole(role);
+           } catch (ClassNotFoundException ex) {
+               Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+           } catch (SQLException ex) {
+               Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+           }
+           
+       }else{
+            try {
+               tableLoad(role,department);
+           } catch (ClassNotFoundException ex) {
+               Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+           } catch (SQLException ex) {
+               Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+           }
+       }
+        
+    }//GEN-LAST:event_departmentComboActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -503,6 +656,7 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JTable accountTable;
     private javax.swing.JTextField contactBox;
     private javax.swing.JButton deleteBtn;
+    private javax.swing.JComboBox<String> departmentCombo;
     private javax.swing.JComboBox<String> deptBox;
     private javax.swing.JTextField emailBox;
     private javax.swing.JTextField idBox;
@@ -516,6 +670,9 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -524,6 +681,7 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -533,8 +691,11 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JTextField nameBox;
     private javax.swing.JTextField passwordBox;
     private javax.swing.JComboBox<String> roleBox;
+    private javax.swing.JComboBox<String> roleCombo;
     private javax.swing.JButton saveBtn;
     private javax.swing.JTextField searchBox;
     private javax.swing.JButton updateBtn;
     // End of variables declaration//GEN-END:variables
+
+   
 }
