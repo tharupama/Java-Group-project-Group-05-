@@ -53,7 +53,7 @@ public class AdminPanel extends javax.swing.JFrame {
     
     public void tableLoad() throws ClassNotFoundException, SQLException{
         DefaultTableModel dtm = (DefaultTableModel) accountTable.getModel();
-        AccountController.tableLoad(dtm);
+        AccountController.getInstance().tableLoad(dtm);
     }
 
     /**
@@ -183,7 +183,7 @@ public class AdminPanel extends javax.swing.JFrame {
 
         roleBox.setBackground(new java.awt.Color(255, 51, 51));
         roleBox.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        roleBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lecturer", "Student", "Technical officer", "Admin", " " }));
+        roleBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lecturer", "Student", "Technical Officer", "Admin", " " }));
         jPanel2.add(roleBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 370, 300, 40));
 
         jLabel14.setBackground(new java.awt.Color(255, 204, 0));
@@ -372,7 +372,7 @@ public class AdminPanel extends javax.swing.JFrame {
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
         AccountModel accountModel = new AccountModel(idBox.getText(),nameBox.getText(), Integer.parseInt(contactBox.getText()), emailBox.getText(), passwordBox.getText(),roleBox.getSelectedItem().toString(),deptBox.getSelectedItem().toString());
         try {
-            boolean affectedRows = AccountController.saveAccount(accountModel);
+            boolean affectedRows = AccountController.getInstance().saveAccount(accountModel);
             if(affectedRows==true){
                 tableLoad();
                 clearBox(); 
@@ -402,7 +402,7 @@ public class AdminPanel extends javax.swing.JFrame {
     private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
        AccountModel accountModel = new AccountModel(idBox.getText(),nameBox.getText(), Integer.parseInt(contactBox.getText()), emailBox.getText(), passwordBox.getText(),roleBox.getSelectedItem().toString(), deptBox.getSelectedItem().toString());
         try {
-            boolean affectedRows = AccountController.updateAccount(accountModel);
+            boolean affectedRows = AccountController.getInstance().updateAccount(accountModel);
             if(affectedRows==true){
             tableLoad();
             JOptionPane.showMessageDialog(rootPane, "Account updated sucessfully !");
@@ -422,7 +422,7 @@ public class AdminPanel extends javax.swing.JFrame {
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         String id = idBox.getText();
         try {
-            boolean affectedRows = AccountController.deleteAccount(id);
+            boolean affectedRows = AccountController.getInstance().deleteAccount(id);
             if(affectedRows==true){
                 tableLoad();
                 clearBox(); 
@@ -450,7 +450,7 @@ public class AdminPanel extends javax.swing.JFrame {
         DefaultTableModel dtm = (DefaultTableModel)accountTable.getModel();
         try {
             
-            AccountController.search(searchBox.getText(), dtm);        // TODO add your handling code here:
+            AccountController.getInstance().search(searchBox.getText(), dtm);        // TODO add your handling code here:
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {

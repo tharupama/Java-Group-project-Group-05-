@@ -264,7 +264,7 @@
                   <StringArray count="5">
                     <StringItem index="0" value="Lecturer"/>
                     <StringItem index="1" value="Student"/>
-                    <StringItem index="2" value="Technical officer"/>
+                    <StringItem index="2" value="Technical Officer"/>
                     <StringItem index="3" value="Admin"/>
                     <StringItem index="4" value=" "/>
                   </StringArray>

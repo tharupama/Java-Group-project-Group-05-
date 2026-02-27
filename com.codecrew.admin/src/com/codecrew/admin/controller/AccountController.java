@@ -17,8 +17,17 @@ import java.sql.ResultSet;
  *
  * @author USER
  */
-public class AccountController {
-    public static boolean saveAccount(AccountModel account) throws ClassNotFoundException, SQLException{
+public class AccountController implements AccountControllerInterface {
+private static AccountController ACObj;
+
+public static AccountController getInstance(){
+    if(ACObj==null){
+        ACObj=new AccountController();
+    }
+    return ACObj;
+}
+
+    public boolean saveAccount(AccountModel account) throws ClassNotFoundException, SQLException{
         String sql = "INSERT INTO user VALUES (?,?,?,?,?,?,?)";
         String sql2 = "SELECT Uname from user where Uname = ?";
         Connection conn = DbConnection.getInstance().getConn();
@@ -38,17 +47,16 @@ public class AccountController {
         pst.setString(7, account.getDept());
         
         int results = pst.executeUpdate();
-    
+        pst.close();
+        pst2.close();
         return results>0;
         }else{
             return false;
         }
-        
-        
-        
+
     }
 
-    public static boolean updateAccount(AccountModel account) throws SQLException, ClassNotFoundException {
+    public boolean updateAccount(AccountModel account) throws SQLException, ClassNotFoundException {
         Connection conn = DbConnection.getInstance().getConn();
         if (account.getPassword() != null) {
             String sql = "Update user SET Uname=?, Contact=?, Email=?, Password=?, Role=?, Department=? WHERE U_Id=?";
@@ -67,8 +75,9 @@ public class AccountController {
             pst.setString(7, account.getId());
 
             int results = pst.executeUpdate();
-
+            pst.close();
             return results > 0;
+            
 
         } else {
             String sql = "Update user SET Uname=?, Contact=?, Email=?, Role=?, Department=? WHERE U_Id=?";
@@ -84,24 +93,24 @@ public class AccountController {
             pst.setString(6, account.getId());
 
             int results = pst.executeUpdate();
-
+            pst.close();
             return results > 0;
 
         }
     }
 
-    public static boolean deleteAccount(String id) throws ClassNotFoundException, SQLException {
+    public boolean deleteAccount(String id) throws ClassNotFoundException, SQLException {
         String sql = "DELETE FROM user WHERE U_Id = ?";
         Connection conn = DbConnection.getInstance().getConn();
         PreparedStatement pst = conn.prepareStatement(sql);
         pst.setString(1,id);
         
         int result = pst.executeUpdate();
-        
+        pst.close();
         return result>0;
     }
 
-    public static void search(String text, DefaultTableModel dtm) throws ClassNotFoundException, SQLException {
+    public void search(String text, DefaultTableModel dtm) throws ClassNotFoundException, SQLException {
         String sql = "SELECT * FROM user WHERE U_Id LIKE ? OR Uname LIKE ? OR Contact LIKE ? OR Email LIKE ? OR Role LIKE ? OR Department LIKE ?";
         
         Connection conn = DbConnection.getInstance().getConn();
@@ -121,9 +130,10 @@ public class AccountController {
             
             dtm.addRow(new Object[]{result.getString("U_Id"), result.getString("Uname"),result.getString("Contact"),result.getString("Email"),result.getString("Role"),result.getString("Department")});
         }
+        pst.close();
     }
 
-    public static void tableLoad(DefaultTableModel dtm) throws ClassNotFoundException, SQLException {
+    public void tableLoad(DefaultTableModel dtm) throws ClassNotFoundException, SQLException {
                 dtm.setRowCount(0);
     Connection conn = DbConnection.getInstance().getConn();
     String sql = "SELECT * FROM user";
@@ -140,10 +150,8 @@ public class AccountController {
     
     dtm.addRow(new Object[]{id,name,contact,email,role,dept});
     }
+    pst.close();
     }
 
-
-   
- 
     
 }
