@@ -58,6 +58,30 @@ public class AdminPanel extends javax.swing.JFrame {
 
     }
     
+    public void courseTableToField(){
+    int selectedRow = courseTable.getSelectedRow();
+    courseCodeBox.setText(courseTable.getValueAt(selectedRow, 0).toString());
+    courseNameBox.setText(courseTable.getValueAt(selectedRow, 1).toString());
+    typeBox.setSelectedItem(courseTable.getValueAt(selectedRow, 2).toString());
+    courseCreditBox.setText(courseTable.getValueAt(selectedRow, 3).toString());
+    lecNameBox.setText(courseTable.getValueAt(selectedRow, 4).toString());
+    courseYearBox.setText(courseTable.getValueAt(selectedRow, 5).toString());
+    
+    String sem = courseTable.getValueAt(selectedRow, 6).toString();
+    if(sem.equals("Semester 1")){
+        sem1.setActionCommand(sem);
+        sem1.setSelected(true);
+    }else if(sem.equals("Semester 2")){
+        sem2.setActionCommand(sem);
+        sem2.setSelected(true);
+    }
+    
+    courseDepartmentBox.setSelectedItem(courseTable.getValueAt(selectedRow, 7).toString());
+    theoryHoursBox.setText(courseTable.getValueAt(selectedRow, 8).toString());
+    practicalHoursBox.setText(courseTable.getValueAt(selectedRow, 9).toString());
+ 
+    }
+    
     public void courseTableLoad() throws ClassNotFoundException, SQLException{
         DefaultTableModel dtm = (DefaultTableModel)courseTable.getModel();
         CourseController.getInstance().courseTableLoad(dtm);
@@ -91,6 +115,7 @@ public class AdminPanel extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        semesterButtonGroup = new javax.swing.ButtonGroup();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -127,20 +152,20 @@ public class AdminPanel extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        courseCodeBox = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        courseCreditBox = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
         typeBox = new javax.swing.JComboBox<>();
         jLabel23 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        courseNameBox = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        courseYearBox = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
         sem2 = new javax.swing.JRadioButton();
         sem1 = new javax.swing.JRadioButton();
         jLabel26 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        courseDepartmentBox = new javax.swing.JComboBox<>();
         theoryHoursLabel = new javax.swing.JLabel();
         theoryHoursBox = new javax.swing.JTextField();
         practicalHoursLabel = new javax.swing.JLabel();
@@ -154,6 +179,8 @@ public class AdminPanel extends javax.swing.JFrame {
         courseTable = new javax.swing.JTable();
         searchBox1 = new javax.swing.JTextField();
         jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        lecNameBox = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -331,6 +358,9 @@ public class AdminPanel extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 accountTableMouseClicked(evt);
             }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                accountTableMouseReleased(evt);
+            }
         });
         jScrollPane1.setViewportView(accountTable);
 
@@ -444,10 +474,10 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel20.setOpaque(true);
         jPanel3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 160, 40));
 
-        jTextField1.setBackground(new java.awt.Color(255, 51, 51));
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel3.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, 220, 40));
+        courseCodeBox.setBackground(new java.awt.Color(255, 51, 51));
+        courseCodeBox.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        courseCodeBox.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel3.add(courseCodeBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, 220, 40));
 
         jLabel21.setBackground(new java.awt.Color(255, 204, 0));
         jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -457,10 +487,10 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel21.setOpaque(true);
         jPanel3.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 160, 40));
 
-        jTextField2.setBackground(new java.awt.Color(255, 51, 51));
-        jTextField2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jTextField2.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel3.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 220, 40));
+        courseCreditBox.setBackground(new java.awt.Color(255, 51, 51));
+        courseCreditBox.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        courseCreditBox.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel3.add(courseCreditBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 220, 40));
 
         jLabel22.setBackground(new java.awt.Color(255, 204, 0));
         jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -489,10 +519,10 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel23.setOpaque(true);
         jPanel3.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 160, 40));
 
-        jTextField3.setBackground(new java.awt.Color(255, 51, 51));
-        jTextField3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel3.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, 220, 40));
+        courseNameBox.setBackground(new java.awt.Color(255, 51, 51));
+        courseNameBox.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        courseNameBox.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel3.add(courseNameBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, 220, 40));
 
         jLabel24.setBackground(new java.awt.Color(255, 204, 0));
         jLabel24.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -502,10 +532,10 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel24.setOpaque(true);
         jPanel3.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 180, 160, 40));
 
-        jTextField4.setBackground(new java.awt.Color(255, 51, 51));
-        jTextField4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jTextField4.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel3.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 130, 220, 40));
+        courseYearBox.setBackground(new java.awt.Color(255, 51, 51));
+        courseYearBox.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        courseYearBox.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel3.add(courseYearBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 130, 220, 40));
 
         jLabel25.setBackground(new java.awt.Color(255, 204, 0));
         jLabel25.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -515,6 +545,7 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel25.setOpaque(true);
         jPanel3.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 130, 160, 40));
 
+        semesterButtonGroup.add(sem2);
         sem2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         sem2.setForeground(new java.awt.Color(0, 0, 0));
         sem2.setText("Semester 2");
@@ -525,6 +556,7 @@ public class AdminPanel extends javax.swing.JFrame {
         });
         jPanel3.add(sem2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 180, 100, 40));
 
+        semesterButtonGroup.add(sem1);
         sem1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         sem1.setForeground(new java.awt.Color(0, 0, 0));
         sem1.setText("Semester 1");
@@ -543,11 +575,11 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel26.setOpaque(true);
         jPanel3.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 160, 40));
 
-        jComboBox2.setBackground(new java.awt.Color(255, 51, 51));
-        jComboBox2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jComboBox2.setForeground(new java.awt.Color(0, 0, 0));
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ICT", "ET", "BST" }));
-        jPanel3.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 180, 220, 40));
+        courseDepartmentBox.setBackground(new java.awt.Color(255, 51, 51));
+        courseDepartmentBox.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        courseDepartmentBox.setForeground(new java.awt.Color(0, 0, 0));
+        courseDepartmentBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ICT", "ET", "BST" }));
+        jPanel3.add(courseDepartmentBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 180, 220, 40));
 
         theoryHoursLabel.setBackground(new java.awt.Color(255, 204, 0));
         theoryHoursLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -641,6 +673,11 @@ public class AdminPanel extends javax.swing.JFrame {
                 "Code", "Name", "Type", "Credit", "lec_name", "Year", "Semester", "Department", "Theory hours", "Practical hours"
             }
         ));
+        courseTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                courseTableMouseReleased(evt);
+            }
+        });
         jScrollPane2.setViewportView(courseTable);
 
         jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 1200, 340));
@@ -658,7 +695,7 @@ public class AdminPanel extends javax.swing.JFrame {
                 searchBox1KeyReleased(evt);
             }
         });
-        jPanel3.add(searchBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 50, 370, 40));
+        jPanel3.add(searchBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 30, 370, 40));
 
         jLabel27.setBackground(new java.awt.Color(0, 255, 255));
         jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -666,7 +703,25 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel27.setText("Search");
         jLabel27.setOpaque(true);
-        jPanel3.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 20, 140, 30));
+        jPanel3.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 0, 140, 30));
+
+        jLabel28.setBackground(new java.awt.Color(255, 204, 0));
+        jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel28.setText("Lectur name");
+        jLabel28.setOpaque(true);
+        jPanel3.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 80, 160, 40));
+
+        lecNameBox.setBackground(new java.awt.Color(255, 51, 51));
+        lecNameBox.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lecNameBox.setForeground(new java.awt.Color(0, 0, 0));
+        lecNameBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lecNameBoxActionPerformed(evt);
+            }
+        });
+        jPanel3.add(lecNameBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 80, 220, 40));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/codecrew/admin/view/university-of-ruhuna.jpg"))); // NOI18N
         jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 629));
@@ -930,10 +985,12 @@ public class AdminPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void sem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sem2ActionPerformed
+        sem1.setActionCommand(" ");
         sem2.setActionCommand("Semester 2");
     }//GEN-LAST:event_sem2ActionPerformed
 
     private void sem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sem1ActionPerformed
+        sem2.setActionCommand(" ");
         sem1.setActionCommand("Semester 1");
     }//GEN-LAST:event_sem1ActionPerformed
 
@@ -944,6 +1001,18 @@ public class AdminPanel extends javax.swing.JFrame {
     private void searchBox1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchBox1KeyReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_searchBox1KeyReleased
+
+    private void accountTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountTableMouseReleased
+        
+    }//GEN-LAST:event_accountTableMouseReleased
+
+    private void lecNameBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lecNameBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lecNameBoxActionPerformed
+
+    private void courseTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_courseTableMouseReleased
+        courseTableToField();
+    }//GEN-LAST:event_courseTableMouseReleased
 
     /**
      * @param args the command line arguments
@@ -989,7 +1058,12 @@ public class AdminPanel extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable accountTable;
     private javax.swing.JTextField contactBox;
+    private javax.swing.JTextField courseCodeBox;
+    private javax.swing.JTextField courseCreditBox;
+    private javax.swing.JComboBox<String> courseDepartmentBox;
+    private javax.swing.JTextField courseNameBox;
     private javax.swing.JTable courseTable;
+    private javax.swing.JTextField courseYearBox;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JButton deleteBtn1;
     private javax.swing.JComboBox<String> departmentCombo;
@@ -1000,7 +1074,6 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1021,6 +1094,7 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1036,10 +1110,7 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField lecNameBox;
     private javax.swing.JTextField nameBox;
     private javax.swing.JTextField passwordBox;
     private javax.swing.JTextField practicalHoursBox;
@@ -1052,6 +1123,7 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JTextField searchBox1;
     private javax.swing.JRadioButton sem1;
     private javax.swing.JRadioButton sem2;
+    private javax.swing.ButtonGroup semesterButtonGroup;
     private javax.swing.JTextField theoryHoursBox;
     private javax.swing.JLabel theoryHoursLabel;
     private javax.swing.JComboBox<String> typeBox;
