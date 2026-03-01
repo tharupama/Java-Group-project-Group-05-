@@ -8,6 +8,7 @@ import com.codecrew.admin.controller.AccountController;
 import com.codecrew.admin.controller.CourseController;
 import com.codecrew.admin.db.DbConnection;
 import com.codecrew.admin.model.AccountModel;
+import com.codecrew.admin.model.CourseModel;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -965,7 +966,60 @@ public class AdminPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_typeBoxActionPerformed
 
     private void saveBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtn1ActionPerformed
-        // TODO add your handling code here:
+        String semester;
+        int theoryHours = 0;
+        int practicalHours = 0;
+        if(sem1.getActionCommand().equals("Semester 1")){
+            semester = "Semester 1";
+        }else if(sem2.getActionCommand().equals("Semester 2")){
+            semester = "Semester 2";
+        }else{
+            semester = "unknown";
+        }
+        
+        if(!theoryHoursBox.getText().equals("")){
+            theoryHours=Integer.parseInt(theoryHoursBox.getText());
+        }
+        if(!practicalHoursBox.getText().equals("")){
+            practicalHours=Integer.parseInt(practicalHoursBox.getText());
+        }
+        CourseModel courseModel = new CourseModel(courseCodeBox.getText(),
+                courseNameBox.getText(), 
+                typeBox.getSelectedItem().toString(),
+                Integer.parseInt(courseCreditBox.getText()),
+                lecNameBox.getText(),
+                Integer.parseInt(courseYearBox.getText()),
+                semester,
+                courseDepartmentBox.getSelectedItem().toString(),
+                theoryHours,
+                practicalHours
+        );
+        
+        boolean affected;
+        try {
+            affected = CourseController.getInstance().courseSave(courseModel);
+            if(affected==true){
+            JOptionPane.showMessageDialog(departmentCombo, "saved sucessfully !");
+            courseTableLoad();
+        }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+        System.out.println(courseModel.getCode());
+        System.out.println(courseModel.getName());
+        System.out.println(courseModel.getType());
+        System.out.println(courseModel.getCredit());
+        System.out.println(courseModel.getLecName());
+        System.out.println(courseModel.getYear());
+        System.out.println(courseModel.getSemester());
+        System.out.println(courseModel.getDepartment());
+        System.out.println(courseModel.getTheoryHours());
+        System.out.println(courseModel.getPracticalHours());
     }//GEN-LAST:event_saveBtn1ActionPerformed
 
     private void updateBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtn1ActionPerformed
@@ -985,12 +1039,12 @@ public class AdminPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void sem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sem2ActionPerformed
-        sem1.setActionCommand(" ");
+        sem1.setActionCommand("");
         sem2.setActionCommand("Semester 2");
     }//GEN-LAST:event_sem2ActionPerformed
 
     private void sem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sem1ActionPerformed
-        sem2.setActionCommand(" ");
+        sem2.setActionCommand("");
         sem1.setActionCommand("Semester 1");
     }//GEN-LAST:event_sem1ActionPerformed
 

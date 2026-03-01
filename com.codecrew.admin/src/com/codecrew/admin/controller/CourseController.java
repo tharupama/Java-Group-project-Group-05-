@@ -5,6 +5,7 @@
 package com.codecrew.admin.controller;
 
 import com.codecrew.admin.db.DbConnection;
+import com.codecrew.admin.model.CourseModel;
 import com.mysql.cj.jdbc.PreparedStatementWrapper;
 import javax.swing.table.DefaultTableModel;
 import java.sql.Connection;
@@ -50,5 +51,27 @@ public class CourseController {
             
         }
     }
+
+    public boolean courseSave(CourseModel courseModel) throws ClassNotFoundException, SQLException {
+        Connection conn = DbConnection.getInstance().getConn();
+        String sql = "INSERT INTO course_unit VALUES(?,?,?,?,?,?,?,?,?,?)";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1, courseModel.getCode());
+        pst.setString(2, courseModel.getName());
+        pst.setString(3, courseModel.getType());
+        pst.setInt(4, courseModel.getCredit());
+        pst.setString(5, courseModel.getLecName());
+        pst.setInt(6, courseModel.getYear());
+        pst.setString(7, courseModel.getSemester());
+        pst.setString(8, courseModel.getDepartment());
+        pst.setInt(9, courseModel.getTheoryHours());
+        pst.setInt(10, courseModel.getPracticalHours());
+        
+        int affectedRows = pst.executeUpdate();
+        
+        return affectedRows>0;
+    }
+
+    
     
 }
