@@ -72,6 +72,16 @@ public class CourseController {
         return affectedRows>0;
     }
 
+    public boolean delete(String id) throws ClassNotFoundException, SQLException {
+        Connection conn = DbConnection.getInstance().getConn();
+        String sql = "DELETE FROM course_unit WHERE Course_code = ?";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1, id);
+        int affectedRows = pst.executeUpdate();
+        
+        return affectedRows>0;
+    }
+
     
     
 }

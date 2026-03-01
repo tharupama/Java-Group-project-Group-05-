@@ -999,9 +999,12 @@ public class AdminPanel extends javax.swing.JFrame {
         try {
             affected = CourseController.getInstance().courseSave(courseModel);
             if(affected==true){
-            JOptionPane.showMessageDialog(departmentCombo, "saved sucessfully !");
             courseTableLoad();
-        }
+            JOptionPane.showMessageDialog(departmentCombo, "saved sucessfully !");
+            
+        }else{
+                JOptionPane.showMessageDialog(departmentCombo, "save error !");
+            }
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -1027,7 +1030,23 @@ public class AdminPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_updateBtn1ActionPerformed
 
     private void deleteBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtn1ActionPerformed
-        // TODO add your handling code here:
+        String id = courseCodeBox.getText();
+        boolean deleted;
+        try {
+            deleted = CourseController.getInstance().delete(id);
+            if(deleted==true){
+            courseTableLoad();
+            JOptionPane.showMessageDialog(departmentCombo, "deleted sucessfully");
+            
+        }else{
+            JOptionPane.showMessageDialog(departmentCombo, "delete error");
+        }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_deleteBtn1ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
