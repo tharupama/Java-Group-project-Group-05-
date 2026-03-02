@@ -17,6 +17,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.table.DefaultTableModel;
+
+    
 /**
  *
  * @author USER
@@ -178,7 +180,7 @@ public class AdminPanel extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         courseTable = new javax.swing.JTable();
-        searchBox1 = new javax.swing.JTextField();
+        courseSearchBox = new javax.swing.JTextField();
         jLabel27 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
         lecNameBox = new javax.swing.JTextField();
@@ -683,20 +685,20 @@ public class AdminPanel extends javax.swing.JFrame {
 
         jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 1200, 340));
 
-        searchBox1.setBackground(new java.awt.Color(255, 255, 255));
-        searchBox1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        searchBox1.setForeground(new java.awt.Color(0, 0, 0));
-        searchBox1.addActionListener(new java.awt.event.ActionListener() {
+        courseSearchBox.setBackground(new java.awt.Color(255, 255, 255));
+        courseSearchBox.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        courseSearchBox.setForeground(new java.awt.Color(0, 0, 0));
+        courseSearchBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchBox1ActionPerformed(evt);
+                courseSearchBoxActionPerformed(evt);
             }
         });
-        searchBox1.addKeyListener(new java.awt.event.KeyAdapter() {
+        courseSearchBox.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                searchBox1KeyReleased(evt);
+                courseSearchBoxKeyReleased(evt);
             }
         });
-        jPanel3.add(searchBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 30, 370, 40));
+        jPanel3.add(courseSearchBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 30, 370, 40));
 
         jLabel27.setBackground(new java.awt.Color(0, 255, 255));
         jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -1026,7 +1028,51 @@ public class AdminPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_saveBtn1ActionPerformed
 
     private void updateBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtn1ActionPerformed
-        // TODO add your handling code here:
+                       String semester;
+        int theoryHours = 0;
+        int practicalHours = 0;
+        if(sem1.getActionCommand().equals("Semester 1")){
+            semester = "Semester 1";
+        }else if(sem2.getActionCommand().equals("Semester 2")){
+            semester = "Semester 2";
+        }else{
+            semester = "unknown";
+        }
+        
+        if(!theoryHoursBox.getText().equals("")){
+            theoryHours=Integer.parseInt(theoryHoursBox.getText());
+        }
+        if(!practicalHoursBox.getText().equals("")){
+            practicalHours=Integer.parseInt(practicalHoursBox.getText());
+        }
+        CourseModel courseModel = new CourseModel(courseCodeBox.getText(),
+                courseNameBox.getText(), 
+                typeBox.getSelectedItem().toString(),
+                Integer.parseInt(courseCreditBox.getText()),
+                lecNameBox.getText(),
+                Integer.parseInt(courseYearBox.getText()),
+                semester,
+                courseDepartmentBox.getSelectedItem().toString(),
+                theoryHours,
+                practicalHours
+        );
+        try {
+            boolean affectedRows = CourseController.getInstance().updateCourse(courseModel);
+            if(affectedRows==true){
+            courseTableLoad();
+            JOptionPane.showMessageDialog(rootPane, "Course updated sucessfully !");
+            }else{
+            JOptionPane.showMessageDialog(rootPane, "update error !");
+            }
+            // TODO add your handling code here:
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(rootPane, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(rootPane, ex);
+        }
+     
     }//GEN-LAST:event_updateBtn1ActionPerformed
 
     private void deleteBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtn1ActionPerformed
@@ -1067,13 +1113,21 @@ public class AdminPanel extends javax.swing.JFrame {
         sem1.setActionCommand("Semester 1");
     }//GEN-LAST:event_sem1ActionPerformed
 
-    private void searchBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBox1ActionPerformed
+    private void courseSearchBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courseSearchBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_searchBox1ActionPerformed
+    }//GEN-LAST:event_courseSearchBoxActionPerformed
 
-    private void searchBox1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchBox1KeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchBox1KeyReleased
+    private void courseSearchBoxKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_courseSearchBoxKeyReleased
+           DefaultTableModel dtm = (DefaultTableModel)courseTable.getModel();
+        try {
+             
+            CourseController.getInstance().search(courseSearchBox.getText(), dtm);        // TODO add your handling code here:
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_courseSearchBoxKeyReleased
 
     private void accountTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountTableMouseReleased
         
@@ -1135,6 +1189,7 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JTextField courseCreditBox;
     private javax.swing.JComboBox<String> courseDepartmentBox;
     private javax.swing.JTextField courseNameBox;
+    private javax.swing.JTextField courseSearchBox;
     private javax.swing.JTable courseTable;
     private javax.swing.JTextField courseYearBox;
     private javax.swing.JButton deleteBtn;
@@ -1193,7 +1248,6 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JButton saveBtn;
     private javax.swing.JButton saveBtn1;
     private javax.swing.JTextField searchBox;
-    private javax.swing.JTextField searchBox1;
     private javax.swing.JRadioButton sem1;
     private javax.swing.JRadioButton sem2;
     private javax.swing.ButtonGroup semesterButtonGroup;
