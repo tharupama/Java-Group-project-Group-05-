@@ -17,7 +17,7 @@ import java.sql.ResultSet;
  *
  * @author USER
  */
-public class CourseController {
+public class CourseController extends CourseControllerAbstract{
     
     private static CourseController CCObj;
     

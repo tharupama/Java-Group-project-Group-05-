@@ -50,6 +50,19 @@ public class AdminPanel extends javax.swing.JFrame {
         deptBox.setSelectedIndex(0);
     }
     
+    public void courseFieldClear(){
+    courseCodeBox.setText("");
+    courseNameBox.setText("");
+    typeBox.setSelectedIndex(0);
+    courseCreditBox.setText("");
+    lecNameBox.setText("");
+    courseYearBox.setText("");
+    semesterButtonGroup.clearSelection();
+    courseDepartmentBox.setSelectedIndex(0);
+    theoryHoursBox.setText("");
+    practicalHoursBox.setText("");
+    }
+    
     public void tableToFields(){
     int selectedRow = accountTable.getSelectedRow();
     idBox.setText(accountTable.getValueAt(selectedRow, 0).toString());
@@ -176,7 +189,7 @@ public class AdminPanel extends javax.swing.JFrame {
         saveBtn1 = new javax.swing.JButton();
         updateBtn1 = new javax.swing.JButton();
         deleteBtn1 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        courseClear = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         courseTable = new javax.swing.JTable();
@@ -643,16 +656,16 @@ public class AdminPanel extends javax.swing.JFrame {
         });
         jPanel3.add(deleteBtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 230, 120, 40));
 
-        jButton6.setBackground(new java.awt.Color(255, 51, 0));
-        jButton6.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(0, 0, 0));
-        jButton6.setText("Clear");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        courseClear.setBackground(new java.awt.Color(255, 51, 0));
+        courseClear.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        courseClear.setForeground(new java.awt.Color(0, 0, 0));
+        courseClear.setText("Clear");
+        courseClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                courseClearActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 230, 120, 40));
+        jPanel3.add(courseClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 230, 120, 40));
 
         jButton2.setBackground(new java.awt.Color(153, 0, 0));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -1002,6 +1015,7 @@ public class AdminPanel extends javax.swing.JFrame {
             affected = CourseController.getInstance().courseSave(courseModel);
             if(affected==true){
             courseTableLoad();
+            courseFieldClear();
             JOptionPane.showMessageDialog(departmentCombo, "saved sucessfully !");
             
         }else{
@@ -1082,6 +1096,7 @@ public class AdminPanel extends javax.swing.JFrame {
             deleted = CourseController.getInstance().delete(id);
             if(deleted==true){
             courseTableLoad();
+            courseFieldClear();
             JOptionPane.showMessageDialog(departmentCombo, "deleted sucessfully");
             
         }else{
@@ -1095,12 +1110,12 @@ public class AdminPanel extends javax.swing.JFrame {
         
     }//GEN-LAST:event_deleteBtn1ActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    private void courseClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courseClearActionPerformed
+            courseFieldClear();
+    }//GEN-LAST:event_courseClearActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+       this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void sem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sem2ActionPerformed
@@ -1185,6 +1200,7 @@ public class AdminPanel extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable accountTable;
     private javax.swing.JTextField contactBox;
+    private javax.swing.JButton courseClear;
     private javax.swing.JTextField courseCodeBox;
     private javax.swing.JTextField courseCreditBox;
     private javax.swing.JComboBox<String> courseDepartmentBox;
@@ -1201,7 +1217,6 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

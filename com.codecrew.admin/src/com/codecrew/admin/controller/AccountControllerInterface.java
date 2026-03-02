@@ -16,5 +16,4 @@ public interface AccountControllerInterface {
     public void tableLoadRole(DefaultTableModel dtm, String uRole) throws ClassNotFoundException, SQLException;
     public void tableLoadDept(DefaultTableModel dtm, String department) throws ClassNotFoundException, SQLException;
     public void tableLoad(DefaultTableModel dtm, String uRole, String department) throws ClassNotFoundException, SQLException ;
-
 }
