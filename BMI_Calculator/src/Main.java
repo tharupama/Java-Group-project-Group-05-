@@ -183,6 +183,18 @@ public class Main extends JFrame {
 
         add(mainPanel);
     }
+
+    private void updateUnitLabels() {
+        if (metricButton.isSelected()) {
+            weightUnitLabel.setText("kg");
+            heightUnitLabel.setText("m");
+        } else {
+            weightUnitLabel.setText("lbs");
+            heightUnitLabel.setText("inches");
+        }
+        resultLabel.setText("BMI: --");
+        categoryLabel.setText("Category: --");
+    }
     public static void main(String[] args) {
 
     }
