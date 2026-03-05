@@ -1,8 +1,30 @@
+
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
-public class Main {
+public class Main extends JFrame {
+
+    // Input fields
+    private JTextField weightField;
+    private JTextField heightField;
+    private JLabel resultLabel;
+    private JLabel categoryLabel;
+    private JRadioButton metricButton;
+    private JRadioButton englishButton;
+    private JLabel weightUnitLabel;
+    private JLabel heightUnitLabel;
+
+    public Main() {
+        setTitle("BMI Calculator");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(420, 500);
+        setLocationRelativeTo(null);
+        setResizable(false);
+
+        initComponents();
+    }
     private void initComponents() {
         // Main panel
         JPanel mainPanel = new JPanel();
