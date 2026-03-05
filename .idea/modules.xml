@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/Java-Group-project-Group-05-.iml" filepath="$PROJECT_DIR$/.idea/Java-Group-project-Group-05-.iml" />
       <module fileurl="file://$PROJECT_DIR$/com.codecrew/com.codecrew.iml" filepath="$PROJECT_DIR$/com.codecrew/com.codecrew.iml" />
       <module fileurl="file://$PROJECT_DIR$/com.codecrew.admin/com.codecrew.admin.iml" filepath="$PROJECT_DIR$/com.codecrew.admin/com.codecrew.admin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.codecrew.bmi/com.codecrew.bmi.iml" filepath="$PROJECT_DIR$/com.codecrew.bmi/com.codecrew.bmi.iml" />
     </modules>
   </component>
 </project>
