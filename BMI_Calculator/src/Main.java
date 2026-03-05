@@ -195,8 +195,57 @@ public class Main extends JFrame {
         resultLabel.setText("BMI: --");
         categoryLabel.setText("Category: --");
     }
-    public static void main(String[] args) {
+    private void calculateBMI() {
+        try {
+            double weight = Double.parseDouble(weightField.getText().trim());
+            double height = Double.parseDouble(heightField.getText().trim());
 
+            if (weight <= 0 || height <= 0) {
+                JOptionPane.showMessageDialog(this,
+                        "Please enter positive values for weight and height.",
+                        "Invalid Input", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            double bmi;
+            if (metricButton.isSelected()) {
+                // BMI = weight(kg) / height(m)^2
+                bmi = weight / (height * height);
+            } else {
+                // BMI = (weight(lbs) * 703) / height(inches)^2
+                bmi = (weight * 703) / (height * height);
+            }
+
+            String category;
+            Color categoryColor;
+            if (bmi < 18.5) {
+                category = "Underweight";
+                categoryColor = new Color(30, 120, 200);
+            } else if (bmi < 25.0) {
+                category = "Normal";
+                categoryColor = new Color(0, 150, 60);
+            } else if (bmi < 30.0) {
+                category = "Overweight";
+                categoryColor = new Color(210, 130, 0);
+            } else {
+                category = "Obese";
+                categoryColor = new Color(200, 30, 30);
+            }
+
+            resultLabel.setText(String.format("BMI: %.2f", bmi));
+            categoryLabel.setText("Category: " + category);
+            categoryLabel.setForeground(categoryColor);
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Please enter valid numeric values.",
+                    "Invalid Input", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            new Main().setVisible(true);
+        });
     }
     
 }
