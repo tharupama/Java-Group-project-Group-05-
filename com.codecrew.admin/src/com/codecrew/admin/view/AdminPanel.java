@@ -38,6 +38,19 @@ public class AdminPanel extends javax.swing.JFrame {
         theoryHoursBox.setVisible(false);
         practicalHoursBox.setVisible(false);
         
+        courseidLabel.setVisible(false);
+            courseIdField.setVisible(false);
+            dateLabel.setVisible(false);
+            DateField.setVisible(false);
+            timeLabel.setVisible(false);
+            hourSpinner.setVisible(false);
+            minuteSpinner.setVisible(false);
+            ampmCombo.setVisible(false);
+            generalTable.setVisible(true);
+            jScrollPane3.setVisible(true);
+            examTable.setVisible(false);
+            jScrollPane4.setVisible(false);
+        
     }
     
     public void clearBox(){
@@ -200,6 +213,35 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        courseCodeBox1 = new javax.swing.JTextField();
+        jLabel30 = new javax.swing.JLabel();
+        textArea1 = new java.awt.TextArea();
+        roleBox1 = new javax.swing.JComboBox<>();
+        jLabel32 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        courseCodeBox2 = new javax.swing.JTextField();
+        jLabel33 = new javax.swing.JLabel();
+        typeCombo = new javax.swing.JComboBox<>();
+        timeLabel = new javax.swing.JLabel();
+        courseIdField = new javax.swing.JTextField();
+        DateField = new com.toedter.calendar.JDateChooser();
+        courseidLabel = new javax.swing.JLabel();
+        dateLabel = new javax.swing.JLabel();
+        minuteSpinner = new javax.swing.JSpinner();
+        hourSpinner = new javax.swing.JSpinner();
+        ampmCombo = new javax.swing.JComboBox<>();
+        saveBtn2 = new javax.swing.JButton();
+        updateBtn2 = new javax.swing.JButton();
+        deleteBtn2 = new javax.swing.JButton();
+        courseClear1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        examTable = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        generalTable = new javax.swing.JTable();
+        courseSearchBox1 = new javax.swing.JTextField();
+        jLabel34 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
@@ -752,6 +794,236 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel7.setText("Notice Management");
         jPanel4.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 10, 380, 50));
 
+        jLabel29.setBackground(new java.awt.Color(255, 204, 0));
+        jLabel29.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel29.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel29.setText("Title");
+        jLabel29.setOpaque(true);
+        jPanel4.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 90, 40));
+
+        courseCodeBox1.setBackground(new java.awt.Color(255, 51, 51));
+        courseCodeBox1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        courseCodeBox1.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel4.add(courseCodeBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, 180, 40));
+
+        jLabel30.setBackground(new java.awt.Color(255, 204, 0));
+        jLabel30.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel30.setText("Content");
+        jLabel30.setOpaque(true);
+        jPanel4.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 130, 120, 40));
+
+        textArea1.setBackground(new java.awt.Color(255, 51, 51));
+        textArea1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jPanel4.add(textArea1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 130, 350, 140));
+
+        roleBox1.setBackground(new java.awt.Color(255, 51, 51));
+        roleBox1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        roleBox1.setForeground(new java.awt.Color(0, 0, 0));
+        roleBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Lecturer", "Student", "Technical Officer", "Admin", " " }));
+        jPanel4.add(roleBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 80, 180, 40));
+
+        jLabel32.setBackground(new java.awt.Color(255, 204, 0));
+        jLabel32.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel32.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel32.setText("Visible For");
+        jLabel32.setOpaque(true);
+        jPanel4.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 80, 190, 40));
+
+        jLabel31.setBackground(new java.awt.Color(255, 204, 0));
+        jLabel31.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel31.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel31.setText("Download Link");
+        jLabel31.setOpaque(true);
+        jPanel4.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, 190, 40));
+
+        courseCodeBox2.setBackground(new java.awt.Color(255, 51, 51));
+        courseCodeBox2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        courseCodeBox2.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel4.add(courseCodeBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 130, 180, 40));
+
+        jLabel33.setBackground(new java.awt.Color(255, 204, 0));
+        jLabel33.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel33.setText("Type");
+        jLabel33.setOpaque(true);
+        jPanel4.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 90, 40));
+
+        typeCombo.setBackground(new java.awt.Color(255, 51, 51));
+        typeCombo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        typeCombo.setForeground(new java.awt.Color(0, 0, 0));
+        typeCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "General", "Exam", " " }));
+        typeCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                typeComboActionPerformed(evt);
+            }
+        });
+        jPanel4.add(typeCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 80, 180, 40));
+
+        timeLabel.setBackground(new java.awt.Color(255, 204, 0));
+        timeLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        timeLabel.setForeground(new java.awt.Color(0, 0, 0));
+        timeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        timeLabel.setText("Time");
+        timeLabel.setOpaque(true);
+        jPanel4.add(timeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 180, 90, 40));
+
+        courseIdField.setBackground(new java.awt.Color(255, 51, 51));
+        courseIdField.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        courseIdField.setForeground(new java.awt.Color(0, 0, 0));
+        courseIdField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                courseIdFieldActionPerformed(evt);
+            }
+        });
+        jPanel4.add(courseIdField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, 180, 40));
+
+        DateField.setBackground(new java.awt.Color(255, 0, 0));
+        DateField.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel4.add(DateField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 230, 180, 40));
+
+        courseidLabel.setBackground(new java.awt.Color(255, 204, 0));
+        courseidLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        courseidLabel.setForeground(new java.awt.Color(0, 0, 0));
+        courseidLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        courseidLabel.setText("Course Id");
+        courseidLabel.setOpaque(true);
+        jPanel4.add(courseidLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 90, 40));
+
+        dateLabel.setBackground(new java.awt.Color(255, 204, 0));
+        dateLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        dateLabel.setForeground(new java.awt.Color(0, 0, 0));
+        dateLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dateLabel.setText("Date");
+        dateLabel.setOpaque(true);
+        jPanel4.add(dateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 90, 40));
+        jPanel4.add(minuteSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 180, -1, 40));
+        jPanel4.add(hourSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 180, -1, 40));
+
+        ampmCombo.setBackground(new java.awt.Color(255, 51, 51));
+        ampmCombo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        ampmCombo.setForeground(new java.awt.Color(0, 0, 0));
+        ampmCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AM", "PM" }));
+        ampmCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ampmComboActionPerformed(evt);
+            }
+        });
+        jPanel4.add(ampmCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 180, 140, 40));
+
+        saveBtn2.setBackground(new java.awt.Color(102, 255, 0));
+        saveBtn2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        saveBtn2.setForeground(new java.awt.Color(0, 0, 0));
+        saveBtn2.setText("Save");
+        saveBtn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveBtn2ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(saveBtn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 230, 120, 40));
+
+        updateBtn2.setBackground(new java.awt.Color(255, 204, 0));
+        updateBtn2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        updateBtn2.setForeground(new java.awt.Color(0, 0, 0));
+        updateBtn2.setText("Update");
+        updateBtn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateBtn2ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(updateBtn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 230, 120, 40));
+
+        deleteBtn2.setBackground(new java.awt.Color(255, 0, 0));
+        deleteBtn2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        deleteBtn2.setForeground(new java.awt.Color(0, 0, 0));
+        deleteBtn2.setText("Delete");
+        deleteBtn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtn2ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(deleteBtn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 230, 120, 40));
+
+        courseClear1.setBackground(new java.awt.Color(255, 51, 0));
+        courseClear1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        courseClear1.setForeground(new java.awt.Color(0, 0, 0));
+        courseClear1.setText("Clear");
+        courseClear1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                courseClear1ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(courseClear1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 230, 120, 40));
+
+        jButton3.setBackground(new java.awt.Color(153, 0, 0));
+        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(0, 0, 0));
+        jButton3.setText("Exit");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 180, 120, 40));
+
+        examTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Type", "Title", "Content", "Visibility", "Download Link", "Course Id", "Date", "Time"
+            }
+        ));
+        jScrollPane4.setViewportView(examTable);
+
+        jPanel4.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 1160, 340));
+
+        generalTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Type", "Title", "Content", "Visibility", "Download Link"
+            }
+        ));
+        jScrollPane3.setViewportView(generalTable);
+
+        jPanel4.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 1160, 330));
+
+        courseSearchBox1.setBackground(new java.awt.Color(255, 255, 255));
+        courseSearchBox1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        courseSearchBox1.setForeground(new java.awt.Color(0, 0, 0));
+        courseSearchBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                courseSearchBox1ActionPerformed(evt);
+            }
+        });
+        courseSearchBox1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                courseSearchBox1KeyReleased(evt);
+            }
+        });
+        jPanel4.add(courseSearchBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 70, 370, 40));
+
+        jLabel34.setBackground(new java.awt.Color(0, 255, 255));
+        jLabel34.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel34.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel34.setText("Search");
+        jLabel34.setOpaque(true);
+        jPanel4.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 40, 140, 30));
+
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/codecrew/admin/view/university-of-ruhuna.jpg"))); // NOI18N
         jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -1156,6 +1428,73 @@ public class AdminPanel extends javax.swing.JFrame {
         courseTableToField();
     }//GEN-LAST:event_courseTableMouseReleased
 
+    private void ampmComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ampmComboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ampmComboActionPerformed
+
+    private void courseIdFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courseIdFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_courseIdFieldActionPerformed
+
+    private void typeComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeComboActionPerformed
+        String selectedItem = (String)typeCombo.getSelectedItem();
+        if(selectedItem.equals("General")){
+            courseidLabel.setVisible(false);
+            courseIdField.setVisible(false);
+            dateLabel.setVisible(false);
+            DateField.setVisible(false);
+            timeLabel.setVisible(false);
+            hourSpinner.setVisible(false);
+            minuteSpinner.setVisible(false);
+            ampmCombo.setVisible(false);
+            generalTable.setVisible(true);
+            jScrollPane3.setVisible(true);
+            examTable.setVisible(false);
+            jScrollPane4.setVisible(false);
+        }else{
+            courseidLabel.setVisible(true);
+            courseIdField.setVisible(true);
+            dateLabel.setVisible(true);
+            DateField.setVisible(true);
+            timeLabel.setVisible(true);
+            hourSpinner.setVisible(true);
+            minuteSpinner.setVisible(true);
+            ampmCombo.setVisible(true);
+            generalTable.setVisible(false);
+            jScrollPane3.setVisible(false);
+            examTable.setVisible(true);
+            jScrollPane4.setVisible(true);
+        }
+    }//GEN-LAST:event_typeComboActionPerformed
+
+    private void saveBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtn2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveBtn2ActionPerformed
+
+    private void updateBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtn2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_updateBtn2ActionPerformed
+
+    private void deleteBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtn2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteBtn2ActionPerformed
+
+    private void courseClear1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courseClear1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_courseClear1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void courseSearchBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courseSearchBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_courseSearchBox1ActionPerformed
+
+    private void courseSearchBox1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_courseSearchBox1KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_courseSearchBox1KeyReleased
+
     /**
      * @param args the command line arguments
      */
@@ -1198,24 +1537,38 @@ public class AdminPanel extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.toedter.calendar.JDateChooser DateField;
     private javax.swing.JTable accountTable;
+    private javax.swing.JComboBox<String> ampmCombo;
     private javax.swing.JTextField contactBox;
     private javax.swing.JButton courseClear;
+    private javax.swing.JButton courseClear1;
     private javax.swing.JTextField courseCodeBox;
+    private javax.swing.JTextField courseCodeBox1;
+    private javax.swing.JTextField courseCodeBox2;
     private javax.swing.JTextField courseCreditBox;
     private javax.swing.JComboBox<String> courseDepartmentBox;
+    private javax.swing.JTextField courseIdField;
     private javax.swing.JTextField courseNameBox;
     private javax.swing.JTextField courseSearchBox;
+    private javax.swing.JTextField courseSearchBox1;
     private javax.swing.JTable courseTable;
     private javax.swing.JTextField courseYearBox;
+    private javax.swing.JLabel courseidLabel;
+    private javax.swing.JLabel dateLabel;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JButton deleteBtn1;
+    private javax.swing.JButton deleteBtn2;
     private javax.swing.JComboBox<String> departmentCombo;
     private javax.swing.JComboBox<String> deptBox;
     private javax.swing.JTextField emailBox;
+    private javax.swing.JTable examTable;
+    private javax.swing.JTable generalTable;
+    private javax.swing.JSpinner hourSpinner;
     private javax.swing.JTextField idBox;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1238,7 +1591,13 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1252,25 +1611,34 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField lecNameBox;
+    private javax.swing.JSpinner minuteSpinner;
     private javax.swing.JTextField nameBox;
     private javax.swing.JTextField passwordBox;
     private javax.swing.JTextField practicalHoursBox;
     private javax.swing.JLabel practicalHoursLabel;
     private javax.swing.JComboBox<String> roleBox;
+    private javax.swing.JComboBox<String> roleBox1;
     private javax.swing.JComboBox<String> roleCombo;
     private javax.swing.JButton saveBtn;
     private javax.swing.JButton saveBtn1;
+    private javax.swing.JButton saveBtn2;
     private javax.swing.JTextField searchBox;
     private javax.swing.JRadioButton sem1;
     private javax.swing.JRadioButton sem2;
     private javax.swing.ButtonGroup semesterButtonGroup;
+    private java.awt.TextArea textArea1;
     private javax.swing.JTextField theoryHoursBox;
     private javax.swing.JLabel theoryHoursLabel;
+    private javax.swing.JLabel timeLabel;
     private javax.swing.JComboBox<String> typeBox;
+    private javax.swing.JComboBox<String> typeCombo;
     private javax.swing.JButton updateBtn;
     private javax.swing.JButton updateBtn1;
+    private javax.swing.JButton updateBtn2;
     // End of variables declaration//GEN-END:variables
 
    
