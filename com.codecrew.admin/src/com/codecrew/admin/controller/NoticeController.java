@@ -9,12 +9,15 @@ import com.codecrew.admin.model.NoticeModel;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
+import javax.swing.table.DefaultTableModel;
+import java.sql.ResultSet;
 
 /**
  *
  * @author USER
  */
 public class NoticeController {
+    private static NoticeController noticeObj;
 
     public boolean saveNotice(NoticeModel noticeModel) throws ClassNotFoundException, SQLException {
         
@@ -31,5 +34,34 @@ public class NoticeController {
     }
 
     
+    public static NoticeController getInstance(){
+        if(noticeObj==null){
+            noticeObj=new NoticeController();
+        }
+        return noticeObj;
+    }
+
+    public void noticeTableLoad(DefaultTableModel generalDtm) throws ClassNotFoundException, SQLException {
+        generalDtm.setRowCount(0);
+        Connection conn = DbConnection.getInstance().getConn();
+        String sql = "SELECT * FROM notice WHERE type=?"; 
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1, "General");
+        
+        ResultSet result =  pst.executeQuery();
+        
+        while(result.next()){
+            String noticeId = result.getString("notice_id");
+            String Created = result.getTimestamp("created_at").toString();
+            String Updated = result.getTimestamp("updated_at").toString();
+            String Type = result.getString("type");
+            String Title = result.getString("title");
+            String downloadLink = result.getString("download_link");
+            String Content = result.getString("content");
+            
+            generalDtm.addRow(new Object[] {noticeId,Created,Updated,Type,Title,Content,downloadLink});
+            
+        }
+    }
     
 }

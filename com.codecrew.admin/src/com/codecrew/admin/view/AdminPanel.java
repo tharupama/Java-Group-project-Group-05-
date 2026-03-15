@@ -37,6 +37,7 @@ public class AdminPanel extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         tableLoad();
         courseTableLoad();
+        noticeTableLoad();
         theoryHoursLabel.setVisible(false);
         practicalHoursLabel.setVisible(false);
         theoryHoursBox.setVisible(false);
@@ -123,6 +124,14 @@ public class AdminPanel extends javax.swing.JFrame {
     public void courseTableLoad() throws ClassNotFoundException, SQLException{
         DefaultTableModel dtm = (DefaultTableModel)courseTable.getModel();
         CourseController.getInstance().courseTableLoad(dtm);
+    }
+    
+    public void noticeTableLoad() throws ClassNotFoundException, SQLException{
+        DefaultTableModel generalDtm = (DefaultTableModel)generalTable.getModel();
+        DefaultTableModel examDtm = (DefaultTableModel)examTable.getModel();
+        
+        NoticeController.getInstance().noticeTableLoad(generalDtm);
+        ExamNoticeController.getInstance().noticeTableLoad(examDtm);
     }
     
     public void tableLoad() throws ClassNotFoundException, SQLException{
@@ -957,13 +966,13 @@ public class AdminPanel extends javax.swing.JFrame {
 
         examTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Notice Id", "Type", "Title", "Content", "Download Link", "Course Id", "Date", "Time From", "Time To"
+                "noticeId", "Created", "Updated", "Type", "Title", "Content", "downloadLink", "courseId", "Date", "timeFrom", "timeTo"
             }
         ));
         jScrollPane4.setViewportView(examTable);
@@ -972,13 +981,13 @@ public class AdminPanel extends javax.swing.JFrame {
 
         generalTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Notice Id", "Type", "Title", "Content", "Download Link"
+                "noticeId", "Created", "Updated", "Type", "Title", "Content", "downloadLink"
             }
         ));
         jScrollPane3.setViewportView(generalTable);
@@ -1470,16 +1479,18 @@ public class AdminPanel extends javax.swing.JFrame {
         
         
         if(type.equals("General")){
-            NoticeController noticeController = new NoticeController();
+            //NoticeController noticeController = new NoticeController();
             NoticeModel noticeModel = new NoticeModel(type, noticeTitle.getText(), downloadLinkField.getText(), contentArea.getText());
             System.out.println(noticeModel.getType());
             System.out.println(noticeModel.getTitle());
             System.out.println(noticeModel.getDownloadLink());
             System.out.println(noticeModel.getContent());
             try {
-                boolean affectedRows = noticeController.saveNotice(noticeModel);
+                boolean affectedRows = NoticeController.getInstance().saveNotice(noticeModel);
                 if(affectedRows==true){
+                    noticeTableLoad();
                     JOptionPane.showMessageDialog(null, "notise saved sucessfully !");
+                    
                 }else{
                     JOptionPane.showMessageDialog(null, "notise save error !");
                 }
@@ -1489,15 +1500,17 @@ public class AdminPanel extends javax.swing.JFrame {
                 Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }else{
-            NoticeController noticeController = new ExamNoticeController();
+            //NoticeController noticeController = new ExamNoticeController();
             LocalTime timeFrom = LocalTime.of((int)hourSpinner.getValue(),(int)minuteSpinner.getValue());
             LocalTime timeTo = LocalTime.of((int)hourToSpinner.getValue(),(int)minuteToSpinner.getValue()) ;
             //System.out.println(timeFrom);
             NoticeModel noticeModel = new NoticeModel(type, noticeTitle.getText(), downloadLinkField.getText(), contentArea.getText(), courseIdField.getText(), DateField.getDate(), timeFrom, timeTo);
             try {
-                boolean affectedRows = noticeController.saveNotice(noticeModel);
+                boolean affectedRows = ExamNoticeController.getInstance().saveNotice(noticeModel);
                 if(affectedRows==true){
+                    noticeTableLoad();
                     JOptionPane.showMessageDialog(null, "notise saved sucessfully !");
+                    
                 }else{
                     JOptionPane.showMessageDialog(null, "notise save error !");
                 }

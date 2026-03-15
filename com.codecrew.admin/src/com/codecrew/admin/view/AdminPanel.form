@@ -1926,16 +1926,18 @@
                 <Component class="javax.swing.JTable" name="examTable">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="9" rowCount="4">
-                        <Column editable="true" title="Notice Id" type="java.lang.Object"/>
+                      <Table columnCount="11" rowCount="4">
+                        <Column editable="true" title="noticeId" type="java.lang.Object"/>
+                        <Column editable="true" title="Created" type="java.lang.Object"/>
+                        <Column editable="true" title="Updated" type="java.lang.Object"/>
                         <Column editable="true" title="Type" type="java.lang.Object"/>
                         <Column editable="true" title="Title" type="java.lang.Object"/>
                         <Column editable="true" title="Content" type="java.lang.Object"/>
-                        <Column editable="true" title="Download Link" type="java.lang.Object"/>
-                        <Column editable="true" title="Course Id" type="java.lang.Object"/>
+                        <Column editable="true" title="downloadLink" type="java.lang.Object"/>
+                        <Column editable="true" title="courseId" type="java.lang.Object"/>
                         <Column editable="true" title="Date" type="java.lang.Object"/>
-                        <Column editable="true" title="Time From" type="java.lang.Object"/>
-                        <Column editable="true" title="Time To" type="java.lang.Object"/>
+                        <Column editable="true" title="timeFrom" type="java.lang.Object"/>
+                        <Column editable="true" title="timeTo" type="java.lang.Object"/>
                       </Table>
                     </Property>
                   </Properties>
@@ -1957,12 +1959,14 @@
                 <Component class="javax.swing.JTable" name="generalTable">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="5" rowCount="4">
-                        <Column editable="true" title="Notice Id" type="java.lang.Object"/>
+                      <Table columnCount="7" rowCount="4">
+                        <Column editable="true" title="noticeId" type="java.lang.Object"/>
+                        <Column editable="true" title="Created" type="java.lang.Object"/>
+                        <Column editable="true" title="Updated" type="java.lang.Object"/>
                         <Column editable="true" title="Type" type="java.lang.Object"/>
                         <Column editable="true" title="Title" type="java.lang.Object"/>
                         <Column editable="true" title="Content" type="java.lang.Object"/>
-                        <Column editable="true" title="Download Link" type="java.lang.Object"/>
+                        <Column editable="true" title="downloadLink" type="java.lang.Object"/>
                       </Table>
                     </Property>
                   </Properties>
