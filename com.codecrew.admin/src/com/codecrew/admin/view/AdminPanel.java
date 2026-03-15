@@ -88,6 +88,20 @@ public class AdminPanel extends javax.swing.JFrame {
     practicalHoursBox.setText("");
     }
     
+    public void noticeFieldClear(){
+    idLabel.setText("Id");
+    //typeCombo.setSelectedItem("General");
+    noticeTitle.setText("");
+    courseIdField.setText("");
+    downloadLinkField.setText("");
+    contentArea.setText("");
+    DateField.setDate(null);
+    hourSpinner.setValue(0);
+    minuteSpinner.setValue(0);
+    hourToSpinner.setValue(0);
+    minuteToSpinner.setValue(0);
+    }
+    
     public void tableToFields(){
     int selectedRow = accountTable.getSelectedRow();
     idBox.setText(accountTable.getValueAt(selectedRow, 0).toString());
@@ -1542,6 +1556,7 @@ public class AdminPanel extends javax.swing.JFrame {
                 boolean affectedRows = NoticeController.getInstance().saveNotice(noticeModel);
                 if(affectedRows==true){
                     noticeTableLoad();
+                    noticeFieldClear();
                     JOptionPane.showMessageDialog(null, "notise saved sucessfully !");
                     
                 }else{
@@ -1562,6 +1577,7 @@ public class AdminPanel extends javax.swing.JFrame {
                 boolean affectedRows = ExamNoticeController.getInstance().saveNotice(noticeModel);
                 if(affectedRows==true){
                     noticeTableLoad();
+                    noticeFieldClear();
                     JOptionPane.showMessageDialog(null, "notise saved sucessfully !");
                     
                 }else{
@@ -1585,6 +1601,7 @@ public class AdminPanel extends javax.swing.JFrame {
                 boolean affectedRows = NoticeController.getInstance().updateNotice(noticeModel);
                 if(affectedRows==true){
                     noticeTableLoad();
+                    noticeFieldClear();
                     JOptionPane.showMessageDialog(null, "notise updated sucessfully !");
                     
                 }else{
@@ -1605,6 +1622,7 @@ public class AdminPanel extends javax.swing.JFrame {
                 boolean affectedRows = ExamNoticeController.getInstance().updateNotice(noticeModel);
                 if(affectedRows==true){
                     noticeTableLoad();
+                    noticeFieldClear();
                     JOptionPane.showMessageDialog(null, "notise updated sucessfully !");
                     
                 }else{
@@ -1621,15 +1639,27 @@ public class AdminPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_updateBtn2ActionPerformed
 
     private void deleteBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtn2ActionPerformed
-        // TODO add your handling code here:
+        try {
+           boolean affectedRows =  NoticeController.getInstance().noticeDelete(idLabel.getText());
+           if(affectedRows==true){
+               noticeTableLoad();
+           JOptionPane.showMessageDialog(null, "Deleted sucessfully !");
+           }else{
+               JOptionPane.showMessageDialog(null, "Delete error!");
+           }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_deleteBtn2ActionPerformed
 
     private void courseClear1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courseClear1ActionPerformed
-        // TODO add your handling code here:
+        noticeFieldClear();
     }//GEN-LAST:event_courseClear1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void courseSearchBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courseSearchBox1ActionPerformed

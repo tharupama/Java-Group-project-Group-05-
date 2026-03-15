@@ -76,5 +76,14 @@ public class NoticeController {
         int affectedRows = pst.executeUpdate();
         return affectedRows>0;
     }
+
+    public boolean noticeDelete(String text) throws ClassNotFoundException, SQLException {
+        Connection conn = DbConnection.getInstance().getConn();
+        String sql = "DELETE FROM notice WHERE notice_id = ?";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1, text);
+        int affectedRows = pst.executeUpdate();
+        return affectedRows>0;
+    }
     
 }
