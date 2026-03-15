@@ -21,3 +21,11 @@ ALTER TABLE user ADD COLUMN Contact INT;
 ALTER TABLE user ADD COLUMN Password VARCHAR(255);
 ALTER TABLE user MODIFY COLUMN Contact INT AFTER Uname;
 ALTER TABLE user MODIFY COLUMN Password VARCHAR(255) AFTER Email;
+
+mysql> CREATE TABLE notice(type VARCHAR(10), title VARCHAR(255), download_link VARCHAR(255), content VARCHAR(255), course_id VARCHAR(15), date DATE, time_from TIME, time_to TIME);
+
+ALTER TABLE notice ADD notice_id INT AUTO_INCREMENT PRIMARY KEY;
+
+ ALTER TABLE notice MODIFY COLUMN notice_id INT FIRST;
+ ALTER TABLE notice MODIFY notice_id INT AUTO_INCREMENT;
+ ALTER TABLE notice RENAME COLUMN date TO exam_date;
