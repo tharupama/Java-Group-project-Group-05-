@@ -13,9 +13,18 @@ import javax.swing.table.DefaultTableModel;
  * @author USER
  */
 public abstract class CourseControllerAbstract {
+    private static CourseController CCObj;
+    
     public abstract void courseTableLoad(DefaultTableModel dtm) throws ClassNotFoundException, SQLException;
     public abstract boolean courseSave(CourseModel courseModel) throws ClassNotFoundException, SQLException;
     public abstract boolean delete(String id) throws ClassNotFoundException, SQLException;
     public abstract void search(String text, DefaultTableModel dtm) throws ClassNotFoundException, SQLException;
     public abstract boolean updateCourse(CourseModel courseModel) throws SQLException, ClassNotFoundException;
+    
+    public static CourseController getInstance(){
+        if(CCObj==null){
+            CCObj = new CourseController();
+        }
+        return CCObj;
+    }
 }

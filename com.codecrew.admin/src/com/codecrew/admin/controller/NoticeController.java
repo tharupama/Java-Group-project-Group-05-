@@ -17,7 +17,7 @@ import javax.swing.JTextField;
  *
  * @author USER
  */
-public class NoticeController {
+public class NoticeController implements NoticeControllerInterface{
     private static NoticeController noticeObj;
 
     public boolean saveNotice(NoticeModel noticeModel) throws ClassNotFoundException, SQLException {

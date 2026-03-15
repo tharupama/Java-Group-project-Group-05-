@@ -1643,6 +1643,7 @@ public class AdminPanel extends javax.swing.JFrame {
            boolean affectedRows =  NoticeController.getInstance().noticeDelete(idLabel.getText());
            if(affectedRows==true){
                noticeTableLoad();
+               noticeFieldClear();
            JOptionPane.showMessageDialog(null, "Deleted sucessfully !");
            }else{
                JOptionPane.showMessageDialog(null, "Delete error!");
