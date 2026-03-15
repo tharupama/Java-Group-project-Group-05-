@@ -33,7 +33,6 @@ public class NoticeController {
         return affectedRows>0;
     }
 
-    
     public static NoticeController getInstance(){
         if(noticeObj==null){
             noticeObj=new NoticeController();
@@ -62,6 +61,20 @@ public class NoticeController {
             generalDtm.addRow(new Object[] {noticeId,Created,Updated,Type,Title,Content,downloadLink});
             
         }
+    }
+
+    public boolean updateNotice(NoticeModel noticeModel) throws ClassNotFoundException, SQLException {
+        Connection conn = DbConnection.getInstance().getConn();
+        String sql = "Update notice SET type=?,title=?,download_link=?,content=? WHERE notice_id = ?";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1, noticeModel.getType());
+        pst.setString(2, noticeModel.getTitle());
+        pst.setString(3, noticeModel.getDownloadLink());
+        pst.setString(4, noticeModel.getContent());
+        pst.setInt(5, noticeModel.getId());
+        
+        int affectedRows = pst.executeUpdate();
+        return affectedRows>0;
     }
     
 }

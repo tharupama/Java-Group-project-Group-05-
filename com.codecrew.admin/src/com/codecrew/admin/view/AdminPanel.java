@@ -19,6 +19,8 @@ import javax.swing.JOptionPane;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import javax.swing.table.DefaultTableModel;
 
@@ -120,6 +122,35 @@ public class AdminPanel extends javax.swing.JFrame {
     practicalHoursBox.setText(courseTable.getValueAt(selectedRow, 9).toString());
  
     }
+    
+    public void noticeTableToField(){
+    int selectedRow = generalTable.getSelectedRow();
+    idLabel.setText(generalTable.getValueAt(selectedRow, 0).toString());
+    typeCombo.setSelectedItem(generalTable.getValueAt(selectedRow, 3).toString());
+    noticeTitle.setText(generalTable.getValueAt(selectedRow, 4).toString());
+    downloadLinkField.setText(generalTable.getValueAt(selectedRow, 6).toString());
+    contentArea.setText(generalTable.getValueAt(selectedRow, 5).toString());
+    }
+    
+    public void examNoticeTableToField() throws ParseException{
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    int selectedRow = examTable.getSelectedRow();
+    idLabel.setText(examTable.getValueAt(selectedRow, 0).toString());
+    typeCombo.setSelectedItem(examTable.getValueAt(selectedRow, 3).toString());
+    noticeTitle.setText(examTable.getValueAt(selectedRow, 4).toString());
+    downloadLinkField.setText(examTable.getValueAt(selectedRow, 6).toString());
+    contentArea.setText(examTable.getValueAt(selectedRow, 5).toString());
+    
+    courseIdField.setText(examTable.getValueAt(selectedRow, 7).toString());
+    DateField.setDate(sdf.parse(examTable.getValueAt(selectedRow, 8).toString()));
+
+    hourSpinner.setValue(Integer.parseInt(examTable.getValueAt(selectedRow, 9).toString().split(":")[0]));
+    minuteSpinner.setValue(Integer.parseInt(examTable.getValueAt(selectedRow, 9).toString().split(":")[1]));
+    
+    hourToSpinner.setValue(Integer.parseInt(examTable.getValueAt(selectedRow, 10).toString().split(":")[0]));
+    minuteToSpinner.setValue(Integer.parseInt(examTable.getValueAt(selectedRow, 10).toString().split(":")[1]));
+    }
+    
     
     public void courseTableLoad() throws ClassNotFoundException, SQLException{
         DefaultTableModel dtm = (DefaultTableModel)courseTable.getModel();
@@ -237,7 +268,7 @@ public class AdminPanel extends javax.swing.JFrame {
         contentArea = new java.awt.TextArea();
         jLabel31 = new javax.swing.JLabel();
         downloadLinkField = new javax.swing.JTextField();
-        jLabel33 = new javax.swing.JLabel();
+        idLabel = new javax.swing.JLabel();
         typeCombo = new javax.swing.JComboBox<>();
         timeLabel = new javax.swing.JLabel();
         courseIdField = new javax.swing.JTextField();
@@ -260,6 +291,7 @@ public class AdminPanel extends javax.swing.JFrame {
         timeToLabel = new javax.swing.JLabel();
         hourToSpinner = new javax.swing.JSpinner();
         minuteToSpinner = new javax.swing.JSpinner();
+        jLabel35 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
@@ -850,13 +882,18 @@ public class AdminPanel extends javax.swing.JFrame {
         downloadLinkField.setForeground(new java.awt.Color(0, 0, 0));
         jPanel4.add(downloadLinkField, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 80, 180, 40));
 
-        jLabel33.setBackground(new java.awt.Color(255, 204, 0));
-        jLabel33.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel33.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel33.setText("Type");
-        jLabel33.setOpaque(true);
-        jPanel4.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 90, 40));
+        idLabel.setBackground(new java.awt.Color(255, 204, 0));
+        idLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        idLabel.setForeground(new java.awt.Color(0, 0, 0));
+        idLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        idLabel.setText("Id");
+        idLabel.setOpaque(true);
+        idLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                idLabelMouseReleased(evt);
+            }
+        });
+        jPanel4.add(idLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 90, 40));
 
         typeCombo.setBackground(new java.awt.Color(255, 51, 51));
         typeCombo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -975,6 +1012,11 @@ public class AdminPanel extends javax.swing.JFrame {
                 "noticeId", "Created", "Updated", "Type", "Title", "Content", "downloadLink", "courseId", "Date", "timeFrom", "timeTo"
             }
         ));
+        examTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                examTableMouseReleased(evt);
+            }
+        });
         jScrollPane4.setViewportView(examTable);
 
         jPanel4.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 1160, 340));
@@ -990,6 +1032,11 @@ public class AdminPanel extends javax.swing.JFrame {
                 "noticeId", "Created", "Updated", "Type", "Title", "Content", "downloadLink"
             }
         ));
+        generalTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                generalTableMouseReleased(evt);
+            }
+        });
         jScrollPane3.setViewportView(generalTable);
 
         jPanel4.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 1160, 330));
@@ -1026,6 +1073,14 @@ public class AdminPanel extends javax.swing.JFrame {
         jPanel4.add(timeToLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 180, 190, 40));
         jPanel4.add(hourToSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 180, 90, 40));
         jPanel4.add(minuteToSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(604, 180, 90, 40));
+
+        jLabel35.setBackground(new java.awt.Color(255, 204, 0));
+        jLabel35.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel35.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel35.setText("Type");
+        jLabel35.setOpaque(true);
+        jPanel4.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 90, 40));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/codecrew/admin/view/university-of-ruhuna.jpg"))); // NOI18N
         jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -1301,9 +1356,7 @@ public class AdminPanel extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
+ 
         System.out.println(courseModel.getCode());
         System.out.println(courseModel.getName());
         System.out.println(courseModel.getType());
@@ -1523,7 +1576,48 @@ public class AdminPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_saveBtn2ActionPerformed
 
     private void updateBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtn2ActionPerformed
-        // TODO add your handling code here:
+       String type = typeCombo.getSelectedItem().toString();
+       if(type.equals("General")){
+            //NoticeController noticeController = new NoticeController();
+            NoticeModel noticeModel = new NoticeModel(type, noticeTitle.getText(), downloadLinkField.getText(), contentArea.getText(), Integer.parseInt(idLabel.getText()));
+            
+            try {
+                boolean affectedRows = NoticeController.getInstance().updateNotice(noticeModel);
+                if(affectedRows==true){
+                    noticeTableLoad();
+                    JOptionPane.showMessageDialog(null, "notise updated sucessfully !");
+                    
+                }else{
+                    JOptionPane.showMessageDialog(null, "notise update error !"); 
+                }
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+           //NoticeController noticeController = new ExamNoticeController();
+            LocalTime timeFrom = LocalTime.of((int)hourSpinner.getValue(),(int)minuteSpinner.getValue());
+            LocalTime timeTo = LocalTime.of((int)hourToSpinner.getValue(),(int)minuteToSpinner.getValue()) ;
+            
+            NoticeModel noticeModel = new NoticeModel(type, noticeTitle.getText(), downloadLinkField.getText(), contentArea.getText(), courseIdField.getText(), DateField.getDate(), timeFrom, timeTo,Integer.parseInt(idLabel.getText()));
+            try {
+                boolean affectedRows = ExamNoticeController.getInstance().updateNotice(noticeModel);
+                if(affectedRows==true){
+                    noticeTableLoad();
+                    JOptionPane.showMessageDialog(null, "notise updated sucessfully !");
+                    
+                }else{
+                    JOptionPane.showMessageDialog(null, "notise update error !");
+                }
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+       
+       }
     }//GEN-LAST:event_updateBtn2ActionPerformed
 
     private void deleteBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtn2ActionPerformed
@@ -1545,6 +1639,24 @@ public class AdminPanel extends javax.swing.JFrame {
     private void courseSearchBox1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_courseSearchBox1KeyReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_courseSearchBox1KeyReleased
+
+    private void examTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_examTableMouseReleased
+        
+        try {
+            examNoticeTableToField();
+        } catch (ParseException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_examTableMouseReleased
+
+    private void generalTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_generalTableMouseReleased
+        noticeTableToField();
+    }//GEN-LAST:event_generalTableMouseReleased
+
+    private void idLabelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_idLabelMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idLabelMouseReleased
 
     /**
      * @param args the command line arguments
@@ -1617,6 +1729,7 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JSpinner hourSpinner;
     private javax.swing.JSpinner hourToSpinner;
     private javax.swing.JTextField idBox;
+    private javax.swing.JLabel idLabel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -1646,8 +1759,8 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1691,6 +1804,10 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JButton updateBtn1;
     private javax.swing.JButton updateBtn2;
     // End of variables declaration//GEN-END:variables
+
+    private void eamNoticeTableToField() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
    
 }

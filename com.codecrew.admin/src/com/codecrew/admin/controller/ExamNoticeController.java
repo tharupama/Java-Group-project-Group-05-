@@ -74,5 +74,25 @@ public class ExamNoticeController extends NoticeController{
         
         }
     }   
+
+    @Override
+    public boolean updateNotice(NoticeModel noticeModel) throws SQLException, ClassNotFoundException {
+         Connection conn = DbConnection.getInstance().getConn();
+        String sql = "UPDATE notice SET type=?,title=?,download_link=?,content=?,course_id=?,exam_date=?,time_from=?,time_to=? WHERE notice_id = ?";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        java.sql.Date sqlDate = new java.sql.Date(noticeModel.getDate().getTime());
+        pst.setString(1, noticeModel.getType());
+        pst.setString(2, noticeModel.getTitle());
+        pst.setString(3, noticeModel.getDownloadLink());
+        pst.setString(4, noticeModel.getContent());
+        pst.setString(5, noticeModel.getCourseId());
+        pst.setDate(6, sqlDate);
+        pst.setObject(7, noticeModel.getTimeFrom());
+        pst.setObject(8, noticeModel.getTimeTo()); 
+        pst.setInt(9, noticeModel.getId()); 
+        
+        int affectedRows = pst.executeUpdate();
+        return affectedRows>0;
+    }
     
 }

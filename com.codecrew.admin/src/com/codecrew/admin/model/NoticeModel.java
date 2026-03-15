@@ -21,12 +21,41 @@ public class NoticeModel {
     private java.util.Date date;
     private LocalTime timeFrom;
     private LocalTime timeTo;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public NoticeModel(String type, String title, String downloadLink, String content, String courseId, Date date, LocalTime timeFrom, LocalTime timeTo, int id) {
+        this.type = type;
+        this.title = title;
+        this.downloadLink = downloadLink;
+        this.content = content;
+        this.courseId = courseId;
+        this.date = date;
+        this.timeFrom = timeFrom;
+        this.timeTo = timeTo;
+        this.id = id;
+    }
 
     public NoticeModel(String type, String title, String downloadLink, String content) {
         this.type = type;
         this.title = title;
         this.downloadLink = downloadLink;
         this.content = content;
+    }
+    
+    public NoticeModel(String type, String title, String downloadLink, String content, int id) {
+        this.type = type;
+        this.title = title;
+        this.downloadLink = downloadLink;
+        this.content = content;
+        this.id = id;
     }
 
     public NoticeModel(String type, String title, String downloadLink, String content, String courseId, java.util.Date date, LocalTime timeFrom, LocalTime timeTo) {
