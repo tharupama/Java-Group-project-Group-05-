@@ -300,7 +300,7 @@ public class AdminPanel extends javax.swing.JFrame {
         examTable = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         generalTable = new javax.swing.JTable();
-        courseSearchBox1 = new javax.swing.JTextField();
+        noticeSearchBox = new javax.swing.JTextField();
         jLabel34 = new javax.swing.JLabel();
         timeToLabel = new javax.swing.JLabel();
         hourToSpinner = new javax.swing.JSpinner();
@@ -1055,20 +1055,20 @@ public class AdminPanel extends javax.swing.JFrame {
 
         jPanel4.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 1160, 330));
 
-        courseSearchBox1.setBackground(new java.awt.Color(255, 255, 255));
-        courseSearchBox1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        courseSearchBox1.setForeground(new java.awt.Color(0, 0, 0));
-        courseSearchBox1.addActionListener(new java.awt.event.ActionListener() {
+        noticeSearchBox.setBackground(new java.awt.Color(255, 255, 255));
+        noticeSearchBox.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        noticeSearchBox.setForeground(new java.awt.Color(0, 0, 0));
+        noticeSearchBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                courseSearchBox1ActionPerformed(evt);
+                noticeSearchBoxActionPerformed(evt);
             }
         });
-        courseSearchBox1.addKeyListener(new java.awt.event.KeyAdapter() {
+        noticeSearchBox.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                courseSearchBox1KeyReleased(evt);
+                noticeSearchBoxKeyReleased(evt);
             }
         });
-        jPanel4.add(courseSearchBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 70, 370, 40));
+        jPanel4.add(noticeSearchBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 70, 370, 40));
 
         jLabel34.setBackground(new java.awt.Color(0, 255, 255));
         jLabel34.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -1662,13 +1662,32 @@ public class AdminPanel extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void courseSearchBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courseSearchBox1ActionPerformed
+    private void noticeSearchBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noticeSearchBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_courseSearchBox1ActionPerformed
+    }//GEN-LAST:event_noticeSearchBoxActionPerformed
 
-    private void courseSearchBox1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_courseSearchBox1KeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_courseSearchBox1KeyReleased
+    private void noticeSearchBoxKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_noticeSearchBoxKeyReleased
+        String type = typeCombo.getSelectedItem().toString();
+        if(type.equals("General")){
+            DefaultTableModel dtm = (DefaultTableModel)generalTable.getModel();
+            try {
+                NoticeController.getInstance().search(dtm,noticeSearchBox.getText());
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            DefaultTableModel dtm = (DefaultTableModel)examTable.getModel();
+            try {
+                ExamNoticeController.getInstance().search(dtm,noticeSearchBox.getText());
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_noticeSearchBoxKeyReleased
 
     private void examTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_examTableMouseReleased
         
@@ -1742,7 +1761,6 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JTextField courseIdField;
     private javax.swing.JTextField courseNameBox;
     private javax.swing.JTextField courseSearchBox;
-    private javax.swing.JTextField courseSearchBox1;
     private javax.swing.JTable courseTable;
     private javax.swing.JTextField courseYearBox;
     private javax.swing.JLabel courseidLabel;
@@ -1811,6 +1829,7 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JSpinner minuteSpinner;
     private javax.swing.JSpinner minuteToSpinner;
     private javax.swing.JTextField nameBox;
+    private javax.swing.JTextField noticeSearchBox;
     private javax.swing.JTextField noticeTitle;
     private javax.swing.JTextField passwordBox;
     private javax.swing.JTextField practicalHoursBox;

@@ -95,4 +95,37 @@ public class ExamNoticeController extends NoticeController{
         return affectedRows>0;
     }
     
+    @Override
+        public void search(DefaultTableModel dtm, String type) throws ClassNotFoundException, SQLException {
+            
+        dtm.setRowCount(0);
+        Connection conn = DbConnection.getInstance().getConn();
+        String sql = "SELECT * FROM notice WHERE type=? AND (title LIKE ? OR download_link LIKE ? OR content LIKE ? OR course_id LIKE ? OR exam_date LIKE ?)"; 
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1, "Exam");
+        pst.setString(2, "%"+type+"%");
+        pst.setString(3, "%"+type+"%");
+        pst.setString(4, "%"+type+"%");
+        pst.setString(5, "%"+type+"%");
+        pst.setString(6, "%"+type+"%");
+
+        ResultSet result =  pst.executeQuery();
+
+        while(result.next()){
+            String noticeId = result.getString("notice_id");
+            String Created = result.getTimestamp("created_at").toString();
+            String Updated = result.getTimestamp("updated_at").toString();
+            String Type = result.getString("type");
+            String Title = result.getString("title");
+            String downloadLink = result.getString("download_link");
+            String Content = result.getString("content");
+            String courseId = result.getString("course_id");
+            String Date = result.getString("exam_date");
+            String timeFrom = result.getString("time_from");
+            String timeTo = result.getString("time_to");
+
+            dtm.addRow(new Object[] {noticeId,Created,Updated,Type,Title,Content,downloadLink,courseId,Date,timeFrom,timeTo});        
+        }
+    }
+    
 }

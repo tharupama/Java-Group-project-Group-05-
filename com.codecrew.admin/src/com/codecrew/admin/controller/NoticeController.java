@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import javax.swing.table.DefaultTableModel;
 import java.sql.ResultSet;
+import javax.swing.JTextField;
 
 /**
  *
@@ -84,6 +85,31 @@ public class NoticeController {
         pst.setString(1, text);
         int affectedRows = pst.executeUpdate();
         return affectedRows>0;
+    }
+
+    public void search(DefaultTableModel dtm, String type) throws ClassNotFoundException, SQLException {
+        dtm.setRowCount(0);
+        Connection conn = DbConnection.getInstance().getConn();
+        String sql = "SELECT * FROM notice WHERE type=? AND (title LIKE ? OR download_link LIKE ? OR content LIKE ?)"; 
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1, "General");
+        pst.setString(2, "%"+type+"%");
+        pst.setString(3, "%"+type+"%");
+        pst.setString(4, "%"+type+"%");
+
+        ResultSet result =  pst.executeQuery();
+
+        while(result.next()){
+            String noticeId = result.getString("notice_id");
+            String Created = result.getTimestamp("created_at").toString();
+            String Updated = result.getTimestamp("updated_at").toString();
+            String Type = result.getString("type");
+            String Title = result.getString("title");
+            String downloadLink = result.getString("download_link");
+            String Content = result.getString("content");
+
+            dtm.addRow(new Object[] {noticeId,Created,Updated,Type,Title,Content,downloadLink});        
+        }
     }
     
 }
