@@ -309,6 +309,30 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        TTCourseCodeField = new javax.swing.JTextField();
+        timeTableIdLabel = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        TTTypeCombo = new javax.swing.JComboBox<>();
+        TTDateField = new com.toedter.calendar.JDateChooser();
+        dateLabel1 = new javax.swing.JLabel();
+        TTDayCombo = new javax.swing.JComboBox<>();
+        jLabel36 = new javax.swing.JLabel();
+        timeLabel1 = new javax.swing.JLabel();
+        TTFromHoursSpinner = new javax.swing.JSpinner();
+        TTFromMinutesSpinner = new javax.swing.JSpinner();
+        timeToLabel1 = new javax.swing.JLabel();
+        TTToHoursSpinner = new javax.swing.JSpinner();
+        TTToMinutesSpinner = new javax.swing.JSpinner();
+        saveBtn3 = new javax.swing.JButton();
+        updateBtn3 = new javax.swing.JButton();
+        deleteBtn3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        noticeSearchBox1 = new javax.swing.JTextField();
+        jLabel37 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -676,7 +700,7 @@ public class AdminPanel extends javax.swing.JFrame {
                 sem2ActionPerformed(evt);
             }
         });
-        jPanel3.add(sem2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 180, 100, 40));
+        jPanel3.add(sem2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 180, 100, 40));
 
         semesterButtonGroup.add(sem1);
         sem1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -1107,7 +1131,196 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(204, 0, 0));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("Timetable Management");
-        jPanel5.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, 420, 50));
+        jPanel5.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 10, 420, 50));
+
+        jLabel32.setBackground(new java.awt.Color(255, 204, 0));
+        jLabel32.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel32.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel32.setText("Course code");
+        jLabel32.setOpaque(true);
+        jPanel5.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 160, 40));
+
+        TTCourseCodeField.setBackground(new java.awt.Color(255, 51, 51));
+        TTCourseCodeField.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        TTCourseCodeField.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel5.add(TTCourseCodeField, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 110, 220, 40));
+
+        timeTableIdLabel.setBackground(new java.awt.Color(255, 204, 0));
+        timeTableIdLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        timeTableIdLabel.setForeground(new java.awt.Color(0, 0, 0));
+        timeTableIdLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        timeTableIdLabel.setText("Id");
+        timeTableIdLabel.setOpaque(true);
+        timeTableIdLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                timeTableIdLabelMouseReleased(evt);
+            }
+        });
+        jPanel5.add(timeTableIdLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 160, 40));
+
+        jLabel33.setBackground(new java.awt.Color(255, 204, 0));
+        jLabel33.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel33.setText("Type");
+        jLabel33.setOpaque(true);
+        jPanel5.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 160, 40));
+
+        TTTypeCombo.setBackground(new java.awt.Color(255, 51, 51));
+        TTTypeCombo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        TTTypeCombo.setForeground(new java.awt.Color(0, 0, 0));
+        TTTypeCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LECTURE", "EXAM" }));
+        TTTypeCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TTTypeComboActionPerformed(evt);
+            }
+        });
+        jPanel5.add(TTTypeCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 160, 220, 40));
+
+        TTDateField.setBackground(new java.awt.Color(255, 0, 0));
+        TTDateField.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel5.add(TTDateField, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 110, 220, 40));
+
+        dateLabel1.setBackground(new java.awt.Color(255, 204, 0));
+        dateLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        dateLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        dateLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dateLabel1.setText("Date");
+        dateLabel1.setOpaque(true);
+        jPanel5.add(dateLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 110, 160, 40));
+
+        TTDayCombo.setBackground(new java.awt.Color(255, 51, 51));
+        TTDayCombo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        TTDayCombo.setForeground(new java.awt.Color(0, 0, 0));
+        TTDayCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY" }));
+        TTDayCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TTDayComboActionPerformed(evt);
+            }
+        });
+        jPanel5.add(TTDayCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 160, 220, 40));
+
+        jLabel36.setBackground(new java.awt.Color(255, 204, 0));
+        jLabel36.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel36.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel36.setText("Day");
+        jLabel36.setOpaque(true);
+        jPanel5.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 160, 160, 40));
+
+        timeLabel1.setBackground(new java.awt.Color(255, 204, 0));
+        timeLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        timeLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        timeLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        timeLabel1.setText("Time From");
+        timeLabel1.setOpaque(true);
+        jPanel5.add(timeLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 110, 160, 40));
+        jPanel5.add(TTFromHoursSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 110, 80, 40));
+        jPanel5.add(TTFromMinutesSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 110, 80, 40));
+
+        timeToLabel1.setBackground(new java.awt.Color(255, 204, 0));
+        timeToLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        timeToLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        timeToLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        timeToLabel1.setText("Time To");
+        timeToLabel1.setOpaque(true);
+        jPanel5.add(timeToLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 160, 160, 40));
+        jPanel5.add(TTToHoursSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 160, 80, 40));
+        jPanel5.add(TTToMinutesSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 160, 80, 40));
+
+        saveBtn3.setBackground(new java.awt.Color(102, 255, 0));
+        saveBtn3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        saveBtn3.setForeground(new java.awt.Color(0, 0, 0));
+        saveBtn3.setText("Save");
+        saveBtn3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveBtn3ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(saveBtn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 210, 120, 40));
+
+        updateBtn3.setBackground(new java.awt.Color(255, 204, 0));
+        updateBtn3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        updateBtn3.setForeground(new java.awt.Color(0, 0, 0));
+        updateBtn3.setText("Update");
+        updateBtn3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateBtn3ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(updateBtn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 210, 120, 40));
+
+        deleteBtn3.setBackground(new java.awt.Color(255, 0, 0));
+        deleteBtn3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        deleteBtn3.setForeground(new java.awt.Color(0, 0, 0));
+        deleteBtn3.setText("Delete");
+        deleteBtn3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtn3ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(deleteBtn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 210, 120, 40));
+
+        jButton4.setBackground(new java.awt.Color(153, 0, 0));
+        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jButton4.setForeground(new java.awt.Color(0, 0, 0));
+        jButton4.setText("Exit");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 210, 120, 40));
+
+        jButton6.setBackground(new java.awt.Color(255, 51, 0));
+        jButton6.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jButton6.setForeground(new java.awt.Color(0, 0, 0));
+        jButton6.setText("Clear");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 210, 120, 40));
+
+        noticeSearchBox1.setBackground(new java.awt.Color(255, 255, 255));
+        noticeSearchBox1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        noticeSearchBox1.setForeground(new java.awt.Color(0, 0, 0));
+        noticeSearchBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                noticeSearchBox1ActionPerformed(evt);
+            }
+        });
+        noticeSearchBox1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                noticeSearchBox1KeyReleased(evt);
+            }
+        });
+        jPanel5.add(noticeSearchBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 60, 370, 40));
+
+        jLabel37.setBackground(new java.awt.Color(0, 255, 255));
+        jLabel37.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel37.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel37.setText("Search");
+        jLabel37.setOpaque(true);
+        jPanel5.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 30, 140, 30));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "id", "course code", "type", "date", "day", "time from", "time to"
+            }
+        ));
+        jScrollPane5.setViewportView(jTable1);
+
+        jPanel5.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 257, 1160, 350));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/codecrew/admin/view/university-of-ruhuna.jpg"))); // NOI18N
         jPanel5.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 1200, 650));
@@ -1708,6 +1921,46 @@ public class AdminPanel extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_idLabelMouseReleased
 
+    private void timeTableIdLabelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_timeTableIdLabelMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_timeTableIdLabelMouseReleased
+
+    private void TTTypeComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TTTypeComboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TTTypeComboActionPerformed
+
+    private void TTDayComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TTDayComboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TTDayComboActionPerformed
+
+    private void saveBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtn3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveBtn3ActionPerformed
+
+    private void updateBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtn3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_updateBtn3ActionPerformed
+
+    private void deleteBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtn3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteBtn3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void noticeSearchBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noticeSearchBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_noticeSearchBox1ActionPerformed
+
+    private void noticeSearchBox1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_noticeSearchBox1KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_noticeSearchBox1KeyReleased
+
     /**
      * @param args the command line arguments
      */
@@ -1751,6 +2004,14 @@ public class AdminPanel extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser DateField;
+    private javax.swing.JTextField TTCourseCodeField;
+    private com.toedter.calendar.JDateChooser TTDateField;
+    private javax.swing.JComboBox<String> TTDayCombo;
+    private javax.swing.JSpinner TTFromHoursSpinner;
+    private javax.swing.JSpinner TTFromMinutesSpinner;
+    private javax.swing.JSpinner TTToHoursSpinner;
+    private javax.swing.JSpinner TTToMinutesSpinner;
+    private javax.swing.JComboBox<String> TTTypeCombo;
     private javax.swing.JTable accountTable;
     private javax.swing.JTextField contactBox;
     private java.awt.TextArea contentArea;
@@ -1766,9 +2027,11 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JTextField courseYearBox;
     private javax.swing.JLabel courseidLabel;
     private javax.swing.JLabel dateLabel;
+    private javax.swing.JLabel dateLabel1;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JButton deleteBtn1;
     private javax.swing.JButton deleteBtn2;
+    private javax.swing.JButton deleteBtn3;
     private javax.swing.JComboBox<String> departmentCombo;
     private javax.swing.JComboBox<String> deptBox;
     private javax.swing.JTextField downloadLinkField;
@@ -1782,7 +2045,9 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1808,8 +2073,12 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1825,12 +2094,15 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField lecNameBox;
     private javax.swing.JSpinner minuteSpinner;
     private javax.swing.JSpinner minuteToSpinner;
     private javax.swing.JTextField nameBox;
     private javax.swing.JTextField noticeSearchBox;
+    private javax.swing.JTextField noticeSearchBox1;
     private javax.swing.JTextField noticeTitle;
     private javax.swing.JTextField passwordBox;
     private javax.swing.JTextField practicalHoursBox;
@@ -1840,6 +2112,7 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JButton saveBtn;
     private javax.swing.JButton saveBtn1;
     private javax.swing.JButton saveBtn2;
+    private javax.swing.JButton saveBtn3;
     private javax.swing.JTextField searchBox;
     private javax.swing.JRadioButton sem1;
     private javax.swing.JRadioButton sem2;
@@ -1847,12 +2120,16 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JTextField theoryHoursBox;
     private javax.swing.JLabel theoryHoursLabel;
     private javax.swing.JLabel timeLabel;
+    private javax.swing.JLabel timeLabel1;
+    private javax.swing.JLabel timeTableIdLabel;
     private javax.swing.JLabel timeToLabel;
+    private javax.swing.JLabel timeToLabel1;
     private javax.swing.JComboBox<String> typeBox;
     private javax.swing.JComboBox<String> typeCombo;
     private javax.swing.JButton updateBtn;
     private javax.swing.JButton updateBtn1;
     private javax.swing.JButton updateBtn2;
+    private javax.swing.JButton updateBtn3;
     // End of variables declaration//GEN-END:variables
 
     private void eamNoticeTableToField() {
