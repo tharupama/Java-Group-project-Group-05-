@@ -42,3 +42,6 @@ CREATE TABLE time_table (
     time_from TIME,
     time_to TIME
 );
+
+ALTER TABLE time_table 
+ADD COLUMN date DATE AFTER Type;
