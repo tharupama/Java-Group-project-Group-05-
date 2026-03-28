@@ -33,3 +33,12 @@ ALTER TABLE notice ADD notice_id INT AUTO_INCREMENT PRIMARY KEY;
  ALTER TABLE notice
     ->     ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP AFTER notice_id,
     ->     ADD COLUMN updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP AFTER created_at;
+
+CREATE TABLE time_table (
+    Course_code VARCHAR(15),
+    FOREIGN KEY (Course_code) REFERENCES course_unit(Course_code),
+    Type ENUM('LECTURE', 'EXAM'),
+    Day ENUM('MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY'),
+    time_from TIME,
+    time_to TIME
+);
