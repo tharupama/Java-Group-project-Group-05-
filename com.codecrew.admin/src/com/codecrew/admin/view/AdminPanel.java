@@ -8,10 +8,13 @@ import com.codecrew.admin.controller.AccountController;
 import com.codecrew.admin.controller.CourseController;
 import com.codecrew.admin.controller.ExamNoticeController;
 import com.codecrew.admin.controller.NoticeController;
+import com.codecrew.admin.controller.TimeTableController;
 import com.codecrew.admin.db.DbConnection;
+import com.codecrew.admin.enums.Day;
 import com.codecrew.admin.model.AccountModel;
 import com.codecrew.admin.model.CourseModel;
 import com.codecrew.admin.model.NoticeModel;
+import com.codecrew.admin.model.TimeTableModel;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -1934,7 +1937,21 @@ public class AdminPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_TTDayComboActionPerformed
 
     private void saveBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtn3ActionPerformed
-        // TODO add your handling code here:
+        TimeTableModel timeTableModel = new TimeTableModel(TTCourseCodeField.getText(),TTTypeCombo.getSelectedItem().toString(),TTDateField.getDate(),Day.valueOf(TTDayCombo.getSelectedItem().toString()),LocalTime.of((int)TTFromHoursSpinner.getValue(),(int)TTFromMinutesSpinner.getValue()),LocalTime.of((int)TTToHoursSpinner.getValue(), (int)TTToMinutesSpinner.getValue()));
+        boolean rowsAffected;
+        try {
+            rowsAffected = TimeTableController.getInstance().save(timeTableModel);
+            if(rowsAffected==true){
+            JOptionPane.showMessageDialog(null, "Saved Sucessfully !");
+        }else{
+            JOptionPane.showMessageDialog(null, "save error !");
+        }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_saveBtn3ActionPerformed
 
     private void updateBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtn3ActionPerformed
