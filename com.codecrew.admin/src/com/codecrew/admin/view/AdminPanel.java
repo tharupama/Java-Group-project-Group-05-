@@ -43,6 +43,7 @@ public class AdminPanel extends javax.swing.JFrame {
         tableLoad();
         courseTableLoad();
         noticeTableLoad();
+        timeTableLoad();
         theoryHoursLabel.setVisible(false);
         practicalHoursLabel.setVisible(false);
         theoryHoursBox.setVisible(false);
@@ -65,7 +66,7 @@ public class AdminPanel extends javax.swing.JFrame {
             jScrollPane3.setVisible(true);
             examTable.setVisible(false);
             jScrollPane4.setVisible(false);
-        
+ 
     }
     
     public void clearBox(){
@@ -180,6 +181,11 @@ public class AdminPanel extends javax.swing.JFrame {
         
         NoticeController.getInstance().noticeTableLoad(generalDtm);
         ExamNoticeController.getInstance().noticeTableLoad(examDtm);
+    }
+    
+    public void timeTableLoad() throws ClassNotFoundException, SQLException{
+        DefaultTableModel timeDtm = (DefaultTableModel)timeTable.getModel();
+        TimeTableController.getInstance().timeTableLoad(timeDtm);
     }
     
     public void tableLoad() throws ClassNotFoundException, SQLException{
@@ -335,7 +341,7 @@ public class AdminPanel extends javax.swing.JFrame {
         noticeSearchBox1 = new javax.swing.JTextField();
         jLabel37 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        timeTable = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1310,7 +1316,7 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel37.setOpaque(true);
         jPanel5.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 30, 140, 30));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        timeTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -1318,10 +1324,10 @@ public class AdminPanel extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "id", "course code", "type", "date", "day", "time from", "time to"
+                "id", "courseCode", "type", "date", "day", "timeFrom", "timeTo"
             }
         ));
-        jScrollPane5.setViewportView(jTable1);
+        jScrollPane5.setViewportView(timeTable);
 
         jPanel5.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 257, 1160, 350));
 
@@ -1942,6 +1948,7 @@ public class AdminPanel extends javax.swing.JFrame {
         try {
             rowsAffected = TimeTableController.getInstance().save(timeTableModel);
             if(rowsAffected==true){
+                timeTableLoad();
             JOptionPane.showMessageDialog(null, "Saved Sucessfully !");
         }else{
             JOptionPane.showMessageDialog(null, "save error !");
@@ -2113,7 +2120,6 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField lecNameBox;
     private javax.swing.JSpinner minuteSpinner;
     private javax.swing.JSpinner minuteToSpinner;
@@ -2138,6 +2144,7 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JLabel theoryHoursLabel;
     private javax.swing.JLabel timeLabel;
     private javax.swing.JLabel timeLabel1;
+    private javax.swing.JTable timeTable;
     private javax.swing.JLabel timeTableIdLabel;
     private javax.swing.JLabel timeToLabel;
     private javax.swing.JLabel timeToLabel1;
