@@ -68,4 +68,35 @@ public class TimeTableController {
             timeDtm.addRow(new Object[]{id,courseCode,type,date,day,timeFrom,timeTo});
         }
     }
+
+    public void search(DefaultTableModel dtm, String text) throws ClassNotFoundException, SQLException {
+               dtm.setRowCount(0);
+        String sql = "SELECT * FROM time_table WHERE id LIKE ? OR Course_code LIKE ? OR Type LIKE ? OR date LIKE ? OR Day LIKE ? OR time_from LIKE ? OR time_to LIKE ?";
+        Connection conn = DbConnection.getInstance().getConn();
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1, "%"+text+"%");
+        pst.setString(2, "%"+text+"%");
+        pst.setString(3, "%"+text+"%");
+        pst.setString(4, "%"+text+"%");
+        pst.setString(5, "%"+text+"%");
+        pst.setString(6, "%"+text+"%");
+        pst.setString(7, "%"+text+"%");
+        
+        ResultSet rst = pst.executeQuery();
+        
+        while(rst.next()){
+            
+            String id = rst.getString("id");
+            String courseCode = rst.getString("Course_code");
+            String type = rst.getString("Type");
+            String date = rst.getDate("date").toString();
+            String day = rst.getString("Day").toString();
+            String timeFrom = rst.getString("time_from");
+            String timeTo = rst.getString("time_to");
+            
+            dtm.addRow(new Object[]{id,courseCode,type,date,day,timeFrom,timeTo});
+        }
+    }
+
+    
 }

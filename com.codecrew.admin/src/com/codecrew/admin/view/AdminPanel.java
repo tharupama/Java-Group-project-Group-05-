@@ -353,7 +353,7 @@ public class AdminPanel extends javax.swing.JFrame {
         deleteBtn3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
-        noticeSearchBox1 = new javax.swing.JTextField();
+        timeTableSearchBox = new javax.swing.JTextField();
         jLabel37 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         timeTable = new javax.swing.JTable();
@@ -1308,20 +1308,20 @@ public class AdminPanel extends javax.swing.JFrame {
         });
         jPanel5.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 210, 120, 40));
 
-        noticeSearchBox1.setBackground(new java.awt.Color(255, 255, 255));
-        noticeSearchBox1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        noticeSearchBox1.setForeground(new java.awt.Color(0, 0, 0));
-        noticeSearchBox1.addActionListener(new java.awt.event.ActionListener() {
+        timeTableSearchBox.setBackground(new java.awt.Color(255, 255, 255));
+        timeTableSearchBox.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        timeTableSearchBox.setForeground(new java.awt.Color(0, 0, 0));
+        timeTableSearchBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                noticeSearchBox1ActionPerformed(evt);
+                timeTableSearchBoxActionPerformed(evt);
             }
         });
-        noticeSearchBox1.addKeyListener(new java.awt.event.KeyAdapter() {
+        timeTableSearchBox.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                noticeSearchBox1KeyReleased(evt);
+                timeTableSearchBoxKeyReleased(evt);
             }
         });
-        jPanel5.add(noticeSearchBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 60, 370, 40));
+        jPanel5.add(timeTableSearchBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 60, 370, 40));
 
         jLabel37.setBackground(new java.awt.Color(0, 255, 255));
         jLabel37.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -1410,10 +1410,7 @@ public class AdminPanel extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "update error !");
             }
             // TODO add your handling code here:
-        } catch (SQLException ex) {
-            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(rootPane, ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(rootPane, ex);
         }
@@ -1433,10 +1430,7 @@ public class AdminPanel extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Delete error!");
             }
             
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(rootPane, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(rootPane, ex);
         }
@@ -1451,9 +1445,7 @@ public class AdminPanel extends javax.swing.JFrame {
         try {
             
             AccountController.getInstance().search(searchBox.getText(), dtm);        // TODO add your handling code here:
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_searchBoxKeyReleased
@@ -1466,33 +1458,25 @@ public class AdminPanel extends javax.swing.JFrame {
        if(role.equals("All") && department.equals("All")){
            try {
                tableLoad();
-           } catch (ClassNotFoundException ex) {
-               Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-           } catch (SQLException ex) {
+           } catch (ClassNotFoundException | SQLException ex) {
                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
            }
        }else if(department.equals("All")){         
            try {
                tableLoadRole(role);
-           } catch (ClassNotFoundException ex) {
-               Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-           } catch (SQLException ex) {
+           } catch (ClassNotFoundException | SQLException ex) {
                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
            }
        }else if(role.equals("All")){
                 try {
                 tableLoadDept(department);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
+            } catch (ClassNotFoundException | SQLException ex) {
                 Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }else{
            try {
                tableLoad(role,department);
-           } catch (ClassNotFoundException ex) {
-               Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-           } catch (SQLException ex) {
+           } catch (ClassNotFoundException | SQLException ex) {
                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
            }
        }
@@ -1506,34 +1490,26 @@ public class AdminPanel extends javax.swing.JFrame {
               if(department.equals("All")&& role.equals("All")){
            try {
                tableLoad();
-           } catch (ClassNotFoundException ex) {
-               Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-           } catch (SQLException ex) {
+           } catch (ClassNotFoundException | SQLException ex) {
                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
            }
        }else if(role.equals("All")){
             try {
                 tableLoadDept(department);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
+            } catch (ClassNotFoundException | SQLException ex) {
                 Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
        }else if(department.equals("All")){
            try {
                tableLoadRole(role);
-           } catch (ClassNotFoundException ex) {
-               Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-           } catch (SQLException ex) {
+           } catch (ClassNotFoundException | SQLException ex) {
                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
            }
            
        }else{
             try {
                tableLoad(role,department);
-           } catch (ClassNotFoundException ex) {
-               Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-           } catch (SQLException ex) {
+           } catch (ClassNotFoundException | SQLException ex) {
                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
            }
        }
@@ -1997,13 +1973,21 @@ public class AdminPanel extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void noticeSearchBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noticeSearchBox1ActionPerformed
+    private void timeTableSearchBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timeTableSearchBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_noticeSearchBox1ActionPerformed
+    }//GEN-LAST:event_timeTableSearchBoxActionPerformed
 
-    private void noticeSearchBox1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_noticeSearchBox1KeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_noticeSearchBox1KeyReleased
+    private void timeTableSearchBoxKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_timeTableSearchBoxKeyReleased
+         String text =  timeTableSearchBox.getText();
+         DefaultTableModel dtm = (DefaultTableModel)timeTable.getModel();
+        try {
+            TimeTableController.getInstance().search(dtm,text);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_timeTableSearchBoxKeyReleased
 
     private void timeTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_timeTableMouseClicked
         try {
@@ -2153,7 +2137,6 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JSpinner minuteToSpinner;
     private javax.swing.JTextField nameBox;
     private javax.swing.JTextField noticeSearchBox;
-    private javax.swing.JTextField noticeSearchBox1;
     private javax.swing.JTextField noticeTitle;
     private javax.swing.JTextField passwordBox;
     private javax.swing.JTextField practicalHoursBox;
@@ -2174,6 +2157,7 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JLabel timeLabel1;
     private javax.swing.JTable timeTable;
     private javax.swing.JLabel timeTableIdLabel;
+    private javax.swing.JTextField timeTableSearchBox;
     private javax.swing.JLabel timeToLabel;
     private javax.swing.JLabel timeToLabel1;
     private javax.swing.JComboBox<String> typeBox;
