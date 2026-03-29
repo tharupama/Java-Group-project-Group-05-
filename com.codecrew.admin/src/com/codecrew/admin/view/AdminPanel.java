@@ -162,13 +162,28 @@ public class AdminPanel extends javax.swing.JFrame {
     courseIdField.setText(examTable.getValueAt(selectedRow, 7).toString());
     DateField.setDate(sdf.parse(examTable.getValueAt(selectedRow, 8).toString()));
 
-    hourSpinner.setValue(Integer.parseInt(examTable.getValueAt(selectedRow, 9).toString().split(":")[0]));
-    minuteSpinner.setValue(Integer.parseInt(examTable.getValueAt(selectedRow, 9).toString().split(":")[1]));
+    hourSpinner.setValue(Integer.valueOf(examTable.getValueAt(selectedRow, 9).toString().split(":")[0]));
+    minuteSpinner.setValue(Integer.valueOf(examTable.getValueAt(selectedRow, 9).toString().split(":")[1]));
     
-    hourToSpinner.setValue(Integer.parseInt(examTable.getValueAt(selectedRow, 10).toString().split(":")[0]));
-    minuteToSpinner.setValue(Integer.parseInt(examTable.getValueAt(selectedRow, 10).toString().split(":")[1]));
+    hourToSpinner.setValue(Integer.valueOf(examTable.getValueAt(selectedRow, 10).toString().split(":")[0]));
+    minuteToSpinner.setValue(Integer.valueOf(examTable.getValueAt(selectedRow, 10).toString().split(":")[1]));
     }
     
+    public void timeTableToField() throws ParseException{
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        int selectedRow = timeTable.getSelectedRow();
+        timeTableIdLabel.setText(timeTable.getValueAt(selectedRow, 0).toString());
+        TTCourseCodeField.setText(timeTable.getValueAt(selectedRow, 1).toString());
+        TTTypeCombo.setSelectedItem(timeTable.getValueAt(selectedRow,2).toString());
+        TTDateField.setDate(sdf.parse(timeTable.getValueAt(selectedRow, 3).toString()));
+        TTDayCombo.setSelectedItem(timeTable.getValueAt(selectedRow, 4).toString());
+        
+        TTFromHoursSpinner.setValue(Integer.valueOf(timeTable.getValueAt(selectedRow, 5).toString().split(":")[0]));
+        TTFromMinutesSpinner.setValue(Integer.valueOf(timeTable.getValueAt(selectedRow, 5).toString().split(":")[1]));
+        
+        TTToHoursSpinner.setValue(Integer.valueOf(timeTable.getValueAt(selectedRow, 6).toString().split(":")[0]));
+        TTToMinutesSpinner.setValue(Integer.valueOf(timeTable.getValueAt(selectedRow, 6).toString().split(":")[1]));
+    }
     
     public void courseTableLoad() throws ClassNotFoundException, SQLException{
         DefaultTableModel dtm = (DefaultTableModel)courseTable.getModel();
@@ -1327,6 +1342,11 @@ public class AdminPanel extends javax.swing.JFrame {
                 "id", "courseCode", "type", "date", "day", "timeFrom", "timeTo"
             }
         ));
+        timeTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                timeTableMouseClicked(evt);
+            }
+        });
         jScrollPane5.setViewportView(timeTable);
 
         jPanel5.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 257, 1160, 350));
@@ -1984,6 +2004,14 @@ public class AdminPanel extends javax.swing.JFrame {
     private void noticeSearchBox1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_noticeSearchBox1KeyReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_noticeSearchBox1KeyReleased
+
+    private void timeTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_timeTableMouseClicked
+        try {
+            timeTableToField();
+        } catch (ParseException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_timeTableMouseClicked
 
     /**
      * @param args the command line arguments
