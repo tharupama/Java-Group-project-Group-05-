@@ -26,6 +26,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.SpinnerNumberModel;
 
     
 /**
@@ -1020,7 +1021,11 @@ public class AdminPanel extends javax.swing.JFrame {
         dateLabel.setText("Date");
         dateLabel.setOpaque(true);
         jPanel4.add(dateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 90, 40));
+
+        minuteSpinner.setModel(new SpinnerNumberModel(0, 0, 59, 1));
         jPanel4.add(minuteSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(604, 130, 90, 40));
+
+        hourSpinner.setModel(new SpinnerNumberModel(0, 0, 24, 1));
         jPanel4.add(hourSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 130, 90, 40));
 
         saveBtn2.setBackground(new java.awt.Color(102, 255, 0));
@@ -1148,7 +1153,11 @@ public class AdminPanel extends javax.swing.JFrame {
         timeToLabel.setText("Time To");
         timeToLabel.setOpaque(true);
         jPanel4.add(timeToLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 180, 190, 40));
+
+        hourToSpinner.setModel(new SpinnerNumberModel(0, 0, 24, 1));
         jPanel4.add(hourToSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 180, 90, 40));
+
+        minuteToSpinner.setModel(new SpinnerNumberModel(0, 0, 59, 1));
         jPanel4.add(minuteToSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(604, 180, 90, 40));
 
         jLabel35.setBackground(new java.awt.Color(255, 204, 0));
@@ -1255,7 +1264,11 @@ public class AdminPanel extends javax.swing.JFrame {
         timeLabel1.setText("Time From");
         timeLabel1.setOpaque(true);
         jPanel5.add(timeLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 110, 160, 40));
+
+        TTFromHoursSpinner.setModel(new SpinnerNumberModel(0, 0, 24, 1));
         jPanel5.add(TTFromHoursSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 110, 80, 40));
+
+        TTFromMinutesSpinner.setModel(new SpinnerNumberModel(0, 0, 59, 1));
         jPanel5.add(TTFromMinutesSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 110, 80, 40));
 
         timeToLabel1.setBackground(new java.awt.Color(255, 204, 0));
@@ -1265,7 +1278,11 @@ public class AdminPanel extends javax.swing.JFrame {
         timeToLabel1.setText("Time To");
         timeToLabel1.setOpaque(true);
         jPanel5.add(timeToLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 160, 160, 40));
+
+        TTToHoursSpinner.setModel(new SpinnerNumberModel(0, 0, 24, 1));
         jPanel5.add(TTToHoursSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 160, 80, 40));
+
+        TTToMinutesSpinner.setModel(new SpinnerNumberModel(0, 0, 59, 1));
         jPanel5.add(TTToMinutesSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 160, 80, 40));
 
         saveBtn3.setBackground(new java.awt.Color(102, 255, 0));
