@@ -78,6 +78,7 @@ public class AdminPanel extends javax.swing.JFrame {
         roleBox.setSelectedIndex(0);
         deptBox.setSelectedIndex(0);
     }
+ 
     
     public void courseFieldClear(){
     courseCodeBox.setText("");
@@ -104,6 +105,20 @@ public class AdminPanel extends javax.swing.JFrame {
     minuteSpinner.setValue(0);
     hourToSpinner.setValue(0);
     minuteToSpinner.setValue(0);
+    }
+    
+    public void timeTableFieldClear(){
+        timeTableIdLabel.setText("Id");
+        TTCourseCodeField.setText("");
+        TTTypeCombo.setSelectedItem("LECTURE");
+        TTDateField.setDate(null);
+        TTDayCombo.setSelectedItem("MONDAY");
+        
+        TTFromHoursSpinner.setValue(0);
+        TTFromMinutesSpinner.setValue(0);
+        
+        TTToHoursSpinner.setValue(0);
+        TTToMinutesSpinner.setValue(0);
     }
     
     public void tableToFields(){
@@ -1945,6 +1960,7 @@ public class AdminPanel extends javax.swing.JFrame {
             rowsAffected = TimeTableController.getInstance().save(timeTableModel);
             if(rowsAffected==true){
                 timeTableLoad();
+                timeTableFieldClear();
             JOptionPane.showMessageDialog(null, "Saved Sucessfully !");
         }else{
             JOptionPane.showMessageDialog(null, "save error !");
@@ -1958,19 +1974,42 @@ public class AdminPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_saveBtn3ActionPerformed
 
     private void updateBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtn3ActionPerformed
-        // TODO add your handling code here:
+        TimeTableModel timeTableModel = new TimeTableModel(TTCourseCodeField.getText(),TTTypeCombo.getSelectedItem().toString(),TTDateField.getDate(),Day.valueOf(TTDayCombo.getSelectedItem().toString()),LocalTime.of((int)TTFromHoursSpinner.getValue(),(int)TTFromMinutesSpinner.getValue()),LocalTime.of((int)TTToHoursSpinner.getValue(), (int)TTToMinutesSpinner.getValue()));
+        boolean rowsAffected;
+        try {
+            rowsAffected = TimeTableController.getInstance().update(timeTableModel,Integer.parseInt(timeTableIdLabel.getText()));
+            if(rowsAffected==true){
+                timeTableLoad();
+            JOptionPane.showMessageDialog(null, "Updated Sucessfully !");
+        }else{
+            JOptionPane.showMessageDialog(null, "Update error !");
+        }
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_updateBtn3ActionPerformed
 
     private void deleteBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtn3ActionPerformed
-        // TODO add your handling code here:
+        try {
+           boolean affectedRows = TimeTableController.getInstance().delete(Integer.parseInt(timeTableIdLabel.getText()));
+           if(affectedRows==true){
+               timeTableFieldClear();
+               timeTableLoad();
+           JOptionPane.showMessageDialog(null, "Deleted sucessfully !");
+           }else{
+               JOptionPane.showMessageDialog(null, "Delete error!");
+           }
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_deleteBtn3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+        timeTableFieldClear();
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void timeTableSearchBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timeTableSearchBoxActionPerformed

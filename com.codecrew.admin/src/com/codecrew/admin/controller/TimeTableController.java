@@ -98,5 +98,35 @@ public class TimeTableController {
         }
     }
 
+    public boolean update(TimeTableModel timeTableModel, int id) throws ClassNotFoundException, SQLException {
+        String sql = "UPDATE time_table SET Course_code=?,Type=?,date=?,Day=?,time_from=?,time_to=? WHERE id = ?";
+        Connection conn = DbConnection.getInstance().getConn();
+        
+        
+        java.sql.Date sqlDate = new java.sql.Date(timeTableModel.getDate().getTime());
+        
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1, timeTableModel.getCourseCode());
+        pst.setString(2, timeTableModel.getType());
+        pst.setDate(3, sqlDate);
+        pst.setString(4, timeTableModel.getDay().toString());
+        pst.setObject(5, timeTableModel.getTimeFrom());
+        pst.setObject(6, timeTableModel.getTimeTo());
+        pst.setInt(7,id);
+        
+        int affectedRows = pst.executeUpdate();
+       
+        return affectedRows>0;
+    }
+
+    public boolean delete(int id) throws ClassNotFoundException, SQLException {
+                Connection conn = DbConnection.getInstance().getConn();
+        String sql = "DELETE FROM time_table WHERE id = ?";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setInt(1,id);
+        int affectedRows = pst.executeUpdate();
+        return affectedRows>0;
+    }
+
     
 }
