@@ -27,6 +27,7 @@ public static AccountController getInstance(){
     return ACObj;
 }
 
+@Override
     public boolean saveAccount(AccountModel account) throws ClassNotFoundException, SQLException{
         String sql = "INSERT INTO user VALUES (?,?,?,?,?,?,?)";
         String sql2 = "SELECT Uname from user where Uname = ?";
@@ -53,68 +54,66 @@ public static AccountController getInstance(){
         }else{
             return false;
         }
-
+        
     }
 
+@Override
     public boolean updateAccount(AccountModel account) throws SQLException, ClassNotFoundException {
         Connection conn = DbConnection.getInstance().getConn();
         if (account.getPassword() != null) {
             String sql = "Update user SET Uname=?, Contact=?, Email=?, Password=?, Role=?, Department=? WHERE U_Id=?";
 
-            PreparedStatement pst = conn.prepareStatement(sql);
-
-            String hashedPassword = BCrypt.hashpw(account.getPassword(), BCrypt.gensalt(12));
-
-            pst.setString(1, account.getName());
-            pst.setInt(2, account.getContact());
-            pst.setString(3, account.getEmail());
-            pst.setString(4, hashedPassword);
-            pst.setString(5, account.getRole());
-            
-            pst.setString(6, account.getDept());
-            pst.setString(7, account.getId());
-
-            int results = pst.executeUpdate();
-            pst.close();
+            int results;
+            try (PreparedStatement pst = conn.prepareStatement(sql)) {
+                String hashedPassword = BCrypt.hashpw(account.getPassword(), BCrypt.gensalt(12));
+                pst.setString(1, account.getName());
+                pst.setInt(2, account.getContact());
+                pst.setString(3, account.getEmail());
+                pst.setString(4, hashedPassword);
+                pst.setString(5, account.getRole());
+                pst.setString(6, account.getDept());
+                pst.setString(7, account.getId());
+                results = pst.executeUpdate();
+            }
             return results > 0;
             
 
         } else {
             String sql = "Update user SET Uname=?, Contact=?, Email=?, Role=?, Department=? WHERE U_Id=?";
 
-            PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setString(1, account.getName());
-            pst.setInt(2, account.getContact());
-            pst.setString(3, account.getEmail());
-
-            pst.setString(4, account.getRole());
-            
-            pst.setString(5, account.getDept());
-            pst.setString(6, account.getId());
-
-            int results = pst.executeUpdate();
-            pst.close();
+            int results;
+            try (PreparedStatement pst = conn.prepareStatement(sql)) {
+                pst.setString(1, account.getName());
+                pst.setInt(2, account.getContact());
+                pst.setString(3, account.getEmail());
+                pst.setString(4, account.getRole());
+                pst.setString(5, account.getDept());
+                pst.setString(6, account.getId());
+                results = pst.executeUpdate();
+            }
             return results > 0;
 
         }
     }
 
+@Override
     public boolean deleteAccount(String id) throws ClassNotFoundException, SQLException {
         String sql = "DELETE FROM user WHERE U_Id = ?";
         Connection conn = DbConnection.getInstance().getConn();
-        PreparedStatement pst = conn.prepareStatement(sql);
+        int result;
+    try (PreparedStatement pst = conn.prepareStatement(sql)) {
         pst.setString(1,id);
-        
-        int result = pst.executeUpdate();
-        pst.close();
+        result = pst.executeUpdate();
+    }
         return result>0;
     }
 
+@Override
     public void search(String text, DefaultTableModel dtm) throws ClassNotFoundException, SQLException {
         String sql = "SELECT * FROM user WHERE U_Id LIKE ? OR Uname LIKE ? OR Contact LIKE ? OR Email LIKE ? OR Role LIKE ? OR Department LIKE ?";
         
         Connection conn = DbConnection.getInstance().getConn();
-        PreparedStatement pst = conn.prepareStatement(sql);
+    try (PreparedStatement pst = conn.prepareStatement(sql)) {
         pst.setString(1,"%"+text+"%");
         pst.setString(2,"%"+text+"%");
         pst.setString(3,"%"+text+"%");
@@ -130,94 +129,97 @@ public static AccountController getInstance(){
             
             dtm.addRow(new Object[]{result.getString("U_Id"), result.getString("Uname"),result.getString("Contact"),result.getString("Email"),result.getString("Role"),result.getString("Department")});
         }
-        pst.close();
+    }
     }
 
+@Override
     public void tableLoad(DefaultTableModel dtm) throws ClassNotFoundException, SQLException {
                 dtm.setRowCount(0);
     Connection conn = DbConnection.getInstance().getConn();
     String sql = "SELECT * FROM user";
-    PreparedStatement pst = conn.prepareStatement(sql);
-    ResultSet result = pst.executeQuery();
-    
-    while(result.next()){
-    String id = result.getString("U_Id");
-    String name = result.getString("Uname");
-    String contact = result.getString("Contact");
-    String email = result.getString("Email");
-    String role = result.getString("Role");
-    String dept = result.getString("Department");
-    
-    dtm.addRow(new Object[]{id,name,contact,email,role,dept});
+    try (PreparedStatement pst = conn.prepareStatement(sql)) {
+        ResultSet result = pst.executeQuery();
+        
+        while(result.next()){
+            String id = result.getString("U_Id");
+            String name = result.getString("Uname");
+            String contact = result.getString("Contact");
+            String email = result.getString("Email");
+            String role = result.getString("Role");
+            String dept = result.getString("Department");
+            
+            dtm.addRow(new Object[]{id,name,contact,email,role,dept});
+        }
     }
-    pst.close();
     }
 
+@Override
     public void tableLoadRole(DefaultTableModel dtm, String uRole) throws ClassNotFoundException, SQLException {
                        dtm.setRowCount(0);
     Connection conn = DbConnection.getInstance().getConn();
     String sql = "SELECT * FROM user WHERE Role = ?";
-    PreparedStatement pst = conn.prepareStatement(sql);
-    pst.setString(1, uRole);
-    ResultSet result = pst.executeQuery();
-    
-    while(result.next()){
-    String id = result.getString("U_Id");
-    String name = result.getString("Uname");
-    String contact = result.getString("Contact");
-    String email = result.getString("Email");
-    String role = result.getString("Role");
-    String dept = result.getString("Department");
-    
-    dtm.addRow(new Object[]{id,name,contact,email,role,dept});
+    try (PreparedStatement pst = conn.prepareStatement(sql)) {
+        pst.setString(1, uRole);
+        ResultSet result = pst.executeQuery();
+        
+        while(result.next()){
+            String id = result.getString("U_Id");
+            String name = result.getString("Uname");
+            String contact = result.getString("Contact");
+            String email = result.getString("Email");
+            String role = result.getString("Role");
+            String dept = result.getString("Department");
+            
+            dtm.addRow(new Object[]{id,name,contact,email,role,dept});
+        }
     }
-    pst.close();
     
     }
 
+@Override
     public void tableLoadDept(DefaultTableModel dtm,String department) throws ClassNotFoundException, SQLException {
                                dtm.setRowCount(0);
     Connection conn = DbConnection.getInstance().getConn();
     String sql = "SELECT * FROM user WHERE Department = ?";
-    PreparedStatement pst = conn.prepareStatement(sql);
-    
-    pst.setString(1, department);
-    ResultSet result = pst.executeQuery();
-    
-    while(result.next()){
-    String id = result.getString("U_Id");
-    String name = result.getString("Uname");
-    String contact = result.getString("Contact");
-    String email = result.getString("Email");
-    String role = result.getString("Role");
-    String dept = result.getString("Department");
-    
-    dtm.addRow(new Object[]{id,name,contact,email,role,dept});
+    try (PreparedStatement pst = conn.prepareStatement(sql)) {
+        pst.setString(1, department);
+        ResultSet result = pst.executeQuery();
+        
+        while(result.next()){
+            String id = result.getString("U_Id");
+            String name = result.getString("Uname");
+            String contact = result.getString("Contact");
+            String email = result.getString("Email");
+            String role = result.getString("Role");
+            String dept = result.getString("Department");
+            
+            dtm.addRow(new Object[]{id,name,contact,email,role,dept});
+        }
     }
-    pst.close();
         
     }
 
+@Override
     public void tableLoad(DefaultTableModel dtm, String uRole, String department) throws ClassNotFoundException, SQLException {
                         dtm.setRowCount(0);
     Connection conn = DbConnection.getInstance().getConn();
     String sql = "SELECT * FROM user WHERE Role = ? AND Department = ?";
-    PreparedStatement pst = conn.prepareStatement(sql);
-    pst.setString(1, uRole);
-    pst.setString(2, department);
-    ResultSet result = pst.executeQuery();
-    
-    while(result.next()){
-    String id = result.getString("U_Id");
-    String name = result.getString("Uname");
-    String contact = result.getString("Contact");
-    String email = result.getString("Email");
-    String role = result.getString("Role");
-    String dept = result.getString("Department");
-    
-    dtm.addRow(new Object[]{id,name,contact,email,role,dept});
+    try (PreparedStatement pst = conn.prepareStatement(sql)) {
+        pst.setString(1, uRole);
+        pst.setString(2, department);
+        ResultSet result = pst.executeQuery();
+        
+        while(result.next()){
+            String id = result.getString("U_Id");
+            String name = result.getString("Uname");
+            String contact = result.getString("Contact");
+            String email = result.getString("Email");
+            String role = result.getString("Role");
+            String dept = result.getString("Department");
+            
+            dtm.addRow(new Object[]{id,name,contact,email,role,dept});
+        }
     }
-    pst.close();
         
     }
 

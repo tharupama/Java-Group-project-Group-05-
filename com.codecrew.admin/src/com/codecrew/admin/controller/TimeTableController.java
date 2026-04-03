@@ -34,16 +34,16 @@ public class TimeTableController {
         
         java.sql.Date sqlDate = new java.sql.Date(timeTableModel.getDate().getTime());
         
-        PreparedStatement pst = conn.prepareStatement(sql);
-        pst.setString(1, timeTableModel.getCourseCode());
-        pst.setString(2, timeTableModel.getType());
-        pst.setDate(3, sqlDate);
-        pst.setString(4, timeTableModel.getDay().toString());
-        pst.setObject(5, timeTableModel.getTimeFrom());
-        pst.setObject(6, timeTableModel.getTimeTo());
-        
-        int affectedRows = pst.executeUpdate();
-       
+        int affectedRows;
+        try (PreparedStatement pst = conn.prepareStatement(sql)) {
+            pst.setString(1, timeTableModel.getCourseCode());
+            pst.setString(2, timeTableModel.getType());
+            pst.setDate(3, sqlDate);
+            pst.setString(4, timeTableModel.getDay().toString());
+            pst.setObject(5, timeTableModel.getTimeFrom());
+            pst.setObject(6, timeTableModel.getTimeTo());
+            affectedRows = pst.executeUpdate();
+        }
         return affectedRows>0;
     }
 
@@ -51,21 +51,21 @@ public class TimeTableController {
         timeDtm.setRowCount(0);
         String sql = "SELECT * FROM time_table";
         Connection conn = DbConnection.getInstance().getConn();
-        PreparedStatement pst = conn.prepareStatement(sql);
-        
-        ResultSet rst = pst.executeQuery();
-        
-        while(rst.next()){
+        try (PreparedStatement pst = conn.prepareStatement(sql)) {
+            ResultSet rst = pst.executeQuery();
             
-            String id = rst.getString("id");
-            String courseCode = rst.getString("Course_code");
-            String type = rst.getString("Type");
-            String date = rst.getDate("date").toString();
-            String day = rst.getString("Day").toString();
-            String timeFrom = rst.getString("time_from");
-            String timeTo = rst.getString("time_to");
-            
-            timeDtm.addRow(new Object[]{id,courseCode,type,date,day,timeFrom,timeTo});
+            while(rst.next()){
+                
+                String id = rst.getString("id");
+                String courseCode = rst.getString("Course_code");
+                String type = rst.getString("Type");
+                String date = rst.getDate("date").toString();
+                String day = rst.getString("Day");
+                String timeFrom = rst.getString("time_from");
+                String timeTo = rst.getString("time_to");
+                
+                timeDtm.addRow(new Object[]{id,courseCode,type,date,day,timeFrom,timeTo});
+            }
         }
     }
 
@@ -73,28 +73,29 @@ public class TimeTableController {
                dtm.setRowCount(0);
         String sql = "SELECT * FROM time_table WHERE id LIKE ? OR Course_code LIKE ? OR Type LIKE ? OR date LIKE ? OR Day LIKE ? OR time_from LIKE ? OR time_to LIKE ?";
         Connection conn = DbConnection.getInstance().getConn();
-        PreparedStatement pst = conn.prepareStatement(sql);
-        pst.setString(1, "%"+text+"%");
-        pst.setString(2, "%"+text+"%");
-        pst.setString(3, "%"+text+"%");
-        pst.setString(4, "%"+text+"%");
-        pst.setString(5, "%"+text+"%");
-        pst.setString(6, "%"+text+"%");
-        pst.setString(7, "%"+text+"%");
-        
-        ResultSet rst = pst.executeQuery();
-        
-        while(rst.next()){
+        try (PreparedStatement pst = conn.prepareStatement(sql)) {
+            pst.setString(1, "%"+text+"%");
+            pst.setString(2, "%"+text+"%");
+            pst.setString(3, "%"+text+"%");
+            pst.setString(4, "%"+text+"%");
+            pst.setString(5, "%"+text+"%");
+            pst.setString(6, "%"+text+"%");
+            pst.setString(7, "%"+text+"%");
             
-            String id = rst.getString("id");
-            String courseCode = rst.getString("Course_code");
-            String type = rst.getString("Type");
-            String date = rst.getDate("date").toString();
-            String day = rst.getString("Day").toString();
-            String timeFrom = rst.getString("time_from");
-            String timeTo = rst.getString("time_to");
+            ResultSet rst = pst.executeQuery();
             
-            dtm.addRow(new Object[]{id,courseCode,type,date,day,timeFrom,timeTo});
+            while(rst.next()){
+                
+                String id = rst.getString("id");
+                String courseCode = rst.getString("Course_code");
+                String type = rst.getString("Type");
+                String date = rst.getDate("date").toString();
+                String day = rst.getString("Day");
+                String timeFrom = rst.getString("time_from");
+                String timeTo = rst.getString("time_to");
+                
+                dtm.addRow(new Object[]{id,courseCode,type,date,day,timeFrom,timeTo});
+            }
         }
     }
 
@@ -105,26 +106,28 @@ public class TimeTableController {
         
         java.sql.Date sqlDate = new java.sql.Date(timeTableModel.getDate().getTime());
         
-        PreparedStatement pst = conn.prepareStatement(sql);
-        pst.setString(1, timeTableModel.getCourseCode());
-        pst.setString(2, timeTableModel.getType());
-        pst.setDate(3, sqlDate);
-        pst.setString(4, timeTableModel.getDay().toString());
-        pst.setObject(5, timeTableModel.getTimeFrom());
-        pst.setObject(6, timeTableModel.getTimeTo());
-        pst.setInt(7,id);
-        
-        int affectedRows = pst.executeUpdate();
-       
+        int affectedRows;
+        try (PreparedStatement pst = conn.prepareStatement(sql)) {
+            pst.setString(1, timeTableModel.getCourseCode());
+            pst.setString(2, timeTableModel.getType());
+            pst.setDate(3, sqlDate);
+            pst.setString(4, timeTableModel.getDay().toString());
+            pst.setObject(5, timeTableModel.getTimeFrom());
+            pst.setObject(6, timeTableModel.getTimeTo());
+            pst.setInt(7,id);
+            affectedRows = pst.executeUpdate();
+        }
         return affectedRows>0;
     }
 
     public boolean delete(int id) throws ClassNotFoundException, SQLException {
                 Connection conn = DbConnection.getInstance().getConn();
         String sql = "DELETE FROM time_table WHERE id = ?";
-        PreparedStatement pst = conn.prepareStatement(sql);
-        pst.setInt(1,id);
-        int affectedRows = pst.executeUpdate();
+        int affectedRows;
+        try (PreparedStatement pst = conn.prepareStatement(sql)) {
+            pst.setInt(1,id);
+            affectedRows = pst.executeUpdate();
+        }
         return affectedRows>0;
     }
 
