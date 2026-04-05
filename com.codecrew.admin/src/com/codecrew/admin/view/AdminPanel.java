@@ -11,6 +11,7 @@ import com.codecrew.admin.controller.NoticeController;
 import com.codecrew.admin.controller.TimeTableController;
 import com.codecrew.admin.db.DbConnection;
 import com.codecrew.admin.enums.Day;
+import com.codecrew.admin.exception.UserIdAlreadyExistsException;
 import com.codecrew.admin.model.AccountModel;
 import com.codecrew.admin.model.CourseModel;
 import com.codecrew.admin.model.NoticeModel;
@@ -67,6 +68,8 @@ public class AdminPanel extends javax.swing.JFrame {
             jScrollPane3.setVisible(true);
             examTable.setVisible(false);
             jScrollPane4.setVisible(false);
+            
+
  
     }
     
@@ -1402,25 +1405,36 @@ public class AdminPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_searchBoxActionPerformed
 
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
-        AccountModel accountModel = new AccountModel(idBox.getText(),nameBox.getText(), Integer.parseInt(contactBox.getText()), emailBox.getText(), passwordBox.getText(),roleBox.getSelectedItem().toString(),deptBox.getSelectedItem().toString());
+        if(idBox.getText().equals("")||nameBox.getText().equals("")||contactBox.getText().equals("")||emailBox.getText().equals("")||passwordBox.getText().equals("")){
+            System.out.println("All fields must fill !");
+            JOptionPane.showMessageDialog(null,"All fields must fill !");
+        }else if(!contactBox.getText().matches("\\d{10,15}")){
+            JOptionPane.showMessageDialog(null,"contact numbber must contain only numbers and 10 to 15 characters !");
+        }else{
+            AccountModel accountModel = new AccountModel(idBox.getText(),nameBox.getText(), Integer.parseInt(contactBox.getText()), emailBox.getText(), passwordBox.getText(),roleBox.getSelectedItem().toString(),deptBox.getSelectedItem().toString());
         try {
-            boolean affectedRows = AccountController.getInstance().saveAccount(accountModel);
+            try{
+                boolean affectedRows = AccountController.getInstance().saveAccount(accountModel);
             if(affectedRows==true){
                 tableLoad();
                 clearBox(); 
                 JOptionPane.showMessageDialog(rootPane, "Account saved sucessfully !");
             }else{
-            JOptionPane.showMessageDialog(rootPane, accountModel.getName()+" already exists !");
+                JOptionPane.showMessageDialog(rootPane, "Unexpected error");
+            }
+            }catch(UserIdAlreadyExistsException ex){
+                JOptionPane.showMessageDialog(null, idBox.getText()+" already exists");
             }
             
+            
             // TODO add your handling code here:
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(rootPane, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(rootPane, ex);
         }
+        }
+        
+        
     }//GEN-LAST:event_saveBtnActionPerformed
 
     private void idBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idBoxActionPerformed
@@ -1963,7 +1977,8 @@ public class AdminPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_timeTableIdLabelMouseReleased
 
     private void TTTypeComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TTTypeComboActionPerformed
-        // TODO add your handling code here:
+
+        
     }//GEN-LAST:event_TTTypeComboActionPerformed
 
     private void TTDayComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TTDayComboActionPerformed

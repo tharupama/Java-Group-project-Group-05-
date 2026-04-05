@@ -5,6 +5,7 @@
 package com.codecrew.admin.controller;
 
 import com.codecrew.admin.db.DbConnection;
+import com.codecrew.admin.exception.UserIdAlreadyExistsException;
 import com.codecrew.admin.model.AccountModel;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -12,6 +13,7 @@ import java.sql.PreparedStatement;
 import javax.swing.table.DefaultTableModel;
 import org.mindrot.jbcrypt.BCrypt;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,11 +32,11 @@ public static AccountController getInstance(){
 @Override
     public boolean saveAccount(AccountModel account) throws ClassNotFoundException, SQLException{
         String sql = "INSERT INTO user VALUES (?,?,?,?,?,?,?)";
-        String sql2 = "SELECT Uname from user where Uname = ?";
+        String sql2 = "SELECT U_Id from user where U_Id = ?";
         Connection conn = DbConnection.getInstance().getConn();
         PreparedStatement pst = conn.prepareStatement(sql);
         PreparedStatement pst2 = conn.prepareStatement(sql2);
-        pst2.setString(1, account.getName());
+        pst2.setString(1, account.getId());
         ResultSet rs =  pst2.executeQuery();
         if(!rs.next()){
             String hashedPassword = BCrypt.hashpw(account.getPassword(), BCrypt.gensalt(12));
@@ -52,7 +54,8 @@ public static AccountController getInstance(){
         pst2.close();
         return results>0;
         }else{
-            return false;
+            
+            throw new UserIdAlreadyExistsException(account.getId());
         }
         
     }

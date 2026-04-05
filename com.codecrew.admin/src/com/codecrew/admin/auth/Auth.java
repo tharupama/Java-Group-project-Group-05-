@@ -19,7 +19,7 @@ import org.mindrot.jbcrypt.BCrypt;
 public class Auth {
 
     public static ResultSet getAuth(String uName, String pWord) throws ClassNotFoundException, SQLException {
-        String sql = "SELECT * FROM user where Uname = ?";
+        String sql = "SELECT * FROM user where U_Id = ?";
         Connection conn = DbConnection.getInstance().getConn();
         PreparedStatement pst = conn.prepareStatement(sql);
         pst.setString(1, uName);
