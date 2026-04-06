@@ -16,7 +16,7 @@ import java.sql.ResultSet;
  *
  * @author USER
  */
-public class TimeTableController {
+public class TimeTableController implements TimeTableControllerInterface{
     
     private static TimeTableController tTObj;
     
@@ -28,6 +28,7 @@ public class TimeTableController {
         return tTObj; 
     }
 
+    @Override
     public boolean save(TimeTableModel timeTableModel) throws ClassNotFoundException, SQLException {
         String sql = "INSERT INTO time_table (Course_code,Type,date,Day,time_from,time_to) VALUES(?,?,?,?,?,?)";
         Connection conn = DbConnection.getInstance().getConn();
@@ -47,6 +48,7 @@ public class TimeTableController {
         return affectedRows>0;
     }
 
+    @Override
     public void timeTableLoad(DefaultTableModel timeDtm) throws ClassNotFoundException, SQLException {
         timeDtm.setRowCount(0);
         String sql = "SELECT * FROM time_table";
@@ -69,6 +71,7 @@ public class TimeTableController {
         }
     }
 
+    @Override
     public void search(DefaultTableModel dtm, String text) throws ClassNotFoundException, SQLException {
                dtm.setRowCount(0);
         String sql = "SELECT * FROM time_table WHERE id LIKE ? OR Course_code LIKE ? OR Type LIKE ? OR date LIKE ? OR Day LIKE ? OR time_from LIKE ? OR time_to LIKE ?";
@@ -99,6 +102,7 @@ public class TimeTableController {
         }
     }
 
+    @Override
     public boolean update(TimeTableModel timeTableModel, int id) throws ClassNotFoundException, SQLException {
         String sql = "UPDATE time_table SET Course_code=?,Type=?,date=?,Day=?,time_from=?,time_to=? WHERE id = ?";
         Connection conn = DbConnection.getInstance().getConn();
@@ -120,6 +124,7 @@ public class TimeTableController {
         return affectedRows>0;
     }
 
+    @Override
     public boolean delete(int id) throws ClassNotFoundException, SQLException {
                 Connection conn = DbConnection.getInstance().getConn();
         String sql = "DELETE FROM time_table WHERE id = ?";

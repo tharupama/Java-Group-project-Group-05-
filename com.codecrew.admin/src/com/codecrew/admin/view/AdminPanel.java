@@ -46,11 +46,11 @@ public class AdminPanel extends javax.swing.JFrame {
         courseTableLoad();
         noticeTableLoad();
         timeTableLoad();
-        theoryHoursLabel.setVisible(false);
+        //theoryHoursLabel.setVisible(false);
         practicalHoursLabel.setVisible(false);
-        theoryHoursBox.setVisible(false);
+        //theoryHoursBox.setVisible(false);
         practicalHoursBox.setVisible(false);
-        
+        sem1.setSelected(true);
         courseidLabel.setVisible(false);
             courseIdField.setVisible(false);
             dateLabel.setVisible(false);
@@ -692,7 +692,7 @@ public class AdminPanel extends javax.swing.JFrame {
         typeBox.setBackground(new java.awt.Color(255, 51, 51));
         typeBox.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         typeBox.setForeground(new java.awt.Color(0, 0, 0));
-        typeBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select type", "Theory", "Practical", "Both" }));
+        typeBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Theory", "Practical", "Both" }));
         typeBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 typeBoxActionPerformed(evt);
@@ -1408,8 +1408,11 @@ public class AdminPanel extends javax.swing.JFrame {
         if(idBox.getText().equals("")||nameBox.getText().equals("")||contactBox.getText().equals("")||emailBox.getText().equals("")||passwordBox.getText().equals("")){
             System.out.println("All fields must fill !");
             JOptionPane.showMessageDialog(null,"All fields must fill !");
-        }else if(!contactBox.getText().matches("\\d{10,15}")){
-            JOptionPane.showMessageDialog(null,"contact numbber must contain only numbers and 10 to 15 characters !");
+        }else if(!contactBox.getText().matches("^[0-9]{10}$")){
+            JOptionPane.showMessageDialog(null,"contact numbber must contain only 10 numbers !");
+        }else if(!emailBox.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")){
+            JOptionPane.showMessageDialog(null,"Please enter valid email! Example: tharupama826@gmail.com");
+        
         }else{
             AccountModel accountModel = new AccountModel(idBox.getText(),nameBox.getText(), Integer.parseInt(contactBox.getText()), emailBox.getText(), passwordBox.getText(),roleBox.getSelectedItem().toString(),deptBox.getSelectedItem().toString());
         try {
@@ -1446,8 +1449,18 @@ public class AdminPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_accountTableMouseClicked
 
     private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
-       AccountModel accountModel = new AccountModel(idBox.getText(),nameBox.getText(), Integer.parseInt(contactBox.getText()), emailBox.getText(), passwordBox.getText(),roleBox.getSelectedItem().toString(), deptBox.getSelectedItem().toString());
+
         try {
+            if(idBox.getText().equals("")||nameBox.getText().equals("")||contactBox.getText().equals("")||emailBox.getText().equals("")){
+            System.out.println("All fields must fill !");
+            JOptionPane.showMessageDialog(null,"All fields must fill !");
+        }else if(!contactBox.getText().matches("^[0-9]{10}$")){
+            JOptionPane.showMessageDialog(null,"contact numbber must contain only numbers and 10 characters !");
+        }else if(!emailBox.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")){
+            JOptionPane.showMessageDialog(null,"Please enter valid email! Example: tharupama826@gmail.com");
+        
+        }else{       
+            AccountModel accountModel = new AccountModel(idBox.getText(),nameBox.getText(), Integer.parseInt(contactBox.getText()), emailBox.getText(), passwordBox.getText(),roleBox.getSelectedItem().toString(), deptBox.getSelectedItem().toString());
             boolean affectedRows = AccountController.getInstance().updateAccount(accountModel);
             if(affectedRows==true){
             tableLoad();
@@ -1455,6 +1468,8 @@ public class AdminPanel extends javax.swing.JFrame {
             }else{
             JOptionPane.showMessageDialog(rootPane, "update error !");
             }
+        }
+            
             // TODO add your handling code here:
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -1592,6 +1607,8 @@ public class AdminPanel extends javax.swing.JFrame {
         String semester;
         int theoryHours = 0;
         int practicalHours = 0;
+        int credit = 0;
+        int year = 0;
         if(sem1.getActionCommand().equals("Semester 1")){
             semester = "Semester 1";
         }else if(sem2.getActionCommand().equals("Semester 2")){
@@ -1599,19 +1616,55 @@ public class AdminPanel extends javax.swing.JFrame {
         }else{
             semester = "unknown";
         }
-        
         if(!theoryHoursBox.getText().equals("")){
-            theoryHours=Integer.parseInt(theoryHoursBox.getText());
+            try{
+                theoryHours=Integer.parseInt(theoryHoursBox.getText());
+              }
+            catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(null, "you can only enter numbers as theory hours!");
+                return;
+            }
+            
         }
         if(!practicalHoursBox.getText().equals("")){
+            try{
             practicalHours=Integer.parseInt(practicalHoursBox.getText());
+            }catch(NumberFormatException ex){
+                
+                JOptionPane.showMessageDialog(null, "you can only enter numbers as practical hours!");
+                return;
+            }
+            
         }
+        
+        
+        if(courseNameBox.getText().equals("")||courseCodeBox.getText().equals("")||courseCreditBox.getText().equals("")||lecNameBox.getText().equals("")||courseYearBox.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "All fields must fill!");
+        }else if((typeBox.getSelectedItem().toString().equals("Theory")&&theoryHours==0)||(typeBox.getSelectedItem().toString().equals("Practical")&&practicalHours==0)||(typeBox.getSelectedItem().toString().equals("Both")&&(theoryHours==0||practicalHours==0))){
+            JOptionPane.showMessageDialog(null, "you have to enter hours accourding to your selection type!");
+        }else{
+
+        
+        try{
+        credit = Integer.parseInt(courseCreditBox.getText());
+        }catch(NumberFormatException e){
+        JOptionPane.showMessageDialog(null, "credit can only contain numbers");
+        return;
+        }
+          
+        try{
+           year = Integer.parseInt(courseYearBox.getText());
+        }catch(NumberFormatException ex){
+        JOptionPane.showMessageDialog(null, "year can only contain numbers");
+        return;
+        }
+            
         CourseModel courseModel = new CourseModel(courseCodeBox.getText(),
                 courseNameBox.getText(), 
                 typeBox.getSelectedItem().toString(),
-                Integer.parseInt(courseCreditBox.getText()),
+                credit,
                 lecNameBox.getText(),
-                Integer.parseInt(courseYearBox.getText()),
+                year,
                 semester,
                 courseDepartmentBox.getSelectedItem().toString(),
                 theoryHours,
@@ -1629,22 +1682,12 @@ public class AdminPanel extends javax.swing.JFrame {
         }else{
                 JOptionPane.showMessageDialog(departmentCombo, "save error !");
             }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
- 
-        System.out.println(courseModel.getCode());
-        System.out.println(courseModel.getName());
-        System.out.println(courseModel.getType());
-        System.out.println(courseModel.getCredit());
-        System.out.println(courseModel.getLecName());
-        System.out.println(courseModel.getYear());
-        System.out.println(courseModel.getSemester());
-        System.out.println(courseModel.getDepartment());
-        System.out.println(courseModel.getTheoryHours());
-        System.out.println(courseModel.getPracticalHours());
+        }
+        
+        
     }//GEN-LAST:event_saveBtn1ActionPerformed
 
     private void updateBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtn1ActionPerformed
