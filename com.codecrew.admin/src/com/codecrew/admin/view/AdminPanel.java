@@ -11,6 +11,7 @@ import com.codecrew.admin.controller.NoticeController;
 import com.codecrew.admin.controller.TimeTableController;
 import com.codecrew.admin.db.DbConnection;
 import com.codecrew.admin.enums.Day;
+import com.codecrew.admin.exception.CourseCodeNotFoundException;
 import com.codecrew.admin.exception.UserIdAlreadyExistsException;
 import com.codecrew.admin.model.AccountModel;
 import com.codecrew.admin.model.CourseModel;
@@ -1609,133 +1610,179 @@ public class AdminPanel extends javax.swing.JFrame {
         int practicalHours = 0;
         int credit = 0;
         int year = 0;
-        if(sem1.getActionCommand().equals("Semester 1")){
+        if (sem1.getActionCommand().equals("Semester 1")) {
             semester = "Semester 1";
-        }else if(sem2.getActionCommand().equals("Semester 2")){
+        } else if (sem2.getActionCommand().equals("Semester 2")) {
             semester = "Semester 2";
-        }else{
+        } else {
             semester = "unknown";
         }
-        if(!theoryHoursBox.getText().equals("")){
-            try{
-                theoryHours=Integer.parseInt(theoryHoursBox.getText());
-              }
-            catch(NumberFormatException e){
+        if (!theoryHoursBox.getText().equals("")) {
+            try {
+                theoryHours = Integer.parseInt(theoryHoursBox.getText());
+            } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "you can only enter numbers as theory hours!");
                 return;
             }
-            
+
         }
-        if(!practicalHoursBox.getText().equals("")){
-            try{
-            practicalHours=Integer.parseInt(practicalHoursBox.getText());
-            }catch(NumberFormatException ex){
-                
+        if (!practicalHoursBox.getText().equals("")) {
+            try {
+                practicalHours = Integer.parseInt(practicalHoursBox.getText());
+            } catch (NumberFormatException ex) {
+
                 JOptionPane.showMessageDialog(null, "you can only enter numbers as practical hours!");
                 return;
             }
-            
-        }
-        
-        
-        if(courseNameBox.getText().equals("")||courseCodeBox.getText().equals("")||courseCreditBox.getText().equals("")||lecNameBox.getText().equals("")||courseYearBox.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "All fields must fill!");
-        }else if((typeBox.getSelectedItem().toString().equals("Theory")&&theoryHours==0)||(typeBox.getSelectedItem().toString().equals("Practical")&&practicalHours==0)||(typeBox.getSelectedItem().toString().equals("Both")&&(theoryHours==0||practicalHours==0))){
-            JOptionPane.showMessageDialog(null, "you have to enter hours accourding to your selection type!");
-        }else{
 
-        
-        try{
-        credit = Integer.parseInt(courseCreditBox.getText());
-        }catch(NumberFormatException e){
-        JOptionPane.showMessageDialog(null, "credit can only contain numbers");
-        return;
         }
-          
-        try{
-           year = Integer.parseInt(courseYearBox.getText());
-        }catch(NumberFormatException ex){
-        JOptionPane.showMessageDialog(null, "year can only contain numbers");
-        return;
-        }
-            
-        CourseModel courseModel = new CourseModel(courseCodeBox.getText(),
-                courseNameBox.getText(), 
-                typeBox.getSelectedItem().toString(),
-                credit,
-                lecNameBox.getText(),
-                year,
-                semester,
-                courseDepartmentBox.getSelectedItem().toString(),
-                theoryHours,
-                practicalHours
-        );
-        
-        boolean affected;
-        try {
-            affected = CourseController.getInstance().courseSave(courseModel);
-            if(affected==true){
-            courseTableLoad();
-            courseFieldClear();
-            JOptionPane.showMessageDialog(departmentCombo, "saved sucessfully !");
-            
-        }else{
-                JOptionPane.showMessageDialog(departmentCombo, "save error !");
+
+        if (courseNameBox.getText().equals("") || courseCodeBox.getText().equals("") || courseCreditBox.getText().equals("") || lecNameBox.getText().equals("") || courseYearBox.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "All fields must fill!");
+        } else if ((typeBox.getSelectedItem().toString().equals("Theory") && theoryHours == 0) || (typeBox.getSelectedItem().toString().equals("Practical") && practicalHours == 0) || (typeBox.getSelectedItem().toString().equals("Both") && (theoryHours == 0 || practicalHours == 0))) {
+            JOptionPane.showMessageDialog(null, "you have to enter hours accourding to your selection type!");
+        } else {
+
+            try {
+                credit = Integer.parseInt(courseCreditBox.getText());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "credit can only contain numbers");
+                return;
             }
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+
+            try {
+                year = Integer.parseInt(courseYearBox.getText());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "year can only contain numbers");
+                return;
+            }
+
+            CourseModel courseModel = new CourseModel(courseCodeBox.getText(),
+                    courseNameBox.getText(),
+                    typeBox.getSelectedItem().toString(),
+                    credit,
+                    lecNameBox.getText(),
+                    year,
+                    semester,
+                    courseDepartmentBox.getSelectedItem().toString(),
+                    theoryHours,
+                    practicalHours
+            );
+ 
+            boolean affected;
+            try {
+                affected = CourseController.getInstance().courseSave(courseModel);
+                if (affected == true) {
+                    courseTableLoad();
+                    courseFieldClear();
+                    JOptionPane.showMessageDialog(departmentCombo, "saved sucessfully !");
+
+                } else {
+                    JOptionPane.showMessageDialog(departmentCombo, "save error !");
+                }
+            } catch (ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        }
-        
-        
+
+
     }//GEN-LAST:event_saveBtn1ActionPerformed
 
     private void updateBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtn1ActionPerformed
-                       String semester;
+
         int theoryHours = 0;
         int practicalHours = 0;
-        if(sem1.getActionCommand().equals("Semester 1")){
-            semester = "Semester 1";
-        }else if(sem2.getActionCommand().equals("Semester 2")){
-            semester = "Semester 2";
-        }else{
-            semester = "unknown";
-        }
-        
-        if(!theoryHoursBox.getText().equals("")){
-            theoryHours=Integer.parseInt(theoryHoursBox.getText());
-        }
-        if(!practicalHoursBox.getText().equals("")){
-            practicalHours=Integer.parseInt(practicalHoursBox.getText());
-        }
-        CourseModel courseModel = new CourseModel(courseCodeBox.getText(),
-                courseNameBox.getText(), 
-                typeBox.getSelectedItem().toString(),
-                Integer.parseInt(courseCreditBox.getText()),
-                lecNameBox.getText(),
-                Integer.parseInt(courseYearBox.getText()),
-                semester,
-                courseDepartmentBox.getSelectedItem().toString(),
-                theoryHours,
-                practicalHours
-        );
-        try {
-            boolean affectedRows = CourseController.getInstance().updateCourse(courseModel);
-            if(affectedRows==true){
-            courseTableLoad();
-            JOptionPane.showMessageDialog(rootPane, "Course updated sucessfully !");
-            }else{
-            JOptionPane.showMessageDialog(rootPane, "update error !");
+        String semester;
+        int credit = 0;
+        int year = 0;
+        if (!theoryHoursBox.getText().equals("")) {
+            try {
+                theoryHours = Integer.parseInt(theoryHoursBox.getText());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "you can only enter numbers as theory hours!");
+                return;
             }
-            // TODO add your handling code here:
-        } catch (SQLException ex) {
-            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(rootPane, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(rootPane, ex);
+
         }
-     
+        if (!practicalHoursBox.getText().equals("")) {
+            try {
+                practicalHours = Integer.parseInt(practicalHoursBox.getText());
+            } catch (NumberFormatException ex) {
+
+                JOptionPane.showMessageDialog(null, "you can only enter numbers as practical hours!");
+                return;
+            }
+
+        }
+
+        if (courseNameBox.getText().equals("") || courseCodeBox.getText().equals("") || courseCreditBox.getText().equals("") || lecNameBox.getText().equals("") || courseYearBox.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "All fields must fill!");
+        } else if ((typeBox.getSelectedItem().toString().equals("Theory") && theoryHours == 0) || (typeBox.getSelectedItem().toString().equals("Practical") && practicalHours == 0) || (typeBox.getSelectedItem().toString().equals("Both") && (theoryHours == 0 || practicalHours == 0))) {
+            JOptionPane.showMessageDialog(null, "you have to enter hours accourding to your selection type!");
+        } else {
+            
+            try {
+                credit = Integer.parseInt(courseCreditBox.getText());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "credit can only contain numbers");
+                return;
+            }
+
+            try {
+                year = Integer.parseInt(courseYearBox.getText());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "year can only contain numbers");
+                return;
+            }
+            
+           
+            
+            if (sem1.getActionCommand().equals("Semester 1")) {
+                semester = "Semester 1";
+            } else if (sem2.getActionCommand().equals("Semester 2")) {
+                semester = "Semester 2";
+            } else {
+                semester = "unknown";
+            }
+
+//            if (!theoryHoursBox.getText().equals("")) {
+//                theoryHours = Integer.parseInt(theoryHoursBox.getText());
+//            }
+//            if (!practicalHoursBox.getText().equals("")) {
+//                practicalHours = Integer.parseInt(practicalHoursBox.getText());
+//            }
+            CourseModel courseModel = new CourseModel(courseCodeBox.getText(),
+                    courseNameBox.getText(),
+                    typeBox.getSelectedItem().toString(),
+                    credit,
+                    lecNameBox.getText(),
+                    year,
+                    semester,
+                    courseDepartmentBox.getSelectedItem().toString(),
+                    theoryHours,
+                    practicalHours
+            );
+            try {
+                boolean affectedRows = CourseController.getInstance().updateCourse(courseModel);
+                if (affectedRows == true) {
+                    courseTableLoad();
+                    JOptionPane.showMessageDialog(rootPane, "Course updated sucessfully !");
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "update error !");
+                }
+                // TODO add your handling code here:
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(rootPane, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(rootPane, ex);
+            } catch(CourseCodeNotFoundException ex){
+                JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+            }
+        }
+
+
     }//GEN-LAST:event_updateBtn1ActionPerformed
 
     private void deleteBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtn1ActionPerformed
@@ -1755,6 +1802,8 @@ public class AdminPanel extends javax.swing.JFrame {
             Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }catch (CourseCodeNotFoundException ex){
+            JOptionPane.showMessageDialog(null,ex.getMessage());
         }
         
     }//GEN-LAST:event_deleteBtn1ActionPerformed

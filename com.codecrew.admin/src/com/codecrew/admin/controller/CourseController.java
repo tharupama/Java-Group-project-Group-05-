@@ -5,6 +5,7 @@
 package com.codecrew.admin.controller;
 
 import com.codecrew.admin.db.DbConnection;
+import com.codecrew.admin.exception.CourseCodeNotFoundException;
 import com.codecrew.admin.model.CourseModel;
 import com.mysql.cj.jdbc.PreparedStatementWrapper;
 import javax.swing.table.DefaultTableModel;
@@ -77,6 +78,16 @@ public class CourseController extends CourseControllerAbstract{
 
     public boolean delete(String id) throws ClassNotFoundException, SQLException {
         Connection conn = DbConnection.getInstance().getConn();
+        
+        String sql2 = "SELECT * FROM course_unit WHERE Course_code=?";
+        try(PreparedStatement pst2 = conn.prepareStatement(sql2)){
+            pst2.setString(1,id);
+            ResultSet rst = pst2.executeQuery();
+            if(!rst.next()){
+                throw new CourseCodeNotFoundException(id);   
+            }
+        }
+        
         String sql = "DELETE FROM course_unit WHERE Course_code = ?";
         int affectedRows;
         try (PreparedStatement pst = conn.prepareStatement(sql)) {
@@ -118,6 +129,16 @@ public class CourseController extends CourseControllerAbstract{
     @Override
     public boolean updateCourse(CourseModel courseModel) throws SQLException, ClassNotFoundException {
         Connection conn = DbConnection.getInstance().getConn();
+        
+        String sql2 = "SELECT * FROM course_unit WHERE Course_code=?";
+        try(PreparedStatement pst2 = conn.prepareStatement(sql2)){
+            pst2.setString(1,courseModel.getCode());
+            ResultSet rst = pst2.executeQuery();
+            if(!rst.next()){
+                throw new CourseCodeNotFoundException(courseModel.getCode());   
+            }
+        }
+        
         String sql = "Update course_unit SET Name=?, Type=?, Credit=?, Lec_Name=?, Year=?, Semester=?, Department_Offering=?, Theory_Hours=?, Practical_Hours=? WHERE Course_code=?";
         int affectedRows;
         try (PreparedStatement pst = conn.prepareStatement(sql)) {
