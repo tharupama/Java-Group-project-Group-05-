@@ -5,7 +5,7 @@
 package com.codecrew.admin.controller;
 
 import com.codecrew.admin.db.DbConnection;
-import com.codecrew.admin.exception.UserIdAlreadyExistsException;
+
 import com.codecrew.admin.model.AccountModel;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -32,14 +32,10 @@ public static AccountController getInstance(){
 @Override
     public boolean saveAccount(AccountModel account) throws ClassNotFoundException, SQLException{
         String sql = "INSERT INTO user VALUES (?,?,?,?,?,?,?)";
-        String sql2 = "SELECT U_Id from user where U_Id = ?";
+        
         Connection conn = DbConnection.getInstance().getConn();
         PreparedStatement pst = conn.prepareStatement(sql);
-        PreparedStatement pst2 = conn.prepareStatement(sql2);
-        pst2.setString(1, account.getId());
-        ResultSet rs =  pst2.executeQuery();
-        if(!rs.next()){
-            String hashedPassword = BCrypt.hashpw(account.getPassword(), BCrypt.gensalt(12));
+         String hashedPassword = BCrypt.hashpw(account.getPassword(), BCrypt.gensalt(12));
         
         pst.setString(1, account.getId());
         pst.setString(2, account.getName());
@@ -51,13 +47,7 @@ public static AccountController getInstance(){
         
         int results = pst.executeUpdate();
         pst.close();
-        pst2.close();
-        return results>0;
-        }else{
-            
-            throw new UserIdAlreadyExistsException(account.getId());
-        }
-        
+       return results>0; 
     }
 
 @Override

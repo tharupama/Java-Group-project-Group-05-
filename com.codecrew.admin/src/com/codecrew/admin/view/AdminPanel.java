@@ -11,8 +11,9 @@ import com.codecrew.admin.controller.NoticeController;
 import com.codecrew.admin.controller.TimeTableController;
 import com.codecrew.admin.db.DbConnection;
 import com.codecrew.admin.enums.Day;
+
 import com.codecrew.admin.exception.CourseCodeNotFoundException;
-import com.codecrew.admin.exception.UserIdAlreadyExistsException;
+
 import com.codecrew.admin.model.AccountModel;
 import com.codecrew.admin.model.CourseModel;
 import com.codecrew.admin.model.NoticeModel;
@@ -29,7 +30,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.SpinnerNumberModel;
-
+import java.sql.SQLIntegrityConstraintViolationException;
     
 /**
  *
@@ -1406,39 +1407,36 @@ public class AdminPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_searchBoxActionPerformed
 
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
-        if(idBox.getText().equals("")||nameBox.getText().equals("")||contactBox.getText().equals("")||emailBox.getText().equals("")||passwordBox.getText().equals("")){
+        if (idBox.getText().equals("") || nameBox.getText().equals("") || contactBox.getText().equals("") || emailBox.getText().equals("") || passwordBox.getText().equals("")) {
             System.out.println("All fields must fill !");
-            JOptionPane.showMessageDialog(null,"All fields must fill !");
-        }else if(!contactBox.getText().matches("^[0-9]{10}$")){
-            JOptionPane.showMessageDialog(null,"contact numbber must contain only 10 numbers !");
-        }else if(!emailBox.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")){
-            JOptionPane.showMessageDialog(null,"Please enter valid email! Example: tharupama826@gmail.com");
-        
-        }else{
-            AccountModel accountModel = new AccountModel(idBox.getText(),nameBox.getText(), Integer.parseInt(contactBox.getText()), emailBox.getText(), passwordBox.getText(),roleBox.getSelectedItem().toString(),deptBox.getSelectedItem().toString());
-        try {
-            try{
-                boolean affectedRows = AccountController.getInstance().saveAccount(accountModel);
-            if(affectedRows==true){
-                tableLoad();
-                clearBox(); 
-                JOptionPane.showMessageDialog(rootPane, "Account saved sucessfully !");
-            }else{
-                JOptionPane.showMessageDialog(rootPane, "Unexpected error");
+            JOptionPane.showMessageDialog(null, "All fields must fill !");
+        } else if (!contactBox.getText().matches("^[0-9]{10}$")) {
+            JOptionPane.showMessageDialog(null, "contact numbber must contain only 10 numbers !");
+        } else if (!emailBox.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            JOptionPane.showMessageDialog(null, "Please enter valid email! Example: tharupama826@gmail.com");
+
+        } else {
+            AccountModel accountModel = new AccountModel(idBox.getText(), nameBox.getText(), Integer.parseInt(contactBox.getText()), emailBox.getText(), passwordBox.getText(), roleBox.getSelectedItem().toString(), deptBox.getSelectedItem().toString());
+            try {
+                
+                    boolean affectedRows = AccountController.getInstance().saveAccount(accountModel);
+                    if (affectedRows == true) {
+                        tableLoad();
+                        clearBox();
+                        JOptionPane.showMessageDialog(rootPane, "Account saved sucessfully !");
+                    } else {
+                        JOptionPane.showMessageDialog(rootPane, "Unexpected error");
+                    }
+                
+
+                // TODO add your handling code here:
+            } catch (ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(rootPane, ex.getMessage());
             }
-            }catch(UserIdAlreadyExistsException ex){
-                JOptionPane.showMessageDialog(null, idBox.getText()+" already exists");
-            }
-            
-            
-            // TODO add your handling code here:
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(rootPane, ex);
         }
-        }
-        
-        
+
+
     }//GEN-LAST:event_saveBtnActionPerformed
 
     private void idBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idBoxActionPerformed
@@ -1675,13 +1673,13 @@ public class AdminPanel extends javax.swing.JFrame {
                 if (affected == true) {
                     courseTableLoad();
                     courseFieldClear();
-                    JOptionPane.showMessageDialog(departmentCombo, "saved sucessfully !");
+                    JOptionPane.showMessageDialog(null, "saved sucessfully !");
 
                 } else {
-                    JOptionPane.showMessageDialog(departmentCombo, "save error !");
+                    JOptionPane.showMessageDialog(null, "save error !");
                 }
             } catch (ClassNotFoundException | SQLException ex) {
-                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, ex.getMessage());
             }
         }
 
@@ -1943,7 +1941,7 @@ public class AdminPanel extends javax.swing.JFrame {
                 Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            } 
         }
     }//GEN-LAST:event_saveBtn2ActionPerformed
 

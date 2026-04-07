@@ -5,6 +5,7 @@
 package com.codecrew.admin.controller;
 
 import com.codecrew.admin.db.DbConnection;
+
 import com.codecrew.admin.exception.CourseCodeNotFoundException;
 import com.codecrew.admin.model.CourseModel;
 import com.mysql.cj.jdbc.PreparedStatementWrapper;
@@ -60,6 +61,8 @@ public class CourseController extends CourseControllerAbstract{
         Connection conn = DbConnection.getInstance().getConn();
         String sql = "INSERT INTO course_unit VALUES(?,?,?,?,?,?,?,?,?,?)";
         int affectedRows;
+        
+        
         try (PreparedStatement pst = conn.prepareStatement(sql)) {
             pst.setString(1, courseModel.getCode());
             pst.setString(2, courseModel.getName());
