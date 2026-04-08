@@ -11,7 +11,7 @@ package com.codecrew.admin.model;
 public class AccountModel {
     private String id;
     private String name;
-    private int contact;
+    private long contact;
     private String email;
     private String password;
     private String role;
@@ -20,7 +20,7 @@ public class AccountModel {
     public AccountModel() {
     }
 
-    public AccountModel(String id, String name, int contact, String email, String password, String role, String dept) {
+    public AccountModel(String id, String name, Long contact, String email, String password, String role, String dept) {
         this.id = id;
         this.name = name;
         this.contact = contact;
@@ -55,11 +55,11 @@ public class AccountModel {
         this.name = name;
     }
 
-    public int getContact() {
+    public long getContact() {
         return contact;
     }
 
-    public void setContact(int contact) {
+    public void setContact(long contact) {
         this.contact = contact;
     }
 

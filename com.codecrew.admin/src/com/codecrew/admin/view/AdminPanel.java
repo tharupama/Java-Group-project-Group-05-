@@ -1410,13 +1410,13 @@ public class AdminPanel extends javax.swing.JFrame {
         if (idBox.getText().equals("") || nameBox.getText().equals("") || contactBox.getText().equals("") || emailBox.getText().equals("") || passwordBox.getText().equals("")) {
             System.out.println("All fields must fill !");
             JOptionPane.showMessageDialog(null, "All fields must fill !");
-        } else if (!contactBox.getText().matches("^[0-9]{10}$")) {
-            JOptionPane.showMessageDialog(null, "contact numbber must contain only 10 numbers !");
+        } else if (!contactBox.getText().matches("^[0-9]{10,15}$")) {
+            JOptionPane.showMessageDialog(null, "contact numbber must contain only 10 to 15 numbers !");
         } else if (!emailBox.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
             JOptionPane.showMessageDialog(null, "Please enter valid email! Example: tharupama826@gmail.com");
 
         } else {
-            AccountModel accountModel = new AccountModel(idBox.getText(), nameBox.getText(), Integer.parseInt(contactBox.getText()), emailBox.getText(), passwordBox.getText(), roleBox.getSelectedItem().toString(), deptBox.getSelectedItem().toString());
+            AccountModel accountModel = new AccountModel(idBox.getText(), nameBox.getText(),Long.parseLong(contactBox.getText()), emailBox.getText(), passwordBox.getText(), roleBox.getSelectedItem().toString(), deptBox.getSelectedItem().toString());
             try {
                 
                     boolean affectedRows = AccountController.getInstance().saveAccount(accountModel);
@@ -1453,13 +1453,13 @@ public class AdminPanel extends javax.swing.JFrame {
             if(idBox.getText().equals("")||nameBox.getText().equals("")||contactBox.getText().equals("")||emailBox.getText().equals("")){
             System.out.println("All fields must fill !");
             JOptionPane.showMessageDialog(null,"All fields must fill !");
-        }else if(!contactBox.getText().matches("^[0-9]{10}$")){
-            JOptionPane.showMessageDialog(null,"contact numbber must contain only numbers and 10 characters !");
+        }else if(!contactBox.getText().matches("^[0-9]{10,15}$")){
+            JOptionPane.showMessageDialog(null,"contact numbber must contain only numbers and 10 to 15 numbers !");
         }else if(!emailBox.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")){
             JOptionPane.showMessageDialog(null,"Please enter valid email! Example: tharupama826@gmail.com");
         
         }else{       
-            AccountModel accountModel = new AccountModel(idBox.getText(),nameBox.getText(), Integer.parseInt(contactBox.getText()), emailBox.getText(), passwordBox.getText(),roleBox.getSelectedItem().toString(), deptBox.getSelectedItem().toString());
+            AccountModel accountModel = new AccountModel(idBox.getText(),nameBox.getText(), Long.parseLong(contactBox.getText()), emailBox.getText(), passwordBox.getText(),roleBox.getSelectedItem().toString(), deptBox.getSelectedItem().toString());
             boolean affectedRows = AccountController.getInstance().updateAccount(accountModel);
             if(affectedRows==true){
             tableLoad();

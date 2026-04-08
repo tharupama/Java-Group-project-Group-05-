@@ -52,3 +52,5 @@ ADD COLUMN id INT PRIMARY KEY AUTO_INCREMENT FIRST;
 ALTER TABLE notice
      ADD CONSTRAINT fk_notice_course
      FOREIGN KEY (course_id) REFERENCES course_unit(Course_code);
+
+ALTER TABLE user MODIFY Contact BIGINT;

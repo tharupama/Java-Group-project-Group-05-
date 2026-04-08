@@ -39,7 +39,7 @@ public static AccountController getInstance(){
         
         pst.setString(1, account.getId());
         pst.setString(2, account.getName());
-        pst.setInt(3, account.getContact());
+        pst.setLong(3, account.getContact());
         pst.setString(4, account.getEmail());
         pst.setString(5, hashedPassword);
         pst.setString(6, account.getRole());
@@ -60,7 +60,7 @@ public static AccountController getInstance(){
             try (PreparedStatement pst = conn.prepareStatement(sql)) {
                 String hashedPassword = BCrypt.hashpw(account.getPassword(), BCrypt.gensalt(12));
                 pst.setString(1, account.getName());
-                pst.setInt(2, account.getContact());
+                pst.setLong(2, account.getContact());
                 pst.setString(3, account.getEmail());
                 pst.setString(4, hashedPassword);
                 pst.setString(5, account.getRole());
@@ -77,7 +77,7 @@ public static AccountController getInstance(){
             int results;
             try (PreparedStatement pst = conn.prepareStatement(sql)) {
                 pst.setString(1, account.getName());
-                pst.setInt(2, account.getContact());
+                pst.setLong(2, account.getContact());
                 pst.setString(3, account.getEmail());
                 pst.setString(4, account.getRole());
                 pst.setString(5, account.getDept());
