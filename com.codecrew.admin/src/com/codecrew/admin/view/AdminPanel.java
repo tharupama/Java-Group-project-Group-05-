@@ -13,7 +13,7 @@ import com.codecrew.admin.db.DbConnection;
 import com.codecrew.admin.enums.Day;
 
 import com.codecrew.admin.exception.CourseCodeNotFoundException;
-
+import com.codecrew.admin.exception.AcountNotFoundException;
 import com.codecrew.admin.model.AccountModel;
 import com.codecrew.admin.model.CourseModel;
 import com.codecrew.admin.model.NoticeModel;
@@ -31,6 +31,8 @@ import java.time.LocalTime;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.SpinnerNumberModel;
 import java.sql.SQLIntegrityConstraintViolationException;
+import javax.security.auth.login.AccountException;
+import javax.security.auth.login.AccountNotFoundException;
     
 /**
  *
@@ -1470,9 +1472,9 @@ public class AdminPanel extends javax.swing.JFrame {
         }
             
             // TODO add your handling code here:
-        } catch (SQLException | ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException |AcountNotFoundException ex) {
             Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(rootPane, ex);
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }
     }//GEN-LAST:event_updateBtnActionPerformed
 
@@ -1490,9 +1492,9 @@ public class AdminPanel extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Delete error!");
             }
             
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (ClassNotFoundException | SQLException | AcountNotFoundException ex) {
             Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(rootPane, ex);
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }
     }//GEN-LAST:event_deleteBtnActionPerformed
 

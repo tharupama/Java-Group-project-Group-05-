@@ -5,6 +5,7 @@
 package com.codecrew.admin.controller;
 
 import com.codecrew.admin.db.DbConnection;
+import com.codecrew.admin.exception.AcountNotFoundException;
 
 import com.codecrew.admin.model.AccountModel;
 import java.sql.Connection;
@@ -13,6 +14,9 @@ import java.sql.PreparedStatement;
 import javax.swing.table.DefaultTableModel;
 import org.mindrot.jbcrypt.BCrypt;
 import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.security.auth.login.AccountNotFoundException;
 import javax.swing.JOptionPane;
 
 /**
@@ -53,6 +57,15 @@ public static AccountController getInstance(){
 @Override
     public boolean updateAccount(AccountModel account) throws SQLException, ClassNotFoundException {
         Connection conn = DbConnection.getInstance().getConn();
+        String sql2 = "SELECT * FROM user WHERE U_Id = ?";
+        try(PreparedStatement pst2 = conn.prepareStatement(sql2)){
+            pst2.setString(1, account.getId());
+            ResultSet rst = pst2.executeQuery();
+            if(!rst.next()){
+                throw new AcountNotFoundException(account.getId());
+            }
+        }
+        
         if (account.getPassword() != null) {
             String sql = "Update user SET Uname=?, Contact=?, Email=?, Password=?, Role=?, Department=? WHERE U_Id=?";
 
@@ -93,6 +106,14 @@ public static AccountController getInstance(){
     public boolean deleteAccount(String id) throws ClassNotFoundException, SQLException {
         String sql = "DELETE FROM user WHERE U_Id = ?";
         Connection conn = DbConnection.getInstance().getConn();
+        String sql2 = "SELECT * FROM user WHERE U_Id = ?";
+        try(PreparedStatement pst2 = conn.prepareStatement(sql2)){
+            pst2.setString(1, id);
+            ResultSet rst = pst2.executeQuery();
+            if(!rst.next()){
+                throw new AcountNotFoundException(id);
+            }
+        }
         int result;
     try (PreparedStatement pst = conn.prepareStatement(sql)) {
         pst.setString(1,id);
