@@ -1929,7 +1929,7 @@ public class AdminPanel extends javax.swing.JFrame {
             }
            
         }else{
-            if (noticeTitle.getText().equals("") || downloadLinkField.getText().equals("") || contentArea.getText().equals("")||courseIdField.getText().equals("")||DateField.getDate().equals("")) {
+            if (noticeTitle.getText().equals("") || downloadLinkField.getText().equals("") || contentArea.getText().equals("")||courseIdField.getText().equals("")||DateField.getDate()==null) {
                 JOptionPane.showMessageDialog(null, "All fields must fill accourding to your selection type!");
             }else{
                 //NoticeController noticeController = new ExamNoticeController();
@@ -1984,7 +1984,7 @@ public class AdminPanel extends javax.swing.JFrame {
             }
 
         } else {
-            if (noticeTitle.getText().equals("") || downloadLinkField.getText().equals("") || contentArea.getText().equals("") || courseIdField.getText().equals("") || DateField.getDate().equals("")) {
+            if (noticeTitle.getText().equals("") || downloadLinkField.getText().equals("") || contentArea.getText().equals("") || courseIdField.getText().equals("") || DateField.getDate()==null) {
                 JOptionPane.showMessageDialog(null, "All fields must fill accourding to your selection type!");
             } else {
                 //NoticeController noticeController = new ExamNoticeController();
@@ -2013,6 +2013,7 @@ public class AdminPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_updateBtn2ActionPerformed
 
     private void deleteBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtn2ActionPerformed
+        
         try {
            boolean affectedRows =  NoticeController.getInstance().noticeDelete(idLabel.getText());
            if(affectedRows==true){
@@ -2096,26 +2097,34 @@ public class AdminPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_TTDayComboActionPerformed
 
     private void saveBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtn3ActionPerformed
-        TimeTableModel timeTableModel = new TimeTableModel(TTCourseCodeField.getText(),TTTypeCombo.getSelectedItem().toString(),TTDateField.getDate(),Day.valueOf(TTDayCombo.getSelectedItem().toString()),LocalTime.of((int)TTFromHoursSpinner.getValue(),(int)TTFromMinutesSpinner.getValue()),LocalTime.of((int)TTToHoursSpinner.getValue(), (int)TTToMinutesSpinner.getValue()));
-        boolean rowsAffected;
-        try {
-            rowsAffected = TimeTableController.getInstance().save(timeTableModel);
-            if(rowsAffected==true){
-                timeTableLoad();
-                timeTableFieldClear();
-            JOptionPane.showMessageDialog(null, "Saved Sucessfully !");
-        }else{
-            JOptionPane.showMessageDialog(null, "save error !");
+        if (TTCourseCodeField.getText().equals("") || TTDateField.getDate()==null) {
+            JOptionPane.showMessageDialog(null, "All fields must fill");
+        } else {
+            TimeTableModel timeTableModel = new TimeTableModel(TTCourseCodeField.getText(), TTTypeCombo.getSelectedItem().toString(), TTDateField.getDate(), Day.valueOf(TTDayCombo.getSelectedItem().toString()), LocalTime.of((int) TTFromHoursSpinner.getValue(), (int) TTFromMinutesSpinner.getValue()), LocalTime.of((int) TTToHoursSpinner.getValue(), (int) TTToMinutesSpinner.getValue()));
+            boolean rowsAffected;
+            try {
+                rowsAffected = TimeTableController.getInstance().save(timeTableModel);
+                if (rowsAffected == true) {
+                    timeTableLoad();
+                    timeTableFieldClear();
+                    JOptionPane.showMessageDialog(null, "Saved Sucessfully !");
+                } else {
+                    JOptionPane.showMessageDialog(null, "save error !");
+                }
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+
+
     }//GEN-LAST:event_saveBtn3ActionPerformed
 
     private void updateBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtn3ActionPerformed
+        if (TTCourseCodeField.getText().equals("") || TTDateField.getDate()==null) {
+            JOptionPane.showMessageDialog(null, "All fields must fill");
+        } else {
         TimeTableModel timeTableModel = new TimeTableModel(TTCourseCodeField.getText(),TTTypeCombo.getSelectedItem().toString(),TTDateField.getDate(),Day.valueOf(TTDayCombo.getSelectedItem().toString()),LocalTime.of((int)TTFromHoursSpinner.getValue(),(int)TTFromMinutesSpinner.getValue()),LocalTime.of((int)TTToHoursSpinner.getValue(), (int)TTToMinutesSpinner.getValue()));
         boolean rowsAffected;
         try {
@@ -2129,6 +2138,8 @@ public class AdminPanel extends javax.swing.JFrame {
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
+        }
+        
     }//GEN-LAST:event_updateBtn3ActionPerformed
 
     private void deleteBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtn3ActionPerformed
