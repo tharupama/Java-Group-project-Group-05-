@@ -1902,29 +1902,37 @@ public class AdminPanel extends javax.swing.JFrame {
         
         
         if(type.equals("General")){
-            //NoticeController noticeController = new NoticeController();
-            NoticeModel noticeModel = new NoticeModel(type, noticeTitle.getText(), downloadLinkField.getText(), contentArea.getText());
-            System.out.println(noticeModel.getType());
-            System.out.println(noticeModel.getTitle());
-            System.out.println(noticeModel.getDownloadLink());
-            System.out.println(noticeModel.getContent());
-            try {
-                boolean affectedRows = NoticeController.getInstance().saveNotice(noticeModel);
-                if(affectedRows==true){
-                    noticeTableLoad();
-                    noticeFieldClear();
-                    JOptionPane.showMessageDialog(null, "notise saved sucessfully !");
-                    
-                }else{
-                    JOptionPane.showMessageDialog(null, "notise save error !");
+            if (noticeTitle.getText().equals("") || downloadLinkField.getText().equals("") || contentArea.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "All fields must fill accourding to your selection type!");
+            } else {
+                //NoticeController noticeController = new NoticeController();
+                NoticeModel noticeModel = new NoticeModel(type, noticeTitle.getText(), downloadLinkField.getText(), contentArea.getText());
+                System.out.println(noticeModel.getType());
+                System.out.println(noticeModel.getTitle());
+                System.out.println(noticeModel.getDownloadLink());
+                System.out.println(noticeModel.getContent());
+                try {
+                    boolean affectedRows = NoticeController.getInstance().saveNotice(noticeModel);
+                    if (affectedRows == true) {
+                        noticeTableLoad();
+                        noticeFieldClear();
+                        JOptionPane.showMessageDialog(null, "notise saved sucessfully !");
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "notise save error !");
+                    }
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
+           
         }else{
-            //NoticeController noticeController = new ExamNoticeController();
+            if (noticeTitle.getText().equals("") || downloadLinkField.getText().equals("") || contentArea.getText().equals("")||courseIdField.getText().equals("")||DateField.getDate().equals("")) {
+                JOptionPane.showMessageDialog(null, "All fields must fill accourding to your selection type!");
+            }else{
+                //NoticeController noticeController = new ExamNoticeController();
             LocalTime timeFrom = LocalTime.of((int)hourSpinner.getValue(),(int)minuteSpinner.getValue());
             LocalTime timeTo = LocalTime.of((int)hourToSpinner.getValue(),(int)minuteToSpinner.getValue()) ;
             //System.out.println(timeFrom);
@@ -1942,56 +1950,66 @@ public class AdminPanel extends javax.swing.JFrame {
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
-                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-            } 
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
+            }
+             
         }
     }//GEN-LAST:event_saveBtn2ActionPerformed
 
     private void updateBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtn2ActionPerformed
-       String type = typeCombo.getSelectedItem().toString();
-       if(type.equals("General")){
-            //NoticeController noticeController = new NoticeController();
-            NoticeModel noticeModel = new NoticeModel(type, noticeTitle.getText(), downloadLinkField.getText(), contentArea.getText(), Integer.parseInt(idLabel.getText()));
-            
-            try {
-                boolean affectedRows = NoticeController.getInstance().updateNotice(noticeModel);
-                if(affectedRows==true){
-                    noticeTableLoad();
-                    noticeFieldClear();
-                    JOptionPane.showMessageDialog(null, "notise updated sucessfully !");
-                    
-                }else{
-                    JOptionPane.showMessageDialog(null, "notise update error !"); 
+        String type = typeCombo.getSelectedItem().toString();
+        if (type.equals("General")) {
+            if (noticeTitle.getText().equals("") || downloadLinkField.getText().equals("") || contentArea.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "All fields must fill accourding to your selection type!");
+            } else {
+                //NoticeController noticeController = new NoticeController();
+                NoticeModel noticeModel = new NoticeModel(type, noticeTitle.getText(), downloadLinkField.getText(), contentArea.getText(), Integer.parseInt(idLabel.getText()));
+
+                try {
+                    boolean affectedRows = NoticeController.getInstance().updateNotice(noticeModel);
+                    if (affectedRows == true) {
+                        noticeTableLoad();
+                        noticeFieldClear();
+                        JOptionPane.showMessageDialog(null, "notise updated sucessfully !");
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "notise update error !");
+                    }
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }else{
-           //NoticeController noticeController = new ExamNoticeController();
-            LocalTime timeFrom = LocalTime.of((int)hourSpinner.getValue(),(int)minuteSpinner.getValue());
-            LocalTime timeTo = LocalTime.of((int)hourToSpinner.getValue(),(int)minuteToSpinner.getValue()) ;
-            
-            NoticeModel noticeModel = new NoticeModel(type, noticeTitle.getText(), downloadLinkField.getText(), contentArea.getText(), courseIdField.getText(), DateField.getDate(), timeFrom, timeTo,Integer.parseInt(idLabel.getText()));
-            try {
-                boolean affectedRows = ExamNoticeController.getInstance().updateNotice(noticeModel);
-                if(affectedRows==true){
-                    noticeTableLoad();
-                    noticeFieldClear();
-                    JOptionPane.showMessageDialog(null, "notise updated sucessfully !");
-                    
-                }else{
-                    JOptionPane.showMessageDialog(null, "notise update error !");
+
+        } else {
+            if (noticeTitle.getText().equals("") || downloadLinkField.getText().equals("") || contentArea.getText().equals("") || courseIdField.getText().equals("") || DateField.getDate().equals("")) {
+                JOptionPane.showMessageDialog(null, "All fields must fill accourding to your selection type!");
+            } else {
+                //NoticeController noticeController = new ExamNoticeController();
+                LocalTime timeFrom = LocalTime.of((int) hourSpinner.getValue(), (int) minuteSpinner.getValue());
+                LocalTime timeTo = LocalTime.of((int) hourToSpinner.getValue(), (int) minuteToSpinner.getValue());
+
+                NoticeModel noticeModel = new NoticeModel(type, noticeTitle.getText(), downloadLinkField.getText(), contentArea.getText(), courseIdField.getText(), DateField.getDate(), timeFrom, timeTo, Integer.parseInt(idLabel.getText()));
+                try {
+                    boolean affectedRows = ExamNoticeController.getInstance().updateNotice(noticeModel);
+                    if (affectedRows == true) {
+                        noticeTableLoad();
+                        noticeFieldClear();
+                        JOptionPane.showMessageDialog(null, "notise updated sucessfully !");
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "notise update error !");
+                    }
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
-        
-       
-       }
+
+        }
     }//GEN-LAST:event_updateBtn2ActionPerformed
 
     private void deleteBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtn2ActionPerformed
