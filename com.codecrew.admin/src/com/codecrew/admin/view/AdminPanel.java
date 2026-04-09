@@ -1480,22 +1480,28 @@ public class AdminPanel extends javax.swing.JFrame {
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         String id = idBox.getText();
-        try {
-            boolean affectedRows = AccountController.getInstance().deleteAccount(id);
-            if(affectedRows==true){
-                tableLoad();
-                clearBox(); 
-                
-            JOptionPane.showMessageDialog(rootPane, "Deleted sucessfully !");
-            
-            }else{
-            JOptionPane.showMessageDialog(rootPane, "Delete error!");
+        int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + id + " ?");
+
+        if (response == 0) {
+            try {
+                boolean affectedRows = AccountController.getInstance().deleteAccount(id);
+                if (affectedRows == true) {
+                    tableLoad();
+                    clearBox();
+
+                    JOptionPane.showMessageDialog(rootPane, "Deleted sucessfully !");
+
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Delete error!");
+                }
+
+            } catch (ClassNotFoundException | SQLException | AcountNotFoundException ex) {
+                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(rootPane, ex.getMessage());
             }
-            
-        } catch (ClassNotFoundException | SQLException | AcountNotFoundException ex) {
-            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }
+
+
     }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -1787,25 +1793,30 @@ public class AdminPanel extends javax.swing.JFrame {
 
     private void deleteBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtn1ActionPerformed
         String id = courseCodeBox.getText();
-        boolean deleted;
-        try {
-            deleted = CourseController.getInstance().delete(id);
-            if(deleted==true){
-            courseTableLoad();
-            courseFieldClear();
-            JOptionPane.showMessageDialog(departmentCombo, "deleted sucessfully");
-            
-        }else{
-            JOptionPane.showMessageDialog(departmentCombo, "delete error");
+        int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + id + " ?");
+
+        if (response == 0) {
+            boolean deleted;
+            try {
+                deleted = CourseController.getInstance().delete(id);
+                if (deleted == true) {
+                    courseTableLoad();
+                    courseFieldClear();
+                    JOptionPane.showMessageDialog(departmentCombo, "deleted sucessfully");
+
+                } else {
+                    JOptionPane.showMessageDialog(departmentCombo, "delete error");
+                }
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CourseCodeNotFoundException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
         }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }catch (CourseCodeNotFoundException ex){
-            JOptionPane.showMessageDialog(null,ex.getMessage());
-        }
-        
+
+
     }//GEN-LAST:event_deleteBtn1ActionPerformed
 
     private void courseClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courseClearActionPerformed
@@ -2013,21 +2024,24 @@ public class AdminPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_updateBtn2ActionPerformed
 
     private void deleteBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtn2ActionPerformed
-        
-        try {
-           boolean affectedRows =  NoticeController.getInstance().noticeDelete(idLabel.getText());
-           if(affectedRows==true){
-               noticeTableLoad();
-               noticeFieldClear();
-           JOptionPane.showMessageDialog(null, "Deleted sucessfully !");
-           }else{
-               JOptionPane.showMessageDialog(null, "Delete error!");
-           }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + idLabel.getText() + " ?");
+        if (response == 0) {
+            try {
+                boolean affectedRows = NoticeController.getInstance().noticeDelete(idLabel.getText());
+                if (affectedRows == true) {
+                    noticeTableLoad();
+                    noticeFieldClear();
+                    JOptionPane.showMessageDialog(null, "Deleted sucessfully !");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Delete error!");
+                }
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+
     }//GEN-LAST:event_deleteBtn2ActionPerformed
 
     private void courseClear1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courseClear1ActionPerformed
@@ -2143,18 +2157,22 @@ public class AdminPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_updateBtn3ActionPerformed
 
     private void deleteBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtn3ActionPerformed
-        try {
-           boolean affectedRows = TimeTableController.getInstance().delete(Integer.parseInt(timeTableIdLabel.getText()));
-           if(affectedRows==true){
-               timeTableFieldClear();
-               timeTableLoad();
-           JOptionPane.showMessageDialog(null, "Deleted sucessfully !");
-           }else{
-               JOptionPane.showMessageDialog(null, "Delete error!");
-           }
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + timeTableIdLabel.getText() + " ?");
+        if (response == 0) {
+            try {
+                boolean affectedRows = TimeTableController.getInstance().delete(Integer.parseInt(timeTableIdLabel.getText()));
+                if (affectedRows == true) {
+                    timeTableFieldClear();
+                    timeTableLoad();
+                    JOptionPane.showMessageDialog(null, "Deleted sucessfully !");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Delete error!");
+                }
+            } catch (ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+
     }//GEN-LAST:event_deleteBtn3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
