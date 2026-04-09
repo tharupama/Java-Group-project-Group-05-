@@ -1032,7 +1032,7 @@ public class AdminPanel extends javax.swing.JFrame {
         minuteSpinner.setModel(new SpinnerNumberModel(0, 0, 59, 1));
         jPanel4.add(minuteSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(604, 130, 90, 40));
 
-        hourSpinner.setModel(new SpinnerNumberModel(0, 0, 24, 1));
+        hourSpinner.setModel(new SpinnerNumberModel(0, 0, 23, 1));
         jPanel4.add(hourSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 130, 90, 40));
 
         saveBtn2.setBackground(new java.awt.Color(102, 255, 0));
@@ -1161,7 +1161,7 @@ public class AdminPanel extends javax.swing.JFrame {
         timeToLabel.setOpaque(true);
         jPanel4.add(timeToLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 180, 190, 40));
 
-        hourToSpinner.setModel(new SpinnerNumberModel(0, 0, 24, 1));
+        hourToSpinner.setModel(new SpinnerNumberModel(0, 0, 23, 1));
         jPanel4.add(hourToSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 180, 90, 40));
 
         minuteToSpinner.setModel(new SpinnerNumberModel(0, 0, 59, 1));
@@ -1272,7 +1272,7 @@ public class AdminPanel extends javax.swing.JFrame {
         timeLabel1.setOpaque(true);
         jPanel5.add(timeLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 110, 160, 40));
 
-        TTFromHoursSpinner.setModel(new SpinnerNumberModel(0, 0, 24, 1));
+        TTFromHoursSpinner.setModel(new SpinnerNumberModel(0, 0, 23, 1));
         jPanel5.add(TTFromHoursSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 110, 80, 40));
 
         TTFromMinutesSpinner.setModel(new SpinnerNumberModel(0, 0, 59, 1));
@@ -1286,7 +1286,7 @@ public class AdminPanel extends javax.swing.JFrame {
         timeToLabel1.setOpaque(true);
         jPanel5.add(timeToLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 160, 160, 40));
 
-        TTToHoursSpinner.setModel(new SpinnerNumberModel(0, 0, 24, 1));
+        TTToHoursSpinner.setModel(new SpinnerNumberModel(0, 0, 23, 1));
         jPanel5.add(TTToHoursSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 160, 80, 40));
 
         TTToMinutesSpinner.setModel(new SpinnerNumberModel(0, 0, 59, 1));
@@ -2038,7 +2038,7 @@ public class AdminPanel extends javax.swing.JFrame {
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
-                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, ex.getMessage());
             }
         }
 
@@ -2128,7 +2128,7 @@ public class AdminPanel extends javax.swing.JFrame {
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
-                Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, ex.getMessage());
             }
         }
 
@@ -2150,7 +2150,7 @@ public class AdminPanel extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Update error !");
         }
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         }
         
