@@ -54,3 +54,11 @@ ALTER TABLE notice
      FOREIGN KEY (course_id) REFERENCES course_unit(Course_code);
 
 ALTER TABLE user MODIFY Contact BIGINT;
+
+ALTER TABLE notice DROP CONSTRAINT fk_notice_course;
+
+ALTER TABLE notice ADD CONSTRAINT fk_notice_course FOREIGN KEY(course_id) REFERENCES course_unit(Course_code) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE time_table DROP CONSTRAINT time_table_ibfk_1;
+
+ALTER TABLE time_table ADD CONSTRAINT fk_time_table FOREIGN KEY (Course_code) REFERENCES Course_unit(Course_code) ON DELETE CASCADE ON UPDATE CASCADE;

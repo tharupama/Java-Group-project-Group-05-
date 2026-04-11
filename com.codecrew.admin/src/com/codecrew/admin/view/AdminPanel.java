@@ -1802,6 +1802,8 @@ public class AdminPanel extends javax.swing.JFrame {
                 if (deleted == true) {
                     courseTableLoad();
                     courseFieldClear();
+                    noticeTableLoad();
+                    timeTableLoad();
                     JOptionPane.showMessageDialog(departmentCombo, "deleted sucessfully");
 
                 } else {
