@@ -3,10 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package gui;
+
 import gui.UploadMarksForm;
 import gui.LoginForm;
 import gui.UploadMarksForm;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author HP
@@ -32,6 +34,7 @@ public class LecturerDashboard extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnAddMarks = new javax.swing.JButton();
         btnViewMarks = new javax.swing.JButton();
+        btnViewMarks1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,6 +55,13 @@ public class LecturerDashboard extends javax.swing.JFrame {
             }
         });
 
+        btnViewMarks1.setText("VIEW GPA");
+        btnViewMarks1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewMarks1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -61,9 +71,12 @@ public class LecturerDashboard extends javax.swing.JFrame {
                 .addComponent(btnAddMarks, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(98, 98, 98)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnViewMarks, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnViewMarks, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(107, 107, 107)
+                        .addComponent(btnViewMarks1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(338, Short.MAX_VALUE))
+                .addContainerGap(186, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -73,7 +86,8 @@ public class LecturerDashboard extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddMarks, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnViewMarks, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnViewMarks, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnViewMarks1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(276, Short.MAX_VALUE))
         );
 
@@ -81,16 +95,22 @@ public class LecturerDashboard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddMarksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMarksActionPerformed
-        UploadMarksForm upload=new UploadMarksForm();
+        UploadMarksForm upload = new UploadMarksForm();
         upload.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAddMarksActionPerformed
 
     private void btnViewMarksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewMarksActionPerformed
-        ViewMarksForm view=new ViewMarksForm();
-            view.setVisible(true);
-            this.dispose();
+        ViewMarksForm view = new ViewMarksForm();
+        view.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnViewMarksActionPerformed
+
+    private void btnViewMarks1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewMarks1ActionPerformed
+        ViewGPAForm gpa=new ViewGPAForm();
+        gpa.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnViewMarks1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -130,6 +150,7 @@ public class LecturerDashboard extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddMarks;
     private javax.swing.JButton btnViewMarks;
+    private javax.swing.JButton btnViewMarks1;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
