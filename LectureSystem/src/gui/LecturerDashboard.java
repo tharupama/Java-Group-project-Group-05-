@@ -35,6 +35,7 @@ public class LecturerDashboard extends javax.swing.JFrame {
         btnAddMarks = new javax.swing.JButton();
         btnViewMarks = new javax.swing.JButton();
         btnViewMarks1 = new javax.swing.JButton();
+        Notice = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -62,33 +63,45 @@ public class LecturerDashboard extends javax.swing.JFrame {
             }
         });
 
+        Notice.setText("NOTICE ");
+        Notice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NoticeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(btnAddMarks, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(98, 98, 98)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(337, 337, 337)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(btnAddMarks, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)
                         .addComponent(btnViewMarks, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(107, 107, 107)
-                        .addComponent(btnViewMarks1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(186, Short.MAX_VALUE))
+                        .addGap(29, 29, 29)
+                        .addComponent(btnViewMarks1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)
+                        .addComponent(Notice, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(70, 70, 70)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAddMarks, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Notice, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnViewMarks1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnViewMarks, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnViewMarks1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(276, Short.MAX_VALUE))
+                    .addComponent(btnAddMarks, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(224, Short.MAX_VALUE))
         );
 
         pack();
@@ -111,6 +124,12 @@ public class LecturerDashboard extends javax.swing.JFrame {
         gpa.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnViewMarks1ActionPerformed
+
+    private void NoticeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NoticeActionPerformed
+        NoticeForm notice=new NoticeForm();
+        notice.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_NoticeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -148,6 +167,7 @@ public class LecturerDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Notice;
     private javax.swing.JButton btnAddMarks;
     private javax.swing.JButton btnViewMarks;
     private javax.swing.JButton btnViewMarks1;
