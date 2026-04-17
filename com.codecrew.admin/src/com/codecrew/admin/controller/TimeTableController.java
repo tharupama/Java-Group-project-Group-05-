@@ -72,7 +72,7 @@ public class TimeTableController implements TimeTableControllerInterface{
     }
 
     @Override
-    public void search(DefaultTableModel dtm, String text) throws ClassNotFoundException, SQLException {
+    public void timeTableLoad(DefaultTableModel dtm, String text) throws ClassNotFoundException, SQLException {
                dtm.setRowCount(0);
         String sql = "SELECT * FROM time_table WHERE id LIKE ? OR Course_code LIKE ? OR Type LIKE ? OR date LIKE ? OR Day LIKE ? OR time_from LIKE ? OR time_to LIKE ?";
         Connection conn = DbConnection.getInstance().getConn();

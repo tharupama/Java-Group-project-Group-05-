@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
     public interface TimeTableControllerInterface {
     public boolean save(TimeTableModel timeTableModel) throws ClassNotFoundException, SQLException;
     public void timeTableLoad(DefaultTableModel timeDtm) throws ClassNotFoundException, SQLException;
-    public void search(DefaultTableModel dtm, String text) throws ClassNotFoundException, SQLException;
+    public void timeTableLoad(DefaultTableModel dtm, String text) throws ClassNotFoundException, SQLException;
     public boolean update(TimeTableModel timeTableModel, int id) throws ClassNotFoundException, SQLException;
     public boolean delete(int id) throws ClassNotFoundException, SQLException;
 }

@@ -2193,7 +2193,7 @@ public class AdminPanel extends javax.swing.JFrame {
          String text =  timeTableSearchBox.getText();
          DefaultTableModel dtm = (DefaultTableModel)timeTable.getModel();
         try {
-            TimeTableController.getInstance().search(dtm,text);
+            TimeTableController.getInstance().timeTableLoad(dtm,text);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
