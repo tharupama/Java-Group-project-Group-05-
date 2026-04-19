@@ -18,7 +18,8 @@ public class ResultService {
     //get best two quizes
     private double[]getBestTwoQuizzes(double q1,double q2,double q3){
       double all[]={q1,q2,q3}; 
-      double lowest=Math.min(q1,Math.min(q2,q3));
+      java.util.Arrays.sort(all);
+/*       double lowest=Math.min(q1,Math.min(q2,q3));
       double bestTwo[]=new double[2];
       int index=0;
       
@@ -31,7 +32,8 @@ public class ResultService {
               break;
           }
       }
-      return bestTwo;
+      return bestTwo; */
+    return new double[]{all[1], all[2]};
     }
  //calculate CA marks   
 private double calculateCA(double q1,double q2,double q3,
