@@ -59,6 +59,7 @@ public class AdminPanel extends javax.swing.JFrame {
         courseTableLoad();
         noticeTableLoad();
         timeTableLoad();
+        profileImg.setIcon(new ImageIcon("C:\\projects\\Java-Group-project-Group-05-\\com.codecrew.admin\\src\\com\\codecrew\\admin\\view\\ppimg.jpg"));
         //theoryHoursLabel.setVisible(false);
         practicalHoursLabel.setVisible(false);
         //theoryHoursBox.setVisible(false);
@@ -94,6 +95,13 @@ public class AdminPanel extends javax.swing.JFrame {
         passwordBox.setText("");
         roleBox.setSelectedIndex(0);
         deptBox.setSelectedIndex(0);
+        
+        // 👇 Set default image
+    profileImg.setIcon(new ImageIcon("C:\\projects\\Java-Group-project-Group-05-\\com.codecrew.admin\\src\\com\\codecrew\\admin\\view\\ppimg.jpg"));
+    
+    // Optional: Force UI to refresh immediately
+    profileImg.revalidate();
+    profileImg.repaint();
     }
  
     
@@ -138,7 +146,27 @@ public class AdminPanel extends javax.swing.JFrame {
         TTToMinutesSpinner.setValue(0);
     }
     
-    public void tableToFields(){
+    public void getImageByID(String id) throws ClassNotFoundException, SQLException {
+        byte[] poto = AccountController.getInstance().getImageById(id);
+
+        if (poto != null && poto.length > 0) {
+            ImageIcon icon = new ImageIcon(poto);
+
+            // Safely handle case where label isn't laid out yet (getWidth/Height = 0)
+            int w = profileImg.getWidth() > 0 ? profileImg.getWidth() : icon.getIconWidth();
+            int h = profileImg.getHeight() > 0 ? profileImg.getHeight() : icon.getIconHeight();
+
+            Image scaled = icon.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
+            profileImg.setIcon(new ImageIcon(scaled));
+        } else {
+            profileImg.setIcon(null); // or set a default placeholder: new ImageIcon("default_avatar.png")
+        }
+
+        profileImg.revalidate();
+        profileImg.repaint();
+    }
+    
+    public void tableToFields() throws ClassNotFoundException, SQLException{
     int selectedRow = accountTable.getSelectedRow();
     idBox.setText(accountTable.getValueAt(selectedRow, 0).toString());
     nameBox.setText(accountTable.getValueAt(selectedRow, 1).toString());
@@ -146,8 +174,12 @@ public class AdminPanel extends javax.swing.JFrame {
     emailBox.setText(accountTable.getValueAt(selectedRow, 3).toString());
     roleBox.setSelectedItem(accountTable.getValueAt(selectedRow, 4).toString());
     deptBox.setSelectedItem(accountTable.getValueAt(selectedRow, 5).toString());
+    
+    getImageByID(accountTable.getValueAt(selectedRow, 0).toString());
 
     }
+    
+
     
     public void courseTableToField(){
     int selectedRow = courseTable.getSelectedRow();
@@ -1470,7 +1502,13 @@ public class AdminPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_idBoxActionPerformed
 
     private void accountTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountTableMouseClicked
-        tableToFields();// TODO add your handling code here:
+        try {
+            tableToFields();// TODO add your handling code here:
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_accountTableMouseClicked
 
     private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
