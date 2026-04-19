@@ -4,6 +4,12 @@
  */
 package com.codecrew;
 
+import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  *
  * @author nipun
@@ -48,12 +54,15 @@ public class Login extends javax.swing.JFrame {
 
         loginPageNameTextField.addActionListener(this::loginPageNameTextFieldActionPerformed);
         getContentPane().add(loginPageNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(545, 278, 80, -1));
+
+        loginPagePasswordField.addActionListener(this::loginPagePasswordFieldActionPerformed);
         getContentPane().add(loginPagePasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(545, 322, 80, -1));
 
         loginPageTitleLabel.setText("LogIn");
         getContentPane().add(loginPageTitleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(478, 234, 37, -1));
 
         loginPageLogInButton.setText("LogIn");
+        loginPageLogInButton.addActionListener(this::loginPageLogInButtonActionPerformed);
         getContentPane().add(loginPageLogInButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 397, -1, -1));
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-3, 0, 1100, 760));
 
@@ -63,6 +72,32 @@ public class Login extends javax.swing.JFrame {
     private void loginPageNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginPageNameTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_loginPageNameTextFieldActionPerformed
+
+    private void loginPageLogInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginPageLogInButtonActionPerformed
+        
+        try {
+            Connection c = Connect.getConnection();
+            PreparedStatement pst = null;
+            ResultSet rs = null;
+            pst=c.prepareStatement("SELECT * FROM user WHERE Uname=? AND Password=?");
+            pst.setString(1,loginPageNameTextField.getText());
+            pst.setString(2,loginPagePasswordField.getText());
+            rs=pst.executeQuery();
+            if(rs.next())
+                new ToHome().setVisible(true);
+            else
+                JOptionPane.showMessageDialog(this, "please enter valide creadentials.");
+            
+            
+            // TODO add your handling code here:
+        } catch (SQLException ex) {
+            System.getLogger(Login.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }//GEN-LAST:event_loginPageLogInButtonActionPerformed
+
+    private void loginPagePasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginPagePasswordFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loginPagePasswordFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -98,4 +133,8 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel loginPagePasswordLabel;
     private javax.swing.JLabel loginPageTitleLabel;
     // End of variables declaration//GEN-END:variables
+
+    private String getText() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
