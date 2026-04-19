@@ -30,7 +30,7 @@ public class ToAttendance extends javax.swing.JFrame {
 
         jButton4 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        AddAttendanceButtons = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -39,8 +39,8 @@ public class ToAttendance extends javax.swing.JFrame {
 
         jButton3.setText("Remove Attendance");
 
-        jButton2.setText("Add Attendance");
-        jButton2.addActionListener(this::jButton2ActionPerformed);
+        AddAttendanceButtons.setText("Add Attendance");
+        AddAttendanceButtons.addActionListener(this::AddAttendanceButtonsActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -48,7 +48,7 @@ public class ToAttendance extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(188, 188, 188)
-                .addComponent(jButton2)
+                .addComponent(AddAttendanceButtons)
                 .addGap(73, 73, 73)
                 .addComponent(jButton3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
@@ -61,7 +61,7 @@ public class ToAttendance extends javax.swing.JFrame {
                 .addGap(82, 82, 82)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4)
-                    .addComponent(jButton2)
+                    .addComponent(AddAttendanceButtons)
                     .addComponent(jButton3))
                 .addContainerGap(655, Short.MAX_VALUE))
         );
@@ -73,9 +73,11 @@ public class ToAttendance extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void AddAttendanceButtonsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddAttendanceButtonsActionPerformed
+    
+        new ToAddAttendance().setVisible(true);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_AddAttendanceButtonsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -103,7 +105,7 @@ public class ToAttendance extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton AddAttendanceButtons;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     // End of variables declaration//GEN-END:variables

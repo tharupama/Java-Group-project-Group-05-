@@ -6,20 +6,20 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Connect {
+public class ToConnect {
 
     public static Connection getConnection() {
         Connection con = null;
 
         try {
             con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/student_management?useSSL=false&serverTimezone=UTC",
+                "jdbc:mysql://localhost:3306/mis?useSSL=false&serverTimezone=UTC",
                 "root",
                 "1234"
             );
             System.out.println("Connected!");
         } catch (SQLException ex) {
-            Logger.getLogger(Connect.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ToConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return con;

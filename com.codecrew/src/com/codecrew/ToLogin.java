@@ -14,14 +14,14 @@ import java.sql.SQLException;
  *
  * @author nipun
  */
-public class Login extends javax.swing.JFrame {
+public class ToLogin extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Login.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ToLogin.class.getName());
 
     /**
      * Creates new form NewJFrame
      */
-    public Login() {
+    public ToLogin() {
         initComponents();
     }
 
@@ -43,7 +43,6 @@ public class Login extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1100, 761));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         loginPageNameLabel.setText("Name");
@@ -76,7 +75,7 @@ public class Login extends javax.swing.JFrame {
     private void loginPageLogInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginPageLogInButtonActionPerformed
         
         try {
-            Connection c = Connect.getConnection();
+            Connection c = ToConnect.getConnection();
             PreparedStatement pst = null;
             ResultSet rs = null;
             pst=c.prepareStatement("SELECT * FROM user WHERE Uname=? AND Password=?");
@@ -91,7 +90,7 @@ public class Login extends javax.swing.JFrame {
             
             // TODO add your handling code here:
         } catch (SQLException ex) {
-            System.getLogger(Login.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(ToLogin.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }//GEN-LAST:event_loginPageLogInButtonActionPerformed
 
@@ -121,7 +120,7 @@ public class Login extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Login().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new ToLogin().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
