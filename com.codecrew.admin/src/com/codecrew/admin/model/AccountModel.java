@@ -16,11 +16,12 @@ public class AccountModel {
     private String password;
     private String role;
     private String dept;
+    private byte[] profilePicture;
 
     public AccountModel() {
     }
 
-    public AccountModel(String id, String name, Long contact, String email, String password, String role, String dept) {
+    public AccountModel(String id, String name, Long contact, String email, String password, String role, String dept, byte[] profilePicture) {
         this.id = id;
         this.name = name;
         this.contact = contact;
@@ -28,6 +29,15 @@ public class AccountModel {
         this.password = password;
         this.role = role;
         this.dept=dept;
+        this.profilePicture=profilePicture;
+    }
+
+    public byte[] getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(byte[] profilePicture) {
+        this.profilePicture = profilePicture;
     }
 
     public String getId() {

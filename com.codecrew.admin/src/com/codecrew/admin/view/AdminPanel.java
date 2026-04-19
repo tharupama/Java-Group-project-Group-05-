@@ -18,6 +18,11 @@ import com.codecrew.admin.model.AccountModel;
 import com.codecrew.admin.model.CourseModel;
 import com.codecrew.admin.model.NoticeModel;
 import com.codecrew.admin.model.TimeTableModel;
+import java.awt.Image;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,6 +38,8 @@ import javax.swing.SpinnerNumberModel;
 import java.sql.SQLIntegrityConstraintViolationException;
 import javax.security.auth.login.AccountException;
 import javax.security.auth.login.AccountNotFoundException;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
     
 /**
  *
@@ -40,6 +47,8 @@ import javax.security.auth.login.AccountNotFoundException;
  */
 public class AdminPanel extends javax.swing.JFrame {
 
+    String fileName = null;
+    byte[] person_image=null;
     /**
      * Creates new form AdminPanel
      */
@@ -287,6 +296,8 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
+        jButton7 = new javax.swing.JButton();
+        profileImg = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -394,7 +405,7 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(204, 0, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Acount Management");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 0, 380, 50));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 380, 50));
 
         jLabel9.setBackground(new java.awt.Color(255, 204, 0));
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -645,6 +656,19 @@ public class AdminPanel extends javax.swing.JFrame {
         jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 6, 110, 30));
 
         jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 90, 450, 110));
+
+        jButton7.setText("Choose");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 80, -1, -1));
+
+        profileImg.setBackground(new java.awt.Color(255, 51, 51));
+        profileImg.setText("profile image");
+        profileImg.setOpaque(true);
+        jPanel2.add(profileImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 10, 160, 180));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/codecrew/admin/view/university-of-ruhuna.jpg"))); // NOI18N
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, -1, 638));
@@ -1418,7 +1442,7 @@ public class AdminPanel extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please enter valid email! Example: tharupama826@gmail.com");
 
         } else {
-            AccountModel accountModel = new AccountModel(idBox.getText(), nameBox.getText(),Long.parseLong(contactBox.getText()), emailBox.getText(), passwordBox.getText(), roleBox.getSelectedItem().toString(), deptBox.getSelectedItem().toString());
+            AccountModel accountModel = new AccountModel(idBox.getText(), nameBox.getText(),Long.parseLong(contactBox.getText()), emailBox.getText(), passwordBox.getText(), roleBox.getSelectedItem().toString(), deptBox.getSelectedItem().toString(),person_image);
             try {
                 
                     boolean affectedRows = AccountController.getInstance().saveAccount(accountModel);
@@ -1461,7 +1485,7 @@ public class AdminPanel extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Please enter valid email! Example: tharupama826@gmail.com");
         
         }else{       
-            AccountModel accountModel = new AccountModel(idBox.getText(),nameBox.getText(), Long.parseLong(contactBox.getText()), emailBox.getText(), passwordBox.getText(),roleBox.getSelectedItem().toString(), deptBox.getSelectedItem().toString());
+            AccountModel accountModel = new AccountModel(idBox.getText(),nameBox.getText(), Long.parseLong(contactBox.getText()), emailBox.getText(), passwordBox.getText(),roleBox.getSelectedItem().toString(), deptBox.getSelectedItem().toString(),person_image);
             boolean affectedRows = AccountController.getInstance().updateAccount(accountModel);
             if(affectedRows==true){
             tableLoad();
@@ -2209,6 +2233,30 @@ public class AdminPanel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_timeTableMouseClicked
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        chooser.showOpenDialog(null);
+        File f = chooser.getSelectedFile();
+        fileName = f.getAbsolutePath();
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon(fileName).getImage().getScaledInstance(profileImg.getWidth(), profileImg.getHeight(), Image.SCALE_SMOOTH));
+        profileImg.setIcon(imageIcon);
+        
+        try{
+            File image = new File(fileName);
+            FileInputStream fis = new FileInputStream(image);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] buf = new byte[1024];
+            for(int readNum;(readNum=fis.read(buf))!=-1;){
+                bos.write(buf,0,readNum);
+            }
+            person_image = bos.toByteArray();
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+            
+    }//GEN-LAST:event_jButton7ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2296,6 +2344,7 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -2353,6 +2402,7 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JTextField passwordBox;
     private javax.swing.JTextField practicalHoursBox;
     private javax.swing.JLabel practicalHoursLabel;
+    private javax.swing.JLabel profileImg;
     private javax.swing.JComboBox<String> roleBox;
     private javax.swing.JComboBox<String> roleCombo;
     private javax.swing.JButton saveBtn;

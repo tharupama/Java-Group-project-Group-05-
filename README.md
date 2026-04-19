@@ -62,3 +62,5 @@ ALTER TABLE notice ADD CONSTRAINT fk_notice_course FOREIGN KEY(course_id) REFERE
 ALTER TABLE time_table DROP CONSTRAINT time_table_ibfk_1;
 
 ALTER TABLE time_table ADD CONSTRAINT fk_time_table FOREIGN KEY (Course_code) REFERENCES Course_unit(Course_code) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE user ADD image_data LONGBLOB NULL;
