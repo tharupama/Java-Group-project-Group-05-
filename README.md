@@ -17,22 +17,14 @@ CREATE TABLE user (
 );
 
 
-*************************************************************************************************
-
-
-CREATE TABLE student (
-  Registration_No VARCHAR(20) NOT NULL PRIMARY KEY,
-  Fname VARCHAR(45),
-  Lname VARCHAR(45),
-  Year INT,
-  Department VARCHAR(45),
-  Batch INT DEFAULT 2024,
-  Status ENUM('Proper','Repeat','Suspended') NOT NULL DEFAULT 'Proper'
-);
+INSERT INTO user (U_Id, Uname, Contact, Email, Password, Role, Department)
+VALUES ('TO/2023/001', 'nipuna', 0771234567, 'nipuna@gmail.com', '123', 'To', 'IT'),('TG/2023/0001', 'deshan', 077123456, 'deshan@gmail.com', '1234', 'student', 'IT');
 
 
 
-***********************************************************************************************
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 CREATE TABLE course_unit (
     Course_code VARCHAR(15) NOT NULL PRIMARY KEY,
@@ -48,70 +40,98 @@ CREATE TABLE course_unit (
 );
 
 
-******************************************************************************************************
+ALTER TABLE course_unit
+drop column Year;
+
+
+INSERT INTO course_unit 
+(Course_code, Name, Type, Credit, Lec_Name, Semester, Department_Offering, Theory_Hours, Practical_Hours)
+VALUES
+('ICT2122', 'Object Oriented Programming', 'Theory', 2, 'P.H.P. Nuwan Laksir', 'Semester 1', 'ICT', 30, 0);
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+CREATE TABLE session (
+    Session_Id INT AUTO_INCREMENT PRIMARY KEY,
+    Course_code VARCHAR(15) NOT NULL,
+    Week_Number INT NOT NULL CHECK (Week_Number BETWEEN 1 AND 15),
+    Session_Number INT NOT NULL,
+    Session_Date DATE NOT NULL,
+    Session_Type ENUM('Theory','Practical') NOT NULL,
+
+    FOREIGN KEY (Course_code) REFERENCES course_unit(Course_code)
+);
+
+
+INSERT INTO session 
+(Course_code, Week_Number, Session_Number, Session_Date, Session_Type)
+VALUES 
+('ICT2122', 1, 1, '2026-04-19', 'Theory');
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
 CREATE TABLE attendance (
-     Attendance_Id VARCHAR(20) NOT NULL PRIMARY KEY,
-     ST_Id VARCHAR(20) NOT NULL,
-     Course_code VARCHAR(15) NOT NULL,
-     Session_Date DATE NOT NULL,
-     Week_Number INT NOT NULL,
-     Session_Number INT NOT NULL,
-     Session_Type ENUM('Theory','Practical','Lab') NOT NULL,
-     Status ENUM('Present','Absent','Medical') DEFAULT 'Present'
- );
+    Attendance_Id INT AUTO_INCREMENT PRIMARY KEY,
+    ST_Id VARCHAR(20) NOT NULL,
+    Session_Id INT NOT NULL,
+    Status ENUM('Present','Absent','Medical') DEFAULT 'Present',
 
- ALTER TABLE attendance
-         ADD CONSTRAINT fk_attendance_student
-             FOREIGN KEY (ST_Id) REFERENCES student(Registration_No)
-             ON UPDATE CASCADE ON DELETE CASCADE,
-         ADD CONSTRAINT fk_attendance_course
-             FOREIGN KEY (Course_code) REFERENCES course_unit(Course_code)
-             ON UPDATE CASCADE ON DELETE RESTRICT;
-
-
-UPDATE attendance SET session_type = "Practical" WHERE session_type = "Lab";
-
-
-***************************************************************************************************
-
-CREATE TABLE medical_record (
-  Medical_Id VARCHAR(10) NOT NULL PRIMARY KEY,
-  ST_Id VARCHAR(20) NOT NULL,
-  Course_code VARCHAR(15) NOT NULL,
-  Date_Submit DATE NOT NULL,
-  Valid_From DATE NOT NULL,
-  Valid_To DATE NOT NULL,
-  Medical_Type ENUM('Attendance','CA','Final_Exam','Quiz') NOT NULL,
-  Approve TINYINT(1) DEFAULT 1,
-  Approved_By VARCHAR(20) NOT NULL  
-);
-ALTER TABLE medical_record
-    ADD CONSTRAINT fk_medical_student 
-        FOREIGN KEY (ST_Id) REFERENCES student(Registration_No)
-        ON UPDATE CASCADE ON DELETE CASCADE;
-ALTER TABLE medical_record
-    ADD CONSTRAINT fk_medical_course 
-        FOREIGN KEY (Course_code) REFERENCES course_unit(Course_code)
-        ON UPDATE CASCADE ON DELETE RESTRICT;
-
-
-
-
-ALTER TABLE medical_record
-ADD CONSTRAINT Checking_approve_status_valid_or_not
-CHECK (
-    (Approve = 0 AND Approved_By IS NULL)
-    OR
-    (Approve = 1 AND Approved_By IS NOT NULL)
+    FOREIGN KEY (ST_Id) REFERENCES user(U_Id),
+    FOREIGN KEY (Session_Id) REFERENCES session(Session_Id)
 );
 
 
-ALTER TABLE medical_record
-MODIFY Approved_By VARCHAR(20) NULL;
 
-**************************************************************************************
+INSERT INTO attendance (ST_Id, Session_Id, Status)
+VALUES (
+    'TG/2023/0001',
+    (SELECT Session_Id FROM session 
+     WHERE Course_code = 'ICT2122' 
+     AND Week_Number = 1 
+     AND Session_Number = 1),
+    'Present'
+);
 
-INSERT INTO user (U_Id, Uname, Contact, Email, Password, Role, Department)
-VALUES ('001', 'nipuna', 0771234567, 'nipuna@gmail.com', '123', 'To', 'IT');
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+CREATE TABLE medical_Record (
+    Record_Id INT AUTO_INCREMENT PRIMARY KEY,
+
+    ST_Id VARCHAR(20) NOT NULL,
+    Course_code VARCHAR(15) NOT NULL,
+
+    Session_Id INT NULL,
+
+    Request_Type ENUM('Attendance','CA','Final_Exam','Quiz') NOT NULL,
+
+    Date_Submit DATE NOT NULL,
+   
+    Status ENUM('Approved','Rejected') DEFAULT 'Approved',
+
+    Approved_By VARCHAR(20) NULL,
+
+    Approved_Date DATE NULL,
+
+    FOREIGN KEY (ST_Id) REFERENCES user(U_Id),
+    FOREIGN KEY (Course_code) REFERENCES course_unit(Course_code),
+    FOREIGN KEY (Session_Id) REFERENCES session(Session_Id)
+);
+
+
+
+INSERT INTO medical_Record 
+(ST_Id, Course_code, Session_Id, Request_Type, Date_Submit, Status, Approved_By, Approved_Date)
+VALUES 
+('TG/2023/0001', 'ICT2122', 1, 'Attendance', '2026-04-19', 'Approved', 'ADMIN01', '2026-04-20');
