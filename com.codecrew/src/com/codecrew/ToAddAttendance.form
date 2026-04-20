@@ -43,12 +43,12 @@
                       <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="AttendanceStudentId" alignment="0" min="-2" pref="71" max="-2" attributes="0"/>
-                          <Component id="AttendanceCourseCode" alignment="0" min="-2" pref="71" max="-2" attributes="0"/>
                           <Component id="AttendanceWeekNo" alignment="0" min="-2" pref="71" max="-2" attributes="0"/>
                           <Component id="AttendanceSessionNo" alignment="0" min="-2" pref="71" max="-2" attributes="0"/>
                           <Component id="AttendanceSessionDate" alignment="0" min="-2" pref="71" max="-2" attributes="0"/>
-                          <Component id="AttendanceStatus" alignment="0" min="-2" pref="71" max="-2" attributes="0"/>
-                          <Component id="AttendanceSessionType" alignment="0" min="-2" pref="71" max="-2" attributes="0"/>
+                          <Component id="AttendanceCourseCode" min="-2" max="-2" attributes="0"/>
+                          <Component id="AttendanceSessionType" min="-2" max="-2" attributes="0"/>
+                          <Component id="AttendanceStatus" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -91,14 +91,14 @@
                   <Component id="AttendanceSessionDate" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel8" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
-                  <Component id="AttendanceSessionType" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jLabel8" min="-2" pref="27" max="-2" attributes="0"/>
+                  <Component id="AttendanceSessionType" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel7" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
-                  <Component id="AttendanceStatus" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jLabel7" min="-2" pref="27" max="-2" attributes="0"/>
+                  <Component id="AttendanceStatus" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="67" max="32767" attributes="0"/>
               <Component id="AttendanceAddButton" min="-2" max="-2" attributes="0"/>
@@ -124,8 +124,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Course Code"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="AttendanceCourseCode">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
@@ -153,14 +151,10 @@
         <Property name="text" type="java.lang.String" value="Session Type"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="AttendanceSessionType">
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
       <Properties>
         <Property name="text" type="java.lang.String" value="Status"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="AttendanceStatus">
     </Component>
     <Component class="javax.swing.JButton" name="AttendanceAddButton">
       <Properties>
@@ -169,6 +163,67 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AttendanceAddButtonActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="AttendanceCourseCode">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="23">
+            <StringItem index="0" value="ICT1212"/>
+            <StringItem index="1" value="ICT1222"/>
+            <StringItem index="2" value="ICT1233"/>
+            <StringItem index="3" value="ICT1242"/>
+            <StringItem index="4" value="ICT1253"/>
+            <StringItem index="5" value="ICT2122"/>
+            <StringItem index="6" value="TCS1212"/>
+            <StringItem index="7" value="TMS1213"/>
+            <StringItem index="8" value="TMS1222"/>
+            <StringItem index="9" value="TMS1231"/>
+            <StringItem index="10" value="TMS1233"/>
+            <StringItem index="11" value="TMS1242"/>
+            <StringItem index="12" value="TMS1253"/>
+            <StringItem index="13" value="TMS1261"/>
+            <StringItem index="14" value="ENT1212"/>
+            <StringItem index="15" value="ENG1222"/>
+            <StringItem index="16" value="BST1272"/>
+            <StringItem index="17" value="BST1262"/>
+            <StringItem index="18" value="BST1253"/>
+            <StringItem index="19" value="BST1242"/>
+            <StringItem index="20" value="BST1232"/>
+            <StringItem index="21" value="BST1222"/>
+            <StringItem index="22" value="BST1212"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="AttendanceSessionType">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="2">
+            <StringItem index="0" value="Theory"/>
+            <StringItem index="1" value="Practical"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="AttendanceStatus">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="3">
+            <StringItem index="0" value="Present"/>
+            <StringItem index="1" value="Absent"/>
+            <StringItem index="2" value="Medical"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

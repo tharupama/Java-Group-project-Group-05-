@@ -79,7 +79,7 @@ public class ToRemoveAttendance extends javax.swing.JFrame {
         removeAttendanceRemoveButton.setText("Remove");
         removeAttendanceRemoveButton.addActionListener(this::removeAttendanceRemoveButtonActionPerformed);
 
-        removeAttendanceCourseCode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ICT2122", "ICT2132" }));
+        removeAttendanceCourseCode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ICT1212", "ICT1222", "ICT1233", "ICT1242", "ICT1253", "ICT2122", "TCS1212", "TMS1213", "TMS1222", "TMS1231", "TMS1233", "TMS1242", "TMS1253", "TMS1261", "ENT1212", "ENG1222", "BST1272", "BST1262", "BST1253", "BST1242", "BST1232", "BST1222", "BST1212" }));
 
         jLabel5.setText("Session Type");
 

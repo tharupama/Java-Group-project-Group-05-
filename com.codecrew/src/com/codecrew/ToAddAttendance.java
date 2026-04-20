@@ -37,7 +37,6 @@ public class ToAddAttendance extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         AttendanceStudentId = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        AttendanceCourseCode = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         AttendanceWeekNo = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -45,10 +44,11 @@ public class ToAddAttendance extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         AttendanceSessionDate = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        AttendanceSessionType = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        AttendanceStatus = new javax.swing.JTextField();
         AttendanceAddButton = new javax.swing.JButton();
+        AttendanceCourseCode = new javax.swing.JComboBox<>();
+        AttendanceSessionType = new javax.swing.JComboBox<>();
+        AttendanceStatus = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -70,6 +70,12 @@ public class ToAddAttendance extends javax.swing.JFrame {
 
         AttendanceAddButton.setText("ADD");
         AttendanceAddButton.addActionListener(this::AttendanceAddButtonActionPerformed);
+
+        AttendanceCourseCode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ICT1212", "ICT1222", "ICT1233", "ICT1242", "ICT1253", "ICT2122", "TCS1212", "TMS1213", "TMS1222", "TMS1231", "TMS1233", "TMS1242", "TMS1253", "TMS1261", "ENT1212", "ENG1222", "BST1272", "BST1262", "BST1253", "BST1242", "BST1232", "BST1222", "BST1212" }));
+
+        AttendanceSessionType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Theory", "Practical" }));
+
+        AttendanceStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Present", "Absent", "Medical" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -93,12 +99,12 @@ public class ToAddAttendance extends javax.swing.JFrame {
                         .addGap(94, 94, 94)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(AttendanceStudentId, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(AttendanceCourseCode, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(AttendanceWeekNo, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(AttendanceSessionNo, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(AttendanceSessionDate, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(AttendanceStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(AttendanceSessionType, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(AttendanceCourseCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(AttendanceSessionType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(AttendanceStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(395, 395, 395)
                         .addComponent(AttendanceAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -130,11 +136,11 @@ public class ToAddAttendance extends javax.swing.JFrame {
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(AttendanceSessionDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(AttendanceSessionType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(AttendanceStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
@@ -151,10 +157,10 @@ public class ToAddAttendance extends javax.swing.JFrame {
              JOptionPane.showMessageDialog(this, "please Fill all details.");
              AttendanceStudentId.requestFocus();
          }
-         else if(AttendanceCourseCode.getText().equals("")){
+         /*else if(AttendanceCourseCod.getText().equals("")){
              JOptionPane.showMessageDialog(this, "please Fill all details.");
-             AttendanceCourseCode.requestFocus();
-         }
+             AttendanceCourseCod.requestFocus();
+         }*/
          else if(AttendanceWeekNo.getText().equals("")){
              JOptionPane.showMessageDialog(this, "please Fill all details.");
              AttendanceWeekNo.requestFocus();
@@ -167,14 +173,14 @@ public class ToAddAttendance extends javax.swing.JFrame {
              JOptionPane.showMessageDialog(this, "please Fill all details.");
              AttendanceSessionDate.requestFocus();
          }
-         else if(AttendanceSessionType.getText().equals("")){
+         /*else if(AttendanceSessionTyp.getText().equals("")){
              JOptionPane.showMessageDialog(this, "please Fill all details.");
-             AttendanceSessionType.requestFocus();
+             AttendanceSessionTyp.requestFocus();
          }
-         else if(AttendanceStatus.getText().equals("")){
+         else if(AttendanceStatu.getText().equals("")){
              JOptionPane.showMessageDialog(this, "please Fill all details.");
-             AttendanceStatus.requestFocus();
-         }
+             AttendanceStatu.requestFocus();
+         }*/
          else{
              
              try {
@@ -184,11 +190,11 @@ public class ToAddAttendance extends javax.swing.JFrame {
                         "SELECT Session_Id FROM session WHERE Course_code=? AND Week_Number=? AND Session_Number=? AND Session_Date=? AND Session_Type=?"
                     );
 
-                    checkSession.setString(1, AttendanceCourseCode.getText());
+                    checkSession.setString(1, AttendanceCourseCode.getSelectedItem().toString());
                     checkSession.setInt(2, Integer.parseInt(AttendanceWeekNo.getText()));
                     checkSession.setInt(3, Integer.parseInt(AttendanceSessionNo.getText()));
                     checkSession.setString(4, AttendanceSessionDate.getText());
-                    checkSession.setString(5, AttendanceSessionType.getText());
+                    checkSession.setString(5, AttendanceSessionType.getSelectedItem().toString());
 
                     ResultSet rs = checkSession.executeQuery();
 
@@ -204,11 +210,11 @@ public class ToAddAttendance extends javax.swing.JFrame {
                             Statement.RETURN_GENERATED_KEYS
                         );
 
-                        pst.setString(1, AttendanceCourseCode.getText());
+                        pst.setString(1, AttendanceCourseCode.getSelectedItem().toString());
                         pst.setInt(2, Integer.parseInt(AttendanceWeekNo.getText()));
                         pst.setInt(3, Integer.parseInt(AttendanceSessionNo.getText()));
                         pst.setString(4, AttendanceSessionDate.getText());
-                        pst.setString(5, AttendanceSessionType.getText());
+                        pst.setString(5, AttendanceSessionType.getSelectedItem().toString());
 
                         pst.executeUpdate();
 
@@ -225,18 +231,16 @@ public class ToAddAttendance extends javax.swing.JFrame {
 
                     pst1.setString(1, AttendanceStudentId.getText()); // student id
                     pst1.setInt(2, sessionId);
-                    pst1.setString(3, AttendanceStatus.getText());
+                    pst1.setString(3, AttendanceStatus.getSelectedItem().toString());
 
                     pst1.executeUpdate();
 
                     JOptionPane.showMessageDialog(this, "Attendance Saved Successfully!");
                     AttendanceStudentId.setText("");
-                    AttendanceStatus.setText("");
-                    AttendanceSessionType.setText("");
                     AttendanceSessionDate.setText("");
                     AttendanceSessionNo.setText("");
                     AttendanceWeekNo.setText("");
-                    AttendanceCourseCode.setText("");
+                    
              } catch (SQLException ex) {
                  System.getLogger(ToAddAttendance.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
              }
@@ -272,11 +276,11 @@ public class ToAddAttendance extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AttendanceAddButton;
-    private javax.swing.JTextField AttendanceCourseCode;
+    private javax.swing.JComboBox<String> AttendanceCourseCode;
     private javax.swing.JTextField AttendanceSessionDate;
     private javax.swing.JTextField AttendanceSessionNo;
-    private javax.swing.JTextField AttendanceSessionType;
-    private javax.swing.JTextField AttendanceStatus;
+    private javax.swing.JComboBox<String> AttendanceSessionType;
+    private javax.swing.JComboBox<String> AttendanceStatus;
     private javax.swing.JTextField AttendanceStudentId;
     private javax.swing.JTextField AttendanceWeekNo;
     private javax.swing.JLabel jLabel1;
