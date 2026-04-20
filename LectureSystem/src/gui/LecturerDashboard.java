@@ -36,6 +36,7 @@ public class LecturerDashboard extends javax.swing.JFrame {
         btnViewMarks = new javax.swing.JButton();
         btnViewMarks1 = new javax.swing.JButton();
         Notice = new javax.swing.JButton();
+        Notice1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,6 +71,13 @@ public class LecturerDashboard extends javax.swing.JFrame {
             }
         });
 
+        Notice1.setText("VIEW TIMETABLE");
+        Notice1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Notice1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -87,7 +95,10 @@ public class LecturerDashboard extends javax.swing.JFrame {
                         .addGap(29, 29, 29)
                         .addComponent(btnViewMarks1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(36, 36, 36)
-                        .addComponent(Notice, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(Notice, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(395, 395, 395)
+                        .addComponent(Notice1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(92, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -101,7 +112,9 @@ public class LecturerDashboard extends javax.swing.JFrame {
                     .addComponent(btnViewMarks1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnViewMarks, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAddMarks, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(224, Short.MAX_VALUE))
+                .addGap(54, 54, 54)
+                .addComponent(Notice1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(111, Short.MAX_VALUE))
         );
 
         pack();
@@ -130,6 +143,12 @@ public class LecturerDashboard extends javax.swing.JFrame {
         notice.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_NoticeActionPerformed
+
+    private void Notice1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Notice1ActionPerformed
+    TimetableForm tt = new TimetableForm();
+    tt.setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_Notice1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -168,6 +187,7 @@ public class LecturerDashboard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Notice;
+    private javax.swing.JButton Notice1;
     private javax.swing.JButton btnAddMarks;
     private javax.swing.JButton btnViewMarks;
     private javax.swing.JButton btnViewMarks1;

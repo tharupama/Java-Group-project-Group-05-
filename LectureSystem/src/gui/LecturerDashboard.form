@@ -39,6 +39,10 @@
                       <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                       <Component id="Notice" min="-2" pref="199" max="-2" attributes="0"/>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="395" max="-2" attributes="0"/>
+                      <Component id="Notice1" min="-2" pref="199" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace pref="92" max="32767" attributes="0"/>
           </Group>
@@ -56,7 +60,9 @@
                   <Component id="btnViewMarks" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
                   <Component id="btnAddMarks" alignment="3" min="-2" pref="59" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="224" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+              <Component id="Notice1" min="-2" pref="59" max="-2" attributes="0"/>
+              <EmptySpace pref="111" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -100,6 +106,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="NoticeActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="Notice1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="VIEW TIMETABLE"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Notice1ActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
