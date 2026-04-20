@@ -423,6 +423,8 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel37 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         timeTable = new javax.swing.JTable();
+        jLabel38 = new javax.swing.JLabel();
+        venueField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -689,18 +691,19 @@ public class AdminPanel extends javax.swing.JFrame {
 
         jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 90, 450, 110));
 
-        jButton7.setText("Choose");
+        jButton7.setText("Choose Image");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 80, -1, -1));
+        jPanel2.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(372, 80, 120, 30));
 
         profileImg.setBackground(new java.awt.Color(255, 51, 51));
-        profileImg.setText("profile image");
+        profileImg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        profileImg.setText("No profile image");
         profileImg.setOpaque(true);
-        jPanel2.add(profileImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 10, 160, 180));
+        jPanel2.add(profileImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, 160, 180));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/codecrew/admin/view/university-of-ruhuna.jpg"))); // NOI18N
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, -1, 638));
@@ -1445,6 +1448,19 @@ public class AdminPanel extends javax.swing.JFrame {
         jScrollPane5.setViewportView(timeTable);
 
         jPanel5.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 257, 1160, 350));
+
+        jLabel38.setBackground(new java.awt.Color(255, 204, 0));
+        jLabel38.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel38.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel38.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel38.setText("Venue");
+        jLabel38.setOpaque(true);
+        jPanel5.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 160, 40));
+
+        venueField.setBackground(new java.awt.Color(255, 51, 51));
+        venueField.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        venueField.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel5.add(venueField, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 210, 220, 40));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/codecrew/admin/view/university-of-ruhuna.jpg"))); // NOI18N
         jPanel5.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 1200, 650));
@@ -2414,6 +2430,7 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -2466,6 +2483,7 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JButton updateBtn1;
     private javax.swing.JButton updateBtn2;
     private javax.swing.JButton updateBtn3;
+    private javax.swing.JTextField venueField;
     // End of variables declaration//GEN-END:variables
 
     private void eamNoticeTableToField() {
