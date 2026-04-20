@@ -189,29 +189,39 @@ DELIMITER $$
 CREATE PROCEDURE generate_week_sessions(IN p_week INT)
 BEGIN
     DECLARE base_date DATE;
-    
-    -- Week start date calculation
+
     SET base_date = DATE_ADD('2026-01-01', INTERVAL (p_week - 1) * 7 DAY);
 
-    INSERT INTO session (Course_code, Week_Number, Session_Number, Session_Date, Session_Type)
-    
+    SET @rownum := 0;
+
+    INSERT INTO session (
+        Course_code,
+        Week_Number,
+        Session_Number,
+        Session_Date,
+        Session_Type
+    )
+
     SELECT 
         t.Course_code,
         p_week,
-        (@rownum := @rownum + 1) + ((p_week - 1) * 23) AS Session_Number,
-        
+        (@rownum := @rownum + 1) + ((p_week - 1) * 23),
+
         CASE t.Day
             WHEN 'MONDAY' THEN DATE_ADD(base_date, INTERVAL 0 DAY)
             WHEN 'TUESDAY' THEN DATE_ADD(base_date, INTERVAL 1 DAY)
             WHEN 'WEDNESDAY' THEN DATE_ADD(base_date, INTERVAL 2 DAY)
             WHEN 'THURSDAY' THEN DATE_ADD(base_date, INTERVAL 3 DAY)
             WHEN 'FRIDAY' THEN DATE_ADD(base_date, INTERVAL 4 DAY)
-        END AS Session_Date,
-        
-        'Theory'
-        
-    FROM time_table t
-    CROSS JOIN (SELECT @rownum := 0) r;
+        END,
+
+        -- ✔ FIXED LOGIC USING ONLY YOUR EXISTING DATA
+        CASE 
+            WHEN t.venue LIKE 'lab%' THEN 'Practical'
+            ELSE 'Theory'
+        END
+
+    FROM time_table t;
 
 END$$
 
