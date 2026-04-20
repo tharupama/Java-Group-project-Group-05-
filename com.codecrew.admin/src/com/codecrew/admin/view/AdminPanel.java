@@ -135,7 +135,7 @@ public class AdminPanel extends javax.swing.JFrame {
     public void timeTableFieldClear(){
         timeTableIdLabel.setText("Id");
         TTCourseCodeField.setText("");
-        TTTypeCombo.setSelectedItem("LECTURE");
+        TTTypeCombo.setSelectedItem("LECTURE"); 
         TTDateField.setDate(null);
         TTDayCombo.setSelectedItem("MONDAY");
         
@@ -144,6 +144,7 @@ public class AdminPanel extends javax.swing.JFrame {
         
         TTToHoursSpinner.setValue(0);
         TTToMinutesSpinner.setValue(0);
+        venueField.setText("");
     }
     
     public void getImageByID(String id) throws ClassNotFoundException, SQLException {
@@ -174,6 +175,7 @@ public class AdminPanel extends javax.swing.JFrame {
     emailBox.setText(accountTable.getValueAt(selectedRow, 3).toString());
     roleBox.setSelectedItem(accountTable.getValueAt(selectedRow, 4).toString());
     deptBox.setSelectedItem(accountTable.getValueAt(selectedRow, 5).toString());
+    
     
     getImageByID(accountTable.getValueAt(selectedRow, 0).toString());
 
@@ -247,6 +249,8 @@ public class AdminPanel extends javax.swing.JFrame {
         
         TTToHoursSpinner.setValue(Integer.valueOf(timeTable.getValueAt(selectedRow, 6).toString().split(":")[0]));
         TTToMinutesSpinner.setValue(Integer.valueOf(timeTable.getValueAt(selectedRow, 6).toString().split(":")[1]));
+        
+        venueField.setText(timeTable.getValueAt(selectedRow, 7).toString());
     }
     
     public void courseTableLoad() throws ClassNotFoundException, SQLException{
@@ -1431,13 +1435,13 @@ public class AdminPanel extends javax.swing.JFrame {
 
         timeTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "id", "courseCode", "type", "date", "day", "timeFrom", "timeTo"
+                "id", "courseCode", "type", "date", "day", "timeFrom", "timeTo", "venue"
             }
         ));
         timeTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -2191,10 +2195,10 @@ public class AdminPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_TTDayComboActionPerformed
 
     private void saveBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtn3ActionPerformed
-        if (TTCourseCodeField.getText().equals("") || TTDateField.getDate()==null) {
+        if (TTCourseCodeField.getText().equals("") || TTDateField.getDate()==null || venueField.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "All fields must fill");
         } else {
-            TimeTableModel timeTableModel = new TimeTableModel(TTCourseCodeField.getText(), TTTypeCombo.getSelectedItem().toString(), TTDateField.getDate(), Day.valueOf(TTDayCombo.getSelectedItem().toString()), LocalTime.of((int) TTFromHoursSpinner.getValue(), (int) TTFromMinutesSpinner.getValue()), LocalTime.of((int) TTToHoursSpinner.getValue(), (int) TTToMinutesSpinner.getValue()));
+            TimeTableModel timeTableModel = new TimeTableModel(TTCourseCodeField.getText(), TTTypeCombo.getSelectedItem().toString(), TTDateField.getDate(), Day.valueOf(TTDayCombo.getSelectedItem().toString()), LocalTime.of((int) TTFromHoursSpinner.getValue(), (int) TTFromMinutesSpinner.getValue()), LocalTime.of((int) TTToHoursSpinner.getValue(), (int) TTToMinutesSpinner.getValue()),venueField.getText());
             boolean rowsAffected;
             try {
                 rowsAffected = TimeTableController.getInstance().save(timeTableModel);
@@ -2216,10 +2220,10 @@ public class AdminPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_saveBtn3ActionPerformed
 
     private void updateBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtn3ActionPerformed
-        if (TTCourseCodeField.getText().equals("") || TTDateField.getDate()==null) {
+        if (TTCourseCodeField.getText().equals("") || TTDateField.getDate()==null || venueField.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "All fields must fill");
         } else {
-        TimeTableModel timeTableModel = new TimeTableModel(TTCourseCodeField.getText(),TTTypeCombo.getSelectedItem().toString(),TTDateField.getDate(),Day.valueOf(TTDayCombo.getSelectedItem().toString()),LocalTime.of((int)TTFromHoursSpinner.getValue(),(int)TTFromMinutesSpinner.getValue()),LocalTime.of((int)TTToHoursSpinner.getValue(), (int)TTToMinutesSpinner.getValue()));
+        TimeTableModel timeTableModel = new TimeTableModel(TTCourseCodeField.getText(),TTTypeCombo.getSelectedItem().toString(),TTDateField.getDate(),Day.valueOf(TTDayCombo.getSelectedItem().toString()),LocalTime.of((int)TTFromHoursSpinner.getValue(),(int)TTFromMinutesSpinner.getValue()),LocalTime.of((int)TTToHoursSpinner.getValue(), (int)TTToMinutesSpinner.getValue()),venueField.getText());
         boolean rowsAffected;
         try {
             rowsAffected = TimeTableController.getInstance().update(timeTableModel,Integer.parseInt(timeTableIdLabel.getText()));
