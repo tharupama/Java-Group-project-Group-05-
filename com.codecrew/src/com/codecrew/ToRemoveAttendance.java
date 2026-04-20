@@ -3,7 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.codecrew;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import java.sql.ResultSet;
+import java.sql.Statement;
 /**
  *
  * @author nipun
@@ -54,16 +59,17 @@ public class ToRemoveAttendance extends javax.swing.JFrame {
         jLabel4.setText("Week No");
 
         removeAttendanceSearchButton.setText("Search");
+        removeAttendanceSearchButton.addActionListener(this::removeAttendanceSearchButtonActionPerformed);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Student ID", "Course Code", "Session Date", "Session Type", "Status"
+                "Attendance ID", "Student ID", "Course Code", "Session Date", "Session Type", "Status"
             }
         ));
         jTable1.setToolTipText("");
@@ -71,6 +77,7 @@ public class ToRemoveAttendance extends javax.swing.JFrame {
 
         removeAttendanceRemoveButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         removeAttendanceRemoveButton.setText("Remove");
+        removeAttendanceRemoveButton.addActionListener(this::removeAttendanceRemoveButtonActionPerformed);
 
         removeAttendanceCourseCode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ICT2122", "ICT2132" }));
 
@@ -82,15 +89,6 @@ public class ToRemoveAttendance extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(211, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(removeAttendanceRemoveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(466, 466, 466))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 711, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(178, 178, 178))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(417, 417, 417)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -120,6 +118,15 @@ public class ToRemoveAttendance extends javax.swing.JFrame {
                                             .addComponent(removeAttendanceStudentId, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(removeAttendanceWeekNo, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(211, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(removeAttendanceRemoveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(466, 466, 466))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 737, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(152, 152, 152))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,6 +160,66 @@ public class ToRemoveAttendance extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void removeAttendanceSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeAttendanceSearchButtonActionPerformed
+         
+            String studentId = removeAttendanceStudentId.getText();
+            String courseCode = removeAttendanceCourseCode.getSelectedItem().toString();
+            String weekNo = removeAttendanceWeekNo.getText();
+            String sessionType = removeAttendanceSessionType.getSelectedItem().toString();
+            
+            
+            try {
+                Connection con = ToConnect.getConnection();
+
+                String sql = "SELECT a.attendance_id, a.student_id, s.course_code, s.session_date, s.session_type, a.status " +
+                             "FROM attendance a " +
+                             "JOIN session s ON a.session_id = s.session_id " +
+                             "WHERE a.student_id=? AND s.course_code=? AND s.week_no=? AND s.session_type=?";
+
+                PreparedStatement pst = con.prepareStatement(sql);
+                pst.setString(1, studentId);
+                pst.setString(2, courseCode);
+                pst.setString(3, weekNo);
+                pst.setString(4, sessionType);
+
+                ResultSet rs = pst.executeQuery();
+
+                // Table model
+                javax.swing.table.DefaultTableModel model = 
+                    (javax.swing.table.DefaultTableModel) jTable1.getModel();
+
+                model.setRowCount(0); // clear table
+
+                while (rs.next()) {
+                    model.addRow(new Object[]{
+                        rs.getInt("attendance_id"),   // hidden or keep
+                        rs.getString("student_id"),
+                        rs.getString("course_code"),
+                        rs.getDate("session_date"),
+                        rs.getString("session_type"),
+                        rs.getString("status")
+                    });
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            }
+        }
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_removeAttendanceSearchButtonActionPerformed
+
+    private void removeAttendanceRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeAttendanceRemoveButtonActionPerformed
+
+        int selectedRow = attendanceTable.getSelectedRow();
+        
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a row to delete");
+            return;
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_removeAttendanceRemoveButtonActionPerformed
 
     /**
      * @param args the command line arguments
