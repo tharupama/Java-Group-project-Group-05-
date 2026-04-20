@@ -40,14 +40,6 @@ CREATE TABLE course_unit (
 );
 
 
-ALTER TABLE course_unit
-drop column Year;
-
-
-INSERT INTO course_unit 
-(Course_code, Name, Type, Credit, Lec_Name, Semester, Department_Offering, Theory_Hours, Practical_Hours)
-VALUES
-('ICT2122', 'Object Oriented Programming', 'Theory', 2, 'P.H.P. Nuwan Laksir', 'Semester 1', 'ICT', 30, 0);
 
 
 
@@ -135,3 +127,53 @@ INSERT INTO medical_Record
 (ST_Id, Course_code, Session_Id, Request_Type, Date_Submit, Status, Approved_By, Approved_Date)
 VALUES 
 ('TG/2023/0001', 'ICT2122', 1, 'Attendance', '2026-04-19', 'Approved', 'ADMIN01', '2026-04-20');
+
+
+////////////////////////////////////////////////////////////////////////////
+
+
+
+INSERT INTO time_table (Course_code, Type, date, Day, time_from, time_to) VALUES
+
+-- MONDAY (Morning)
+('BST1212', 'LECTURE', '2026-01-01', 'MONDAY', '08:00:00', '10:00:00'),
+('ICT1222', 'LECTURE', '2026-01-01', 'MONDAY', '08:00:00', '10:00:00'),
+('TMS1242', 'LECTURE', '2026-01-01', 'MONDAY', '08:00:00', '10:00:00'),
+
+-- MONDAY (Afternoon)
+('BST1262', 'LECTURE', '2026-01-01', 'MONDAY', '13:00:00', '15:00:00'),
+('ICT1233', 'LECTURE', '2026-01-01', 'MONDAY', '13:00:00', '15:00:00'),
+
+-- TUESDAY (Morning)
+('BST1272', 'LECTURE', '2026-01-01', 'TUESDAY', '08:00:00', '10:00:00'),
+('ICT1242', 'LECTURE', '2026-01-01', 'TUESDAY', '08:00:00', '10:00:00'),
+
+-- TUESDAY (Afternoon)
+('BST1222', 'LECTURE', '2026-01-01', 'TUESDAY', '13:00:00', '15:00:00'),
+('ICT1253', 'LECTURE', '2026-01-01', 'TUESDAY', '13:00:00', '15:00:00'),
+('TMS1253', 'LECTURE', '2026-01-01', 'TUESDAY', '13:00:00', '15:00:00'),
+
+-- WEDNESDAY (Morning)
+('BST1232', 'LECTURE', '2026-01-01', 'WEDNESDAY', '08:00:00', '10:00:00'),
+('ICT2122', 'LECTURE', '2026-01-01', 'WEDNESDAY', '08:00:00', '10:00:00'),
+
+-- WEDNESDAY (Afternoon)
+('ENG1222', 'LECTURE', '2026-01-01', 'WEDNESDAY', '13:00:00', '15:00:00'),
+('TCS1212', 'LECTURE', '2026-01-01', 'WEDNESDAY', '13:00:00', '15:00:00'),
+('TMS1261', 'LECTURE', '2026-01-01', 'WEDNESDAY', '13:00:00', '15:00:00'),
+
+-- THURSDAY (Morning)
+('ICT1212', 'LECTURE', '2026-01-01', 'THURSDAY', '08:00:00', '10:00:00'),
+('TMS1213', 'LECTURE', '2026-01-01', 'THURSDAY', '08:00:00', '10:00:00'),
+
+-- THURSDAY (Afternoon)
+('BST1242', 'LECTURE', '2026-01-01', 'THURSDAY', '13:00:00', '15:00:00'),
+('TMS1222', 'LECTURE', '2026-01-01', 'THURSDAY', '13:00:00', '15:00:00'),
+
+-- FRIDAY (Morning)
+('BST1253', 'LECTURE', '2026-01-01', 'FRIDAY', '08:00:00', '10:00:00'),
+('TMS1231', 'LECTURE', '2026-01-01', 'FRIDAY', '08:00:00', '10:00:00'),
+
+-- FRIDAY (Afternoon)
+('ENT1212', 'LECTURE', '2026-01-01', 'FRIDAY', '13:00:00', '15:00:00'),
+('TMS1233', 'LECTURE', '2026-01-01', 'FRIDAY', '13:00:00', '15:00:00');
