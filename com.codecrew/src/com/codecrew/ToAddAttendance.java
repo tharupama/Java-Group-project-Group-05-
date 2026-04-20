@@ -50,7 +50,7 @@ public class ToAddAttendance extends javax.swing.JFrame {
         AttendanceStatus = new javax.swing.JTextField();
         AttendanceAddButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("ADD ATTENDANCE");
 
@@ -179,27 +179,43 @@ public class ToAddAttendance extends javax.swing.JFrame {
              
              try {
                     Connection con = ToConnect.getConnection();
-
-                    // 1. INSERT SESSION
-                    PreparedStatement pst = con.prepareStatement(
-                        "INSERT INTO session (Course_code, Week_Number, Session_Number, Session_Date, Session_Type) VALUES (?, ?, ?, ?, ?)",
-                        Statement.RETURN_GENERATED_KEYS
+                    
+                    PreparedStatement checkSession = con.prepareStatement(
+                        "SELECT Session_Id FROM session WHERE Course_code=? AND Week_Number=? AND Session_Number=? AND Session_Date=? AND Session_Type=?"
                     );
 
-                    pst.setString(1, AttendanceCourseCode.getText());
-                    pst.setInt(2, Integer.parseInt(AttendanceWeekNo.getText()));
-                    pst.setInt(3, Integer.parseInt(AttendanceSessionNo.getText()));
-                    pst.setString(4, AttendanceSessionDate.getText());
-                    pst.setString(5, AttendanceSessionType.getText());
+                    checkSession.setString(1, AttendanceCourseCode.getText());
+                    checkSession.setInt(2, Integer.parseInt(AttendanceWeekNo.getText()));
+                    checkSession.setInt(3, Integer.parseInt(AttendanceSessionNo.getText()));
+                    checkSession.setString(4, AttendanceSessionDate.getText());
+                    checkSession.setString(5, AttendanceSessionType.getText());
 
-                    pst.executeUpdate();
+                    ResultSet rs = checkSession.executeQuery();
 
-                    // 2. GET GENERATED SESSION ID
-                    ResultSet rs = pst.getGeneratedKeys();
                     int sessionId = 0;
 
                     if (rs.next()) {
-                        sessionId = rs.getInt(1);
+                        // Session already exists
+                        sessionId = rs.getInt("Session_Id");
+                    } else {
+                        // Insert new session
+                        PreparedStatement pst = con.prepareStatement(
+                            "INSERT INTO session (Course_code, Week_Number, Session_Number, Session_Date, Session_Type) VALUES (?, ?, ?, ?, ?)",
+                            Statement.RETURN_GENERATED_KEYS
+                        );
+
+                        pst.setString(1, AttendanceCourseCode.getText());
+                        pst.setInt(2, Integer.parseInt(AttendanceWeekNo.getText()));
+                        pst.setInt(3, Integer.parseInt(AttendanceSessionNo.getText()));
+                        pst.setString(4, AttendanceSessionDate.getText());
+                        pst.setString(5, AttendanceSessionType.getText());
+
+                        pst.executeUpdate();
+
+                        ResultSet rs2 = pst.getGeneratedKeys();
+                        if (rs2.next()) {
+                            sessionId = rs2.getInt(1);
+                        }
                     }
 
                     // 3. INSERT ATTENDANCE
