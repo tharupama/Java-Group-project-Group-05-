@@ -83,7 +83,7 @@ public class ToRemoveAttendance extends javax.swing.JFrame {
 
         jLabel5.setText("Session Type");
 
-        removeAttendanceSessionType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Theory", "Prractical" }));
+        removeAttendanceSessionType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Theory", "Practical" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -172,15 +172,15 @@ public class ToRemoveAttendance extends javax.swing.JFrame {
             try {
                 Connection con = ToConnect.getConnection();
 
-                String sql = "SELECT a.attendance_id, a.student_id, s.course_code, s.session_date, s.session_type, a.status " +
+                String sql = "SELECT a.Attendance_Id, a.ST_Id, s.Course_code, s.Session_Date, s.Session_Type, a.Status " +
                              "FROM attendance a " +
-                             "JOIN session s ON a.session_id = s.session_id " +
-                             "WHERE a.student_id=? AND s.course_code=? AND s.week_no=? AND s.session_type=?";
+                             "JOIN session s ON a.Session_Id = s.Session_Id " +
+                             "WHERE a.ST_Id=? AND s.Course_code=? AND s.Week_Number=? AND s.Session_Type=?";
 
                 PreparedStatement pst = con.prepareStatement(sql);
                 pst.setString(1, studentId);
                 pst.setString(2, courseCode);
-                pst.setString(3, weekNo);
+                pst.setInt(3, Integer.parseInt(weekNo));
                 pst.setString(4, sessionType);
 
                 ResultSet rs = pst.executeQuery();
@@ -193,18 +193,18 @@ public class ToRemoveAttendance extends javax.swing.JFrame {
 
                 while (rs.next()) {
                     model.addRow(new Object[]{
-                        rs.getInt("attendance_id"),   // hidden or keep
-                        rs.getString("student_id"),
-                        rs.getString("course_code"),
-                        rs.getDate("session_date"),
-                        rs.getString("session_type"),
-                        rs.getString("status")
+                        rs.getInt("Attendance_Id"),   // hidden or keep
+                        rs.getString("ST_Id"),
+                        rs.getString("Course_code"),
+                        rs.getDate("Session_Date"),
+                        rs.getString("Session_Type"),
+                        rs.getString("Status")
                     });
                 }
 
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
-            }
+            
         }
         
         // TODO add your handling code here:
@@ -212,12 +212,42 @@ public class ToRemoveAttendance extends javax.swing.JFrame {
 
     private void removeAttendanceRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeAttendanceRemoveButtonActionPerformed
 
-        int selectedRow = attendanceTable.getSelectedRow();
+        int selectedRow = jTable1.getSelectedRow();
         
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Please select a row to delete");
             return;
         }
+            int confirm = JOptionPane.showConfirmDialog(this, 
+            "Are you sure you want to delete this record?", 
+            "Confirm", JOptionPane.YES_NO_OPTION);
+            
+        if (confirm != JOptionPane.YES_OPTION) return;
+        
+        try {
+            Connection con = ToConnect.getConnection();
+
+            // get attendance_id from hidden column
+            int attendanceId = Integer.parseInt(
+                jTable1.getValueAt(selectedRow, 0).toString()
+            );
+
+            String sql = "DELETE FROM attendance WHERE attendance_id=?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setInt(1, attendanceId);
+
+            pst.executeUpdate();
+
+            JOptionPane.showMessageDialog(this, "Deleted successfully");
+
+            // remove row from table
+            ((javax.swing.table.DefaultTableModel) jTable1.getModel())
+                .removeRow(selectedRow);
+
+        } catch (NumberFormatException | SQLException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+
         // TODO add your handling code here:
     }//GEN-LAST:event_removeAttendanceRemoveButtonActionPerformed
 

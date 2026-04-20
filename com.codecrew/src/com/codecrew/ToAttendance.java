@@ -38,6 +38,7 @@ public class ToAttendance extends javax.swing.JFrame {
         jButton4.addActionListener(this::jButton4ActionPerformed);
 
         jButton3.setText("Remove Attendance");
+        jButton3.addActionListener(this::jButton3ActionPerformed);
 
         AddAttendanceButtons.setText("Add Attendance");
         AddAttendanceButtons.addActionListener(this::AddAttendanceButtonsActionPerformed);
@@ -78,6 +79,12 @@ public class ToAttendance extends javax.swing.JFrame {
         new ToAddAttendance().setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_AddAttendanceButtonsActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        
+        new ToRemoveAttendance().setVisible(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
