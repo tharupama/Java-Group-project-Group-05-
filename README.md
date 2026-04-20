@@ -60,10 +60,7 @@ CREATE TABLE session (
 );
 
 
-INSERT INTO session 
-(Course_code, Week_Number, Session_Number, Session_Date, Session_Type)
-VALUES 
-('ICT2122', 1, 1, '2026-04-19', 'Theory');
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,15 +79,7 @@ CREATE TABLE attendance (
 
 
 
-INSERT INTO attendance (ST_Id, Session_Id, Status)
-VALUES (
-    'TG/2023/0001',
-    (SELECT Session_Id FROM session 
-     WHERE Course_code = 'ICT2122' 
-     AND Week_Number = 1 
-     AND Session_Number = 1),
-    'Present'
-);
+
 
 
 
@@ -262,3 +251,104 @@ FROM user u
 JOIN session s
 WHERE u.Role = 'Student'
 AND s.Week_Number BETWEEN 1 AND 15;
+
+
+
+
+
+WITH StudentScenario AS (
+    -- Assign each student a random scenario (1-5)
+    SELECT 
+        ST_Id,
+        FLOOR(1 + RAND() * 5) AS scenario_id
+    FROM (SELECT DISTINCT ST_Id FROM attendance WHERE Status = 'Present') AS students
+),
+RankedRecords AS (
+    -- Randomly rank each student's attendance records
+    SELECT 
+        a.ST_Id,
+        a.Session_Id,
+        s.scenario_id,
+        ROW_NUMBER() OVER (PARTITION BY a.ST_Id ORDER BY RAND()) AS rn
+    FROM attendance a
+    JOIN StudentScenario s ON a.ST_Id = s.ST_Id
+    WHERE a.Status = 'Present'
+)
+UPDATE attendance att
+JOIN RankedRecords rr ON att.ST_Id = rr.ST_Id AND att.Session_Id = rr.Session_Id
+SET att.Status = CASE
+    -- Scenario 1: >80% attendance (13-15 Present), 0 Medical → Keep all Present
+    WHEN rr.scenario_id = 1 THEN 'Present'
+    
+    -- Scenario 2: Exactly 80% attendance (12 Present), 0 Medical → 3 Absent
+    WHEN rr.scenario_id = 2 AND rr.rn <= 3 THEN 'Absent'
+    
+    -- Scenario 3: <80% attendance (≤11 Present), 0 Medical → 5 Absent
+    WHEN rr.scenario_id = 3 AND rr.rn <= 5 THEN 'Absent'
+    
+    -- Scenario 4: >80% attendance (13-15 Present), WITH Medicals → 2 Medical
+    WHEN rr.scenario_id = 4 AND rr.rn <= 2 THEN 'Medical'
+    
+    -- Scenario 5: <80% attendance (≤11 Present), WITH Medicals → 2 Medical + 3 Absent
+    WHEN rr.scenario_id = 5 AND rr.rn <= 2 THEN 'Medical'
+    WHEN rr.scenario_id = 5 AND rr.rn BETWEEN 3 AND 5 THEN 'Absent'
+    
+    ELSE att.Status
+END;
+
+
+
+
+
+
+-- 🔁 Auto-select a random student with enough 'Present' records to modify
+SET @TargetStudent = (
+    SELECT ST_Id 
+    FROM attendance 
+    WHERE Status = 'Present' 
+    GROUP BY ST_Id 
+    HAVING COUNT(*) >= 70 
+    ORDER BY RAND() 
+    LIMIT 1
+);
+
+-- Update 70 records: 2 Medical + 68 Absent → drops attendance to 79.7%
+UPDATE attendance a
+JOIN (
+    SELECT ST_Id, Session_Id, 
+           ROW_NUMBER() OVER (ORDER BY RAND()) AS rn
+    FROM attendance
+    WHERE ST_Id = @TargetStudent AND Status = 'Present'
+) AS ranked
+ON a.ST_Id = ranked.ST_Id AND a.Session_Id = ranked.Session_Id
+SET a.Status = CASE
+    WHEN ranked.rn <= 2 THEN 'Medical'   -- Max 2 Medical
+    WHEN ranked.rn <= 70 THEN 'Absent'   -- 68 Absent + 2 Medical = 70 changed
+END
+WHERE ranked.rn <= 70;
+
+-- Show which student was updated
+SELECT @TargetStudent AS Updated_Student_ID;
+
+
+
+
+
+SELECT 
+    ST_Id,
+    COUNT(*) AS TotalSessions,
+    SUM(Status = 'Present') AS PresentCount,
+    SUM(Status = 'Absent') AS AbsentCount,
+    SUM(Status = 'Medical') AS MedicalCount,
+    ROUND(SUM(Status = 'Present') / COUNT(*) * 100, 1) AS AttendancePct,
+    CASE 
+        WHEN SUM(Status = 'Present') / COUNT(*) > 0.8 AND SUM(Status = 'Medical') = 0 THEN '>80% No Medical'
+        WHEN ROUND(SUM(Status = 'Present') / COUNT(*) * 100) = 80 AND SUM(Status = 'Medical') = 0 THEN '=80% No Medical'
+        WHEN SUM(Status = 'Present') / COUNT(*) < 0.8 AND SUM(Status = 'Medical') = 0 THEN '<80% No Medical'
+        WHEN SUM(Status = 'Present') / COUNT(*) > 0.8 AND SUM(Status = 'Medical') > 0 THEN '>80% With Medical'
+        WHEN SUM(Status = 'Present') / COUNT(*) < 0.8 AND SUM(Status = 'Medical') > 0 THEN '<80% With Medical'
+    END AS Scenario
+FROM attendance
+GROUP BY ST_Id
+ORDER BY ST_Id;
+
