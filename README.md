@@ -17,8 +17,50 @@ CREATE TABLE user (
 );
 
 
-INSERT INTO user (U_Id, Uname, Contact, Email, Password, Role, Department)
-VALUES ('TO/2023/001', 'nipuna', 0771234567, 'nipuna@gmail.com', '123', 'To', 'IT'),('TG/2023/0001', 'deshan', 077123456, 'deshan@gmail.com', '1234', 'student', 'IT');
+
+
+
+
+
+
+INSERT INTO user (U_Id, Uname, Contact, Email, Password, Role, Department, image_data)
+VALUES
+('admin/2023/001', 'Nipuna Deshan', NULL, 'nipuna.deshan@ruhuna.lk', '1234', 'Admin', 'ICT', NULL),
+('dean FOT', 'Sahan Bandara', NULL, 'sahan.bandara@ruhuna.lk', '1234', 'Dean', 'BST', NULL),
+
+('lc/2023/002', 'Dilini Wickramasinghe', NULL, 'dilini.wickramasinghe@ruhuna.lk', '1234', 'Lecturer', 'BST', NULL),
+('lc/2023/003', 'Yasodha Gunaratne', NULL, 'yasodha.gunaratne@ruhuna.lk', '1234', 'Lecturer', 'BST', NULL),
+('lc/2023/004', 'Seelawathi Ganga', NULL, 'seelawathi.ganga@ruhuna.lk', '1234', 'Lecturer', 'BST', NULL),
+('lc/2023/005', 'Mahesh Ranasinghe', NULL, 'mahesh.ranasinghe@ruhuna.lk', '1234', 'Lecturer', 'ICT', NULL),
+('lc/2023/006', 'Nirmala Herath', NULL, 'nirmala.herath@ruhuna.lk', '1234', 'Lecturer', 'BST', NULL),
+('lc/2024/001', 'Ravi Silva', NULL, 'ravi.silva@ruhuna.lk', '1234', 'Lecturer', 'ICT', NULL),
+
+('tg/2023/0002', 'Kamani Fernando', NULL, 'kamani.fernando@ruhuna.lk', '1234', 'Student', 'ICT', NULL),
+('tg/2023/0003', 'Tharindu Jayasinghe', NULL, 'tharindu.jayasinghe@ruhuna.lk', '1234', 'Student', 'ICT', NULL),
+('tg/2023/0004', 'Anjali Rajapaksa', NULL, 'anjali.rajapaksa@ruhuna.lk', '1234', 'Student', 'ICT', NULL),
+('tg/2023/0005', 'Chaminda Weerasinghe', NULL, 'chaminda.weerasinghe@ruhuna.lk', '1234', 'Student', 'ICT', NULL),
+('tg/2023/0006', 'Nadeesha Herath', NULL, 'nadeesha.herath@ruhuna.lk', '1234', 'Student', 'ICT', NULL),
+('tg/2023/0007', 'Dinuka Amarasinghe', NULL, 'dinuka.amarasinghe@ruhuna.lk', '1234', 'Student', 'ET', NULL),
+('tg/2023/0008', 'Ishara Gunawardena', NULL, 'ishara.gunawardena@ruhuna.lk', '1234', 'Student', 'ET', NULL),
+('tg/2023/0009', 'Rukshan Mendis', NULL, 'rukshan.mendis@ruhuna.lk', '1234', 'Student', 'ET', NULL),
+('tg/2023/0010', 'Shanika Wijesinghe', NULL, 'shanika.wijesinghe@ruhuna.lk', '1234', 'Student', 'ET', NULL),
+('tg/2023/0011', 'Kavindu Rathnayake', NULL, 'kavindu.rathnayake@ruhuna.lk', '1234', 'Student', 'ET', NULL),
+('tg/2023/0012', 'Piumi De Silva', NULL, 'piumi.desilva@ruhuna.lk', '1234', 'Student', 'BST', NULL),
+('tg/2023/0013', 'Sachin Kumara', NULL, 'sachin.kumara@ruhuna.lk', '1234', 'Student', 'BST', NULL),
+('tg/2023/0014', 'Thilini Peries', NULL, 'thilini.peries@ruhuna.lk', '1234', 'Student', 'BST', NULL),
+('tg/2023/0015', 'Yohan Edirisinghe', NULL, 'yohan.edirisinghe@ruhuna.lk', '1234', 'Student', 'BST', NULL),
+('tg/2024/0001', 'Nimal Perera', NULL, 'nimal.perera@ruhuna.lk', '1234', 'Student', 'ICT', NULL),
+
+('to/2023/001', 'Amila Rathnayake', NULL, 'amila.rathnayake@ruhuna.lk', '1234', 'Technical Officer', 'ET', NULL),
+('to/2023/002', 'Lahiru De Silva', NULL, 'lahiru.desilva@ruhuna.lk', '1234', 'Technical Officer', 'ICT', NULL),
+('to/2023/003', 'Chathura Fernando', NULL, 'chathura.fernando@ruhuna.lk', '1234', 'Technical Officer', 'ICT', NULL),
+('to/2023/004', 'Sanduni Jayawardena', NULL, 'sanduni.jayawardena@ruhuna.lk', '1234', 'Technical Officer', 'BST', NULL),
+('to/2023/005', 'Kasun Madushanka', NULL, 'kasun.madushanka@ruhuna.lk', '1234', 'Technical Officer', 'BST', NULL),
+('to/2023/006', 'Nipuni Abeywickrama', NULL, 'nipuni.abeywickrama@ruhuna.lk', '1234', 'Technical Officer', 'BST', NULL);
+
+
+
+
 
 
 
@@ -112,10 +154,7 @@ CREATE TABLE medical_Record (
 
 
 
-INSERT INTO medical_Record 
-(ST_Id, Course_code, Session_Id, Request_Type, Date_Submit, Status, Approved_By, Approved_Date)
-VALUES 
-('TG/2023/0001', 'ICT2122', 1, 'Attendance', '2026-04-19', 'Approved', 'ADMIN01', '2026-04-20');
+
 
 
 ////////////////////////////////////////////////////////////////////////////
