@@ -255,6 +255,19 @@ AND s.Week_Number BETWEEN 1 AND 15;
 
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
 
 WITH StudentScenario AS (
     -- Assign each student a random scenario (1-5)
@@ -301,6 +314,11 @@ END;
 
 
 
+
+
+
+
+
 -- 🔁 Auto-select a random student with enough 'Present' records to modify
 SET @TargetStudent = (
     SELECT ST_Id 
@@ -334,21 +352,48 @@ SELECT @TargetStudent AS Updated_Student_ID;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 SELECT 
-    ST_Id,
+    ST_Id, 
     COUNT(*) AS TotalSessions,
+
     SUM(Status = 'Present') AS PresentCount,
     SUM(Status = 'Absent') AS AbsentCount,
     SUM(Status = 'Medical') AS MedicalCount,
+
     ROUND(SUM(Status = 'Present') / COUNT(*) * 100, 1) AS AttendancePct,
+
     CASE 
-        WHEN SUM(Status = 'Present') / COUNT(*) > 0.8 AND SUM(Status = 'Medical') = 0 THEN '>80% No Medical'
-        WHEN ROUND(SUM(Status = 'Present') / COUNT(*) * 100) = 80 AND SUM(Status = 'Medical') = 0 THEN '=80% No Medical'
-        WHEN SUM(Status = 'Present') / COUNT(*) < 0.8 AND SUM(Status = 'Medical') = 0 THEN '<80% No Medical'
-        WHEN SUM(Status = 'Present') / COUNT(*) > 0.8 AND SUM(Status = 'Medical') > 0 THEN '>80% With Medical'
-        WHEN SUM(Status = 'Present') / COUNT(*) < 0.8 AND SUM(Status = 'Medical') > 0 THEN '<80% With Medical'
+        WHEN SUM(Status = 'Present') / COUNT(*) > 0.8 AND SUM(Status = 'Medical') = 0 
+            THEN '>80% No Medical'
+
+        WHEN ROUND(SUM(Status = 'Present') / COUNT(*) * 100) = 80 AND SUM(Status = 'Medical') = 0 
+            THEN '=80% No Medical'
+
+        WHEN SUM(Status = 'Present') / COUNT(*) < 0.8 AND SUM(Status = 'Medical') = 0 
+            THEN '<80% No Medical'
+
+        WHEN SUM(Status = 'Present') / COUNT(*) > 0.8 AND SUM(Status = 'Medical') > 0 
+            THEN '>80% With Medical'
+
+        WHEN SUM(Status = 'Present') / COUNT(*) < 0.8 AND SUM(Status = 'Medical') > 0 
+            THEN '<80% With Medical'
     END AS Scenario
-FROM attendance
-GROUP BY ST_Id
+
+FROM attendance 
+GROUP BY ST_Id 
 ORDER BY ST_Id;
 
