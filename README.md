@@ -96,9 +96,7 @@ CREATE TABLE session (
     Week_Number INT NOT NULL CHECK (Week_Number BETWEEN 1 AND 15),
     Session_Number INT NOT NULL,
     Session_Date DATE NOT NULL,
-    Session_Type ENUM('Theory','Practical') NOT NULL,
-
-    FOREIGN KEY (Course_code) REFERENCES course_unit(Course_code)
+    Session_Type ENUM('Theory','Practical') NOT NULL
 );
 
 
@@ -129,27 +127,21 @@ CREATE TABLE attendance (
 
 
 
-CREATE TABLE medical_Record (
-    Record_Id INT AUTO_INCREMENT PRIMARY KEY,
-
+CREATE TABLE medical_record (
+    Record_Id INT NOT NULL AUTO_INCREMENT,
     ST_Id VARCHAR(20) NOT NULL,
     Course_code VARCHAR(15) NOT NULL,
-
-    Session_Id INT NULL,
-
-    Request_Type ENUM('Attendance','CA','Final_Exam','Quiz') NOT NULL,
-
+    Session_Id INT DEFAULT NULL,
+    Request_Type ENUM('Attendance', 'CA', 'Final_Exam', 'Quiz') NOT NULL,
     Date_Submit DATE NOT NULL,
-   
-    Status ENUM('Approved','Rejected') DEFAULT 'Approved',
-
-    Approved_By VARCHAR(20) NULL,
-
-    Approved_Date DATE NULL,
-
-    FOREIGN KEY (ST_Id) REFERENCES user(U_Id),
-    FOREIGN KEY (Course_code) REFERENCES course_unit(Course_code),
-    FOREIGN KEY (Session_Id) REFERENCES session(Session_Id)
+    Reason TEXT NOT NULL,
+    Status ENUM('Pending', 'Approved', 'Rejected') DEFAULT 'Pending',
+    Approved_By VARCHAR(20) DEFAULT NULL,
+    Approved_Date DATE DEFAULT NULL,
+    PRIMARY KEY (Record_Id),
+    INDEX (ST_Id),
+    INDEX (Course_code),
+    INDEX (Session_Id)
 );
 
 
