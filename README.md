@@ -397,3 +397,51 @@ FROM attendance
 GROUP BY ST_Id 
 ORDER BY ST_Id;
 
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+INSERT INTO medical_record (
+    ST_Id,
+    Course_code,
+    Session_Id,
+    Request_Type,
+    Date_Submit,
+    Reason,
+    Status,
+    Approved_By,
+    Approved_Date
+)
+SELECT 
+    a.ST_Id,
+    s.Course_code,
+    a.Session_Id,
+    'Attendance' AS Request_Type,
+
+    DATE_ADD(s.Session_Date, INTERVAL 1 DAY) AS Date_Submit,
+
+    'Medical leave submitted' AS Reason,
+
+    'Approved' AS Status,
+    'Chathura Fernando' AS Approved_By,
+
+    DATE_ADD(s.Session_Date, INTERVAL 2 DAY) AS Approved_Date
+
+FROM attendance a
+JOIN session s ON a.Session_Id = s.Session_Id
+WHERE a.Status = 'Medical';
+
+
+
+
