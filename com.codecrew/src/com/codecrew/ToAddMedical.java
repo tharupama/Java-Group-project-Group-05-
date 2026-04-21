@@ -95,7 +95,7 @@ public class ToAddMedical extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Date", "Session No", "Session_Type", "Time "
+                " ID", "Date", "Session No", "Session_Type"
             }
         ));
         sessionResultShowTable.setToolTipText("date");
@@ -302,31 +302,75 @@ public class ToAddMedical extends javax.swing.JFrame {
     }//GEN-LAST:event_addMedicalSearchButtonActionPerformed
 
     private void addMedicalApproveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMedicalApproveButtonActionPerformed
-        
-        int row = medicalRecordsShowTable.getSelectedRow();
 
-        if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Select a record!");
-            return;
-        }
 
-        int recordId = (int) medicalRecordsShowTable.getValueAt(row, 0);
+            int row = medicalRecordsShowTable.getSelectedRow();
 
-        String sql = "UPDATE medical_record SET Status='Approved', Approved_By='Chathura Fernando', Approved_Date=CURDATE() WHERE Record_Id=?";
+            if (row == -1) {
+                JOptionPane.showMessageDialog(this, "Select a record!");
+                return;
+            }
 
-        try (Connection con = ToConnect.getConnection();
-             PreparedStatement pst = con.prepareStatement(sql)) {
+            int recordId = (int) medicalRecordsShowTable.getValueAt(row, 0);
 
-            pst.setInt(1, recordId);
-            pst.executeUpdate();
+            String updateMedical = "UPDATE medical_record SET Status='Approved', Approved_By='Chathura Fernando', Approved_Date=CURDATE() WHERE Record_Id=?";
 
-            JOptionPane.showMessageDialog(this, "Approved!");
+            String getData = "SELECT ST_Id, Session_Id FROM medical_record WHERE Record_Id=?";
+            String updateAttendance = "UPDATE attendance SET Status='Medical' WHERE ST_Id=? AND Session_Id=?";
 
-            loadPending();
+            Connection con = null;
 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }
+            try {
+                con = ToConnect.getConnection();
+                con.setAutoCommit(false);
+
+                // 1. Get student + session
+                PreparedStatement pst1 = con.prepareStatement(getData);
+                pst1.setInt(1, recordId);
+                ResultSet rs = pst1.executeQuery();
+
+                String stId = null;
+                int sessionId = 0;
+
+                if (rs.next()) {
+                    stId = rs.getString("ST_Id");
+                    sessionId = rs.getInt("Session_Id");
+                }
+
+                // 2. Update medical record
+                PreparedStatement pst2 = con.prepareStatement(updateMedical);
+                pst2.setInt(1, recordId);
+                pst2.executeUpdate();
+
+                // 3. Update attendance
+                PreparedStatement pst3 = con.prepareStatement(updateAttendance);
+                pst3.setString(1, stId);
+                pst3.setInt(2, sessionId);
+                pst3.executeUpdate();
+
+                con.commit();
+
+                JOptionPane.showMessageDialog(this, "Approved & Attendance Updated!");
+
+                loadPending();
+
+            } catch (Exception e) {
+                try {
+                    if (con != null) con.rollback();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+                JOptionPane.showMessageDialog(this, e.getMessage());
+
+            } finally {
+                try {
+                    if (con != null) con.setAutoCommit(true);
+                    if (con != null) con.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         // TODO add your handling code here:
     }//GEN-LAST:event_addMedicalApproveButtonActionPerformed
 
