@@ -37,85 +37,79 @@ public class LecturerDashboard extends javax.swing.JFrame {
         btnViewMarks1 = new javax.swing.JButton();
         Notice = new javax.swing.JButton();
         Notice1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(196, 74, 58));
         jLabel1.setText("LECTURER DASHBOARD");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 60, 560, 101));
 
+        btnAddMarks.setBackground(new java.awt.Color(249, 122, 0));
+        btnAddMarks.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        btnAddMarks.setForeground(new java.awt.Color(255, 255, 255));
         btnAddMarks.setText("ADD MARKS");
+        btnAddMarks.setBorderPainted(false);
         btnAddMarks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddMarksActionPerformed(evt);
             }
         });
+        getContentPane().add(btnAddMarks, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 254, 215, 75));
 
+        btnViewMarks.setBackground(new java.awt.Color(249, 122, 0));
+        btnViewMarks.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        btnViewMarks.setForeground(new java.awt.Color(255, 255, 255));
         btnViewMarks.setText("VIEW MARKS");
+        btnViewMarks.setBorderPainted(false);
         btnViewMarks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnViewMarksActionPerformed(evt);
             }
         });
+        getContentPane().add(btnViewMarks, new org.netbeans.lib.awtextra.AbsoluteConstraints(282, 254, 215, 75));
 
+        btnViewMarks1.setBackground(new java.awt.Color(249, 122, 0));
+        btnViewMarks1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        btnViewMarks1.setForeground(new java.awt.Color(255, 255, 255));
         btnViewMarks1.setText("VIEW GPA");
+        btnViewMarks1.setBorderPainted(false);
         btnViewMarks1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnViewMarks1ActionPerformed(evt);
             }
         });
+        getContentPane().add(btnViewMarks1, new org.netbeans.lib.awtextra.AbsoluteConstraints(551, 254, 215, 75));
 
+        Notice.setBackground(new java.awt.Color(249, 122, 0));
+        Notice.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        Notice.setForeground(new java.awt.Color(255, 255, 255));
         Notice.setText("NOTICE ");
+        Notice.setBorderPainted(false);
         Notice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NoticeActionPerformed(evt);
             }
         });
+        getContentPane().add(Notice, new org.netbeans.lib.awtextra.AbsoluteConstraints(821, 254, 215, 75));
 
+        Notice1.setBackground(new java.awt.Color(249, 122, 0));
+        Notice1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        Notice1.setForeground(new java.awt.Color(255, 255, 255));
         Notice1.setText("VIEW TIMETABLE");
+        Notice1.setBorderPainted(false);
         Notice1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Notice1ActionPerformed(evt);
             }
         });
+        getContentPane().add(Notice1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 380, 240, 75));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(337, 337, 337)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(btnAddMarks, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
-                        .addComponent(btnViewMarks, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addComponent(btnViewMarks1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
-                        .addComponent(Notice, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(395, 395, 395)
-                        .addComponent(Notice1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(92, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Notice, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnViewMarks1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnViewMarks, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAddMarks, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(54, 54, 54)
-                .addComponent(Notice1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(111, Short.MAX_VALUE))
-        );
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/fot-2.jpg"))); // NOI18N
+        jLabel2.setToolTipText("");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 670));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -192,5 +186,6 @@ public class LecturerDashboard extends javax.swing.JFrame {
     private javax.swing.JButton btnViewMarks;
     private javax.swing.JButton btnViewMarks1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }
