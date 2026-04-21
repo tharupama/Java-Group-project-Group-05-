@@ -19,18 +19,30 @@ public class TimeTableModel {
     private Day day;
     private LocalTime timeFrom;
     private LocalTime timeTo;
+    private String venue;
 
-    public TimeTableModel(String courseCode, String type, Date date, Day day, LocalTime timeFrom, LocalTime timeTo) {
+    public TimeTableModel(String courseCode, String type, Date date, Day day, LocalTime timeFrom, LocalTime timeTo, String venue) {
         this.courseCode = courseCode;
         this.type = type;
         this.date = date;
         this.day = day;
         this.timeFrom = timeFrom;
         this.timeTo = timeTo;
+        this.venue = venue;
     }
 
     public TimeTableModel() {
     }
+
+    public String getVenue() {
+        return venue;
+    }
+
+    public void setVenue(String venue) {
+        this.venue = venue;
+    }
+    
+    
 
     public String getCourseCode() {
         return courseCode;

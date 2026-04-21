@@ -30,7 +30,7 @@ public class TimeTableController implements TimeTableControllerInterface{
 
     @Override
     public boolean save(TimeTableModel timeTableModel) throws ClassNotFoundException, SQLException {
-        String sql = "INSERT INTO time_table (Course_code,Type,date,Day,time_from,time_to) VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT INTO time_table (Course_code,Type,date,Day,time_from,time_to,venue) VALUES(?,?,?,?,?,?,?)";
         Connection conn = DbConnection.getInstance().getConn();
         
         java.sql.Date sqlDate = new java.sql.Date(timeTableModel.getDate().getTime());
@@ -43,6 +43,7 @@ public class TimeTableController implements TimeTableControllerInterface{
             pst.setString(4, timeTableModel.getDay().toString());
             pst.setObject(5, timeTableModel.getTimeFrom());
             pst.setObject(6, timeTableModel.getTimeTo());
+            pst.setString(7, timeTableModel.getVenue());
             affectedRows = pst.executeUpdate();
         }
         return affectedRows>0;
@@ -65,8 +66,9 @@ public class TimeTableController implements TimeTableControllerInterface{
                 String day = rst.getString("Day");
                 String timeFrom = rst.getString("time_from");
                 String timeTo = rst.getString("time_to");
+                String venue = rst.getString("venue");
                 
-                timeDtm.addRow(new Object[]{id,courseCode,type,date,day,timeFrom,timeTo});
+                timeDtm.addRow(new Object[]{id,courseCode,type,date,day,timeFrom,timeTo,venue});
             }
         }
     }
@@ -74,7 +76,7 @@ public class TimeTableController implements TimeTableControllerInterface{
     @Override
     public void timeTableLoad(DefaultTableModel dtm, String text) throws ClassNotFoundException, SQLException {
                dtm.setRowCount(0);
-        String sql = "SELECT * FROM time_table WHERE id LIKE ? OR Course_code LIKE ? OR Type LIKE ? OR date LIKE ? OR Day LIKE ? OR time_from LIKE ? OR time_to LIKE ?";
+        String sql = "SELECT * FROM time_table WHERE id LIKE ? OR Course_code LIKE ? OR Type LIKE ? OR date LIKE ? OR Day LIKE ? OR time_from LIKE ? OR time_to LIKE ? OR venue LIKE ?";
         Connection conn = DbConnection.getInstance().getConn();
         try (PreparedStatement pst = conn.prepareStatement(sql)) {
             pst.setString(1, "%"+text+"%");
@@ -84,6 +86,7 @@ public class TimeTableController implements TimeTableControllerInterface{
             pst.setString(5, "%"+text+"%");
             pst.setString(6, "%"+text+"%");
             pst.setString(7, "%"+text+"%");
+            pst.setString(8, "%"+text+"%");
             
             ResultSet rst = pst.executeQuery();
             
@@ -96,15 +99,16 @@ public class TimeTableController implements TimeTableControllerInterface{
                 String day = rst.getString("Day");
                 String timeFrom = rst.getString("time_from");
                 String timeTo = rst.getString("time_to");
+                String venue = rst.getString("venue");
                 
-                dtm.addRow(new Object[]{id,courseCode,type,date,day,timeFrom,timeTo});
+                dtm.addRow(new Object[]{id,courseCode,type,date,day,timeFrom,timeTo,venue});
             }
         }
     }
 
     @Override
     public boolean update(TimeTableModel timeTableModel, int id) throws ClassNotFoundException, SQLException {
-        String sql = "UPDATE time_table SET Course_code=?,Type=?,date=?,Day=?,time_from=?,time_to=? WHERE id = ?";
+        String sql = "UPDATE time_table SET Course_code=?,Type=?,date=?,Day=?,time_from=?,time_to=?, venue = ? WHERE id = ?";
         Connection conn = DbConnection.getInstance().getConn();
         
         
@@ -118,7 +122,8 @@ public class TimeTableController implements TimeTableControllerInterface{
             pst.setString(4, timeTableModel.getDay().toString());
             pst.setObject(5, timeTableModel.getTimeFrom());
             pst.setObject(6, timeTableModel.getTimeTo());
-            pst.setInt(7,id);
+            pst.setString(7, timeTableModel.getVenue());
+            pst.setInt(8,id);
             affectedRows = pst.executeUpdate();
         }
         return affectedRows>0;

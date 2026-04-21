@@ -18,6 +18,11 @@ import com.codecrew.admin.model.AccountModel;
 import com.codecrew.admin.model.CourseModel;
 import com.codecrew.admin.model.NoticeModel;
 import com.codecrew.admin.model.TimeTableModel;
+import java.awt.Image;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,6 +38,8 @@ import javax.swing.SpinnerNumberModel;
 import java.sql.SQLIntegrityConstraintViolationException;
 import javax.security.auth.login.AccountException;
 import javax.security.auth.login.AccountNotFoundException;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
     
 /**
  *
@@ -40,6 +47,8 @@ import javax.security.auth.login.AccountNotFoundException;
  */
 public class AdminPanel extends javax.swing.JFrame {
 
+    String fileName = null;
+    byte[] person_image=null;
     /**
      * Creates new form AdminPanel
      */
@@ -50,6 +59,7 @@ public class AdminPanel extends javax.swing.JFrame {
         courseTableLoad();
         noticeTableLoad();
         timeTableLoad();
+        profileImg.setIcon(new ImageIcon("C:\\projects\\Java-Group-project-Group-05-\\com.codecrew.admin\\src\\com\\codecrew\\admin\\view\\ppimg.jpg"));
         //theoryHoursLabel.setVisible(false);
         practicalHoursLabel.setVisible(false);
         //theoryHoursBox.setVisible(false);
@@ -85,6 +95,13 @@ public class AdminPanel extends javax.swing.JFrame {
         passwordBox.setText("");
         roleBox.setSelectedIndex(0);
         deptBox.setSelectedIndex(0);
+        
+        // 👇 Set default image
+    profileImg.setIcon(new ImageIcon("C:\\projects\\Java-Group-project-Group-05-\\com.codecrew.admin\\src\\com\\codecrew\\admin\\view\\ppimg.jpg"));
+    
+    // Optional: Force UI to refresh immediately
+    profileImg.revalidate();
+    profileImg.repaint();
     }
  
     
@@ -118,7 +135,7 @@ public class AdminPanel extends javax.swing.JFrame {
     public void timeTableFieldClear(){
         timeTableIdLabel.setText("Id");
         TTCourseCodeField.setText("");
-        TTTypeCombo.setSelectedItem("LECTURE");
+        TTTypeCombo.setSelectedItem("LECTURE"); 
         TTDateField.setDate(null);
         TTDayCombo.setSelectedItem("MONDAY");
         
@@ -127,9 +144,30 @@ public class AdminPanel extends javax.swing.JFrame {
         
         TTToHoursSpinner.setValue(0);
         TTToMinutesSpinner.setValue(0);
+        venueField.setText("");
     }
     
-    public void tableToFields(){
+    public void getImageByID(String id) throws ClassNotFoundException, SQLException {
+        byte[] poto = AccountController.getInstance().getImageById(id);
+
+        if (poto != null && poto.length > 0) {
+            ImageIcon icon = new ImageIcon(poto);
+
+            // Safely handle case where label isn't laid out yet (getWidth/Height = 0)
+            int w = profileImg.getWidth() > 0 ? profileImg.getWidth() : icon.getIconWidth();
+            int h = profileImg.getHeight() > 0 ? profileImg.getHeight() : icon.getIconHeight();
+
+            Image scaled = icon.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
+            profileImg.setIcon(new ImageIcon(scaled));
+        } else {
+            profileImg.setIcon(null); // or set a default placeholder: new ImageIcon("default_avatar.png")
+        }
+
+        profileImg.revalidate();
+        profileImg.repaint();
+    }
+    
+    public void tableToFields() throws ClassNotFoundException, SQLException{
     int selectedRow = accountTable.getSelectedRow();
     idBox.setText(accountTable.getValueAt(selectedRow, 0).toString());
     nameBox.setText(accountTable.getValueAt(selectedRow, 1).toString());
@@ -137,8 +175,13 @@ public class AdminPanel extends javax.swing.JFrame {
     emailBox.setText(accountTable.getValueAt(selectedRow, 3).toString());
     roleBox.setSelectedItem(accountTable.getValueAt(selectedRow, 4).toString());
     deptBox.setSelectedItem(accountTable.getValueAt(selectedRow, 5).toString());
+    
+    
+    getImageByID(accountTable.getValueAt(selectedRow, 0).toString());
 
     }
+    
+
     
     public void courseTableToField(){
     int selectedRow = courseTable.getSelectedRow();
@@ -206,6 +249,8 @@ public class AdminPanel extends javax.swing.JFrame {
         
         TTToHoursSpinner.setValue(Integer.valueOf(timeTable.getValueAt(selectedRow, 6).toString().split(":")[0]));
         TTToMinutesSpinner.setValue(Integer.valueOf(timeTable.getValueAt(selectedRow, 6).toString().split(":")[1]));
+        
+        venueField.setText(timeTable.getValueAt(selectedRow, 7).toString());
     }
     
     public void courseTableLoad() throws ClassNotFoundException, SQLException{
@@ -287,6 +332,8 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
+        jButton7 = new javax.swing.JButton();
+        profileImg = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -380,6 +427,8 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel37 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         timeTable = new javax.swing.JTable();
+        jLabel38 = new javax.swing.JLabel();
+        venueField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -394,7 +443,7 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(204, 0, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Acount Management");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 0, 380, 50));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 380, 50));
 
         jLabel9.setBackground(new java.awt.Color(255, 204, 0));
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -645,6 +694,20 @@ public class AdminPanel extends javax.swing.JFrame {
         jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 6, 110, 30));
 
         jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 90, 450, 110));
+
+        jButton7.setText("Choose Image");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(372, 80, 120, 30));
+
+        profileImg.setBackground(new java.awt.Color(255, 51, 51));
+        profileImg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        profileImg.setText("No profile image");
+        profileImg.setOpaque(true);
+        jPanel2.add(profileImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, 160, 180));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/codecrew/admin/view/university-of-ruhuna.jpg"))); // NOI18N
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, -1, 638));
@@ -1372,13 +1435,13 @@ public class AdminPanel extends javax.swing.JFrame {
 
         timeTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "id", "courseCode", "type", "date", "day", "timeFrom", "timeTo"
+                "id", "courseCode", "type", "date", "day", "timeFrom", "timeTo", "venue"
             }
         ));
         timeTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1389,6 +1452,19 @@ public class AdminPanel extends javax.swing.JFrame {
         jScrollPane5.setViewportView(timeTable);
 
         jPanel5.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 257, 1160, 350));
+
+        jLabel38.setBackground(new java.awt.Color(255, 204, 0));
+        jLabel38.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel38.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel38.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel38.setText("Venue");
+        jLabel38.setOpaque(true);
+        jPanel5.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 160, 40));
+
+        venueField.setBackground(new java.awt.Color(255, 51, 51));
+        venueField.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        venueField.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel5.add(venueField, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 210, 220, 40));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/codecrew/admin/view/university-of-ruhuna.jpg"))); // NOI18N
         jPanel5.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 1200, 650));
@@ -1418,7 +1494,7 @@ public class AdminPanel extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please enter valid email! Example: tharupama826@gmail.com");
 
         } else {
-            AccountModel accountModel = new AccountModel(idBox.getText(), nameBox.getText(),Long.parseLong(contactBox.getText()), emailBox.getText(), passwordBox.getText(), roleBox.getSelectedItem().toString(), deptBox.getSelectedItem().toString());
+            AccountModel accountModel = new AccountModel(idBox.getText(), nameBox.getText(),Long.parseLong(contactBox.getText()), emailBox.getText(), passwordBox.getText(), roleBox.getSelectedItem().toString(), deptBox.getSelectedItem().toString(),person_image);
             try {
                 
                     boolean affectedRows = AccountController.getInstance().saveAccount(accountModel);
@@ -1446,7 +1522,13 @@ public class AdminPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_idBoxActionPerformed
 
     private void accountTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountTableMouseClicked
-        tableToFields();// TODO add your handling code here:
+        try {
+            tableToFields();// TODO add your handling code here:
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_accountTableMouseClicked
 
     private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
@@ -1461,7 +1543,7 @@ public class AdminPanel extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Please enter valid email! Example: tharupama826@gmail.com");
         
         }else{       
-            AccountModel accountModel = new AccountModel(idBox.getText(),nameBox.getText(), Long.parseLong(contactBox.getText()), emailBox.getText(), passwordBox.getText(),roleBox.getSelectedItem().toString(), deptBox.getSelectedItem().toString());
+            AccountModel accountModel = new AccountModel(idBox.getText(),nameBox.getText(), Long.parseLong(contactBox.getText()), emailBox.getText(), passwordBox.getText(),roleBox.getSelectedItem().toString(), deptBox.getSelectedItem().toString(),person_image);
             boolean affectedRows = AccountController.getInstance().updateAccount(accountModel);
             if(affectedRows==true){
             tableLoad();
@@ -2113,10 +2195,10 @@ public class AdminPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_TTDayComboActionPerformed
 
     private void saveBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtn3ActionPerformed
-        if (TTCourseCodeField.getText().equals("") || TTDateField.getDate()==null) {
+        if (TTCourseCodeField.getText().equals("") || TTDateField.getDate()==null || venueField.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "All fields must fill");
         } else {
-            TimeTableModel timeTableModel = new TimeTableModel(TTCourseCodeField.getText(), TTTypeCombo.getSelectedItem().toString(), TTDateField.getDate(), Day.valueOf(TTDayCombo.getSelectedItem().toString()), LocalTime.of((int) TTFromHoursSpinner.getValue(), (int) TTFromMinutesSpinner.getValue()), LocalTime.of((int) TTToHoursSpinner.getValue(), (int) TTToMinutesSpinner.getValue()));
+            TimeTableModel timeTableModel = new TimeTableModel(TTCourseCodeField.getText(), TTTypeCombo.getSelectedItem().toString(), TTDateField.getDate(), Day.valueOf(TTDayCombo.getSelectedItem().toString()), LocalTime.of((int) TTFromHoursSpinner.getValue(), (int) TTFromMinutesSpinner.getValue()), LocalTime.of((int) TTToHoursSpinner.getValue(), (int) TTToMinutesSpinner.getValue()),venueField.getText());
             boolean rowsAffected;
             try {
                 rowsAffected = TimeTableController.getInstance().save(timeTableModel);
@@ -2138,10 +2220,10 @@ public class AdminPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_saveBtn3ActionPerformed
 
     private void updateBtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtn3ActionPerformed
-        if (TTCourseCodeField.getText().equals("") || TTDateField.getDate()==null) {
+        if (TTCourseCodeField.getText().equals("") || TTDateField.getDate()==null || venueField.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "All fields must fill");
         } else {
-        TimeTableModel timeTableModel = new TimeTableModel(TTCourseCodeField.getText(),TTTypeCombo.getSelectedItem().toString(),TTDateField.getDate(),Day.valueOf(TTDayCombo.getSelectedItem().toString()),LocalTime.of((int)TTFromHoursSpinner.getValue(),(int)TTFromMinutesSpinner.getValue()),LocalTime.of((int)TTToHoursSpinner.getValue(), (int)TTToMinutesSpinner.getValue()));
+        TimeTableModel timeTableModel = new TimeTableModel(TTCourseCodeField.getText(),TTTypeCombo.getSelectedItem().toString(),TTDateField.getDate(),Day.valueOf(TTDayCombo.getSelectedItem().toString()),LocalTime.of((int)TTFromHoursSpinner.getValue(),(int)TTFromMinutesSpinner.getValue()),LocalTime.of((int)TTToHoursSpinner.getValue(), (int)TTToMinutesSpinner.getValue()),venueField.getText());
         boolean rowsAffected;
         try {
             rowsAffected = TimeTableController.getInstance().update(timeTableModel,Integer.parseInt(timeTableIdLabel.getText()));
@@ -2208,6 +2290,30 @@ public class AdminPanel extends javax.swing.JFrame {
             Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_timeTableMouseClicked
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        chooser.showOpenDialog(null);
+        File f = chooser.getSelectedFile();
+        fileName = f.getAbsolutePath();
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon(fileName).getImage().getScaledInstance(profileImg.getWidth(), profileImg.getHeight(), Image.SCALE_SMOOTH));
+        profileImg.setIcon(imageIcon);
+        
+        try{
+            File image = new File(fileName);
+            FileInputStream fis = new FileInputStream(image);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] buf = new byte[1024];
+            for(int readNum;(readNum=fis.read(buf))!=-1;){
+                bos.write(buf,0,readNum);
+            }
+            person_image = bos.toByteArray();
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+            
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2296,6 +2402,7 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -2327,6 +2434,7 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -2353,6 +2461,7 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JTextField passwordBox;
     private javax.swing.JTextField practicalHoursBox;
     private javax.swing.JLabel practicalHoursLabel;
+    private javax.swing.JLabel profileImg;
     private javax.swing.JComboBox<String> roleBox;
     private javax.swing.JComboBox<String> roleCombo;
     private javax.swing.JButton saveBtn;
@@ -2378,6 +2487,7 @@ public class AdminPanel extends javax.swing.JFrame {
     private javax.swing.JButton updateBtn1;
     private javax.swing.JButton updateBtn2;
     private javax.swing.JButton updateBtn3;
+    private javax.swing.JTextField venueField;
     // End of variables declaration//GEN-END:variables
 
     private void eamNoticeTableToField() {

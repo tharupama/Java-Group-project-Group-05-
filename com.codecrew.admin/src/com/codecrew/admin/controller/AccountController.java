@@ -35,7 +35,7 @@ public static AccountController getInstance(){
 
 @Override
     public boolean saveAccount(AccountModel account) throws ClassNotFoundException, SQLException{
-        String sql = "INSERT INTO user VALUES (?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO user VALUES (?,?,?,?,?,?,?,?)";
         
         Connection conn = DbConnection.getInstance().getConn();
         PreparedStatement pst = conn.prepareStatement(sql);
@@ -48,6 +48,7 @@ public static AccountController getInstance(){
         pst.setString(5, hashedPassword);
         pst.setString(6, account.getRole());
         pst.setString(7, account.getDept());
+        pst.setBytes(8, account.getProfilePicture());
         
         int results = pst.executeUpdate();
         pst.close();
@@ -67,7 +68,7 @@ public static AccountController getInstance(){
         }
         
         if (account.getPassword() != null) {
-            String sql = "Update user SET Uname=?, Contact=?, Email=?, Password=?, Role=?, Department=? WHERE U_Id=?";
+            String sql = "Update user SET Uname=?, Contact=?, Email=?, Password=?, Role=?, Department=?, image_data=? WHERE U_Id=?";
 
             int results;
             try (PreparedStatement pst = conn.prepareStatement(sql)) {
@@ -78,7 +79,8 @@ public static AccountController getInstance(){
                 pst.setString(4, hashedPassword);
                 pst.setString(5, account.getRole());
                 pst.setString(6, account.getDept());
-                pst.setString(7, account.getId());
+                pst.setBytes(7, account.getProfilePicture());
+                pst.setString(8, account.getId());
                 results = pst.executeUpdate();
             }
             return results > 0;
@@ -236,6 +238,22 @@ public static AccountController getInstance(){
     }
         
     }
+
+   public byte[] getImageById(String id) throws SQLException, ClassNotFoundException {
+    Connection conn = DbConnection.getInstance().getConn();
+    String sql = "SELECT image_data FROM user WHERE U_Id = ?";
+    
+    try (PreparedStatement pst = conn.prepareStatement(sql)) {
+        pst.setString(1, id); // 🔑 1. Bind the ID parameter to the "?"
+        
+        try (ResultSet rst = pst.executeQuery()) {
+            if (rst.next()) { // 🔑 2. Move cursor to the first result row
+                return rst.getBytes("image_data"); // ✅ Returns byte[] or null if column is NULL
+            }
+        }
+    }
+    return null; // No matching record or image column is empty
+}
 
     
 }
