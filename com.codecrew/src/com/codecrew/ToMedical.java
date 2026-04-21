@@ -77,6 +77,8 @@ public class ToMedical extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        
+        new ToRemoveMedical().setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
 

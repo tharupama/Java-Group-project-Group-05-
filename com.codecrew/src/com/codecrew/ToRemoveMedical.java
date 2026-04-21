@@ -3,7 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.codecrew;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author nipun
@@ -30,15 +36,15 @@ public class ToRemoveMedical extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        removeMedicalStudentId = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        removeMedicalCourseCode = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        removeMedicalStatus = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        removeMedicalRecordsShowTable = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        removeMedicalRemoveButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -49,14 +55,14 @@ public class ToRemoveMedical extends javax.swing.JFrame {
 
         jLabel3.setText("Course Code");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ICT1212", "ICT1222", "ICT1233", "ICT1242", "ICT1253", "ICT2122", "TCS1212", "TMS1213", "TMS1222", "TMS1231", "TMS1233", "TMS1242", "TMS1253", "TMS1261", "ENT1212", "ENG1222", "BST1272", "BST1262", "BST1253", "BST1242", "BST1232", "BST1222", "BST1212" }));
-        jComboBox1.addActionListener(this::jComboBox1ActionPerformed);
+        removeMedicalCourseCode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ICT1212", "ICT1222", "ICT1233", "ICT1242", "ICT1253", "ICT2122", "TCS1212", "TMS1213", "TMS1222", "TMS1231", "TMS1233", "TMS1242", "TMS1253", "TMS1261", "ENT1212", "ENG1222", "BST1272", "BST1262", "BST1253", "BST1242", "BST1232", "BST1222", "BST1212" }));
+        removeMedicalCourseCode.addActionListener(this::removeMedicalCourseCodeActionPerformed);
 
         jLabel4.setText("Status");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "Approved", "Rejected" }));
+        removeMedicalStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "Approved", "Rejected" }));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        removeMedicalRecordsShowTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
@@ -67,12 +73,13 @@ public class ToRemoveMedical extends javax.swing.JFrame {
                 "Record ID", "Student ", "Course ", "Date ", "Session ", "Type ", "Status ", "Reason "
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(removeMedicalRecordsShowTable);
 
         jButton1.setText("Search");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
-        jButton2.setText("Remove Medical");
+        removeMedicalRemoveButton.setText("Remove Medical");
+        removeMedicalRemoveButton.addActionListener(this::removeMedicalRemoveButtonActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -93,16 +100,16 @@ public class ToRemoveMedical extends javax.swing.JFrame {
                                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(removeMedicalStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(removeMedicalCourseCode, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(removeMedicalStudentId, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(52, 52, 52)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(463, 463, 463)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(removeMedicalRemoveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(126, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -113,34 +120,136 @@ public class ToRemoveMedical extends javax.swing.JFrame {
                 .addGap(56, 56, 56)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(removeMedicalStudentId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(removeMedicalCourseCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(removeMedicalStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35)
                 .addComponent(jButton1)
                 .addGap(35, 35, 35)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41)
-                .addComponent(jButton2)
+                .addComponent(removeMedicalRemoveButton)
                 .addContainerGap(159, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void removeMedicalCourseCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeMedicalCourseCodeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_removeMedicalCourseCodeActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    
+        String studentId = removeMedicalStudentId.getText();
+        String courseCode = removeMedicalCourseCode.getSelectedItem().toString();
+        String status = removeMedicalStatus.getSelectedItem().toString();
+
+        String sql = "SELECT m.Record_Id, m.ST_Id, m.Course_code, s.Session_Date, s.Session_Number, s.Session_Type, m.Status, m.Reason FROM medical_record m  JOIN session s ON m.Session_Id = s.Session_Id WHERE m.ST_Id LIKE ? AND m.Course_code LIKE ? AND m.Status LIKE ?";
+
+        try (Connection con = ToConnect.getConnection();
+             PreparedStatement pst = con.prepareStatement(sql)) {
+
+            pst.setString(1, "%" + studentId + "%");
+            pst.setString(2, "%" + courseCode + "%");
+            pst.setString(3, "%" + status + "%");
+
+            ResultSet rs = pst.executeQuery();
+
+            DefaultTableModel model = (DefaultTableModel) removeMedicalRecordsShowTable.getModel();
+            model.setRowCount(0);
+
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getInt("Record_Id"),
+                    rs.getString("ST_Id"),
+                    rs.getString("Course_code"),
+                    rs.getDate("Session_Date"),
+                    rs.getInt("Session_Number"),
+                    rs.getString("Session_Type"),
+                    rs.getString("Status"),
+                    rs.getString("Reason")
+                });
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void removeMedicalRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeMedicalRemoveButtonActionPerformed
+       
+        int row = removeMedicalRecordsShowTable.getSelectedRow();
+
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Select a record first!");
+            return;
+        }
+
+        int recordId = (int) removeMedicalRecordsShowTable.getValueAt(row, 0);
+        String studentId = removeMedicalRecordsShowTable.getValueAt(row, 1).toString();
+
+        int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "Are you sure you want to delete this medical record?",
+                "Confirm Delete",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        String getSessionSql = "SELECT Session_Id FROM medical_record WHERE Record_Id=?";
+        String updateAttendanceSql = "UPDATE attendance SET Status='Absent' WHERE ST_Id=? AND Session_Id=?";
+        String deleteSql = "DELETE FROM medical_record WHERE Record_Id=?";
+
+        try (Connection con = ToConnect.getConnection()) {
+
+            con.setAutoCommit(false); 
+
+            int sessionId = 0;
+
+            //  1. Get Session_Id
+            try (PreparedStatement pst1 = con.prepareStatement(getSessionSql)) {
+                pst1.setInt(1, recordId);
+                ResultSet rs = pst1.executeQuery();
+
+                if (rs.next()) {
+                    sessionId = rs.getInt("Session_Id");
+                }
+            }
+
+            //  2. Update attendance
+            try (PreparedStatement pst2 = con.prepareStatement(updateAttendanceSql)) {
+                pst2.setString(1, studentId);
+                pst2.setInt(2, sessionId);
+                pst2.executeUpdate();
+            }
+
+            //  3. Delete medical record
+            try (PreparedStatement pst3 = con.prepareStatement(deleteSql)) {
+                pst3.setInt(1, recordId);
+                pst3.executeUpdate();
+            }
+
+            con.commit(); //  success
+
+            JOptionPane.showMessageDialog(this, "Medical record removed & attendance updated!");
+
+            searchMedical(); // refresh table
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_removeMedicalRemoveButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -169,15 +278,53 @@ public class ToRemoveMedical extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JComboBox<String> removeMedicalCourseCode;
+    private javax.swing.JTable removeMedicalRecordsShowTable;
+    private javax.swing.JButton removeMedicalRemoveButton;
+    private javax.swing.JComboBox<String> removeMedicalStatus;
+    private javax.swing.JTextField removeMedicalStudentId;
     // End of variables declaration//GEN-END:variables
+
+    private void searchMedical() {
+            String studentId = removeMedicalStudentId.getText();
+         String courseCode = removeMedicalCourseCode.getSelectedItem().toString();
+         String status = removeMedicalStatus.getSelectedItem().toString();
+
+         String sql = "SELECT m.Record_Id, m.ST_Id, m.Course_code, s.Session_Date, s.Session_Number, s.Session_Type, m.Status, m.Reason FROM medical_record m  JOIN session s ON m.Session_Id = s.Session_Id WHERE m.ST_Id LIKE ? AND m.Course_code LIKE ? AND m.Status LIKE ?";
+
+         try (Connection con = ToConnect.getConnection();
+              PreparedStatement pst = con.prepareStatement(sql)) {
+
+             pst.setString(1, "%" + studentId + "%");
+             pst.setString(2, "%" + courseCode + "%");
+             pst.setString(3, "%" + status + "%");
+
+             ResultSet rs = pst.executeQuery();
+
+             DefaultTableModel model = (DefaultTableModel) removeMedicalRecordsShowTable.getModel();
+             model.setRowCount(0);
+
+             while (rs.next()) {
+                 model.addRow(new Object[]{
+                     rs.getInt("Record_Id"),
+                     rs.getString("ST_Id"),
+                     rs.getString("Course_code"),
+                     rs.getDate("Session_Date"),
+                     rs.getInt("Session_Number"),
+                     rs.getString("Session_Type"),
+                     rs.getString("Status"),
+                     rs.getString("Reason")
+                 });
+             }
+
+         } catch (Exception e) {
+             JOptionPane.showMessageDialog(this, e.getMessage());
+         }
+
+         }
 }
