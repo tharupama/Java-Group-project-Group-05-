@@ -64,13 +64,13 @@ public class ToAddMedical extends javax.swing.JFrame {
 
         medicalRecordsShowTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Student ID", "Course Code", "Request Type", "Reason", "Status"
+                "Record ID", "Student ID", "Course Code", "Request Type", "Reason", "Status"
             }
         ));
         jScrollPane1.setViewportView(medicalRecordsShowTable);
@@ -114,17 +114,6 @@ public class ToAddMedical extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(addMedicalApproveButton)
-                        .addGap(39, 39, 39)
-                        .addComponent(addMedicalRejectButton)
-                        .addGap(295, 295, 295))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(174, 174, 174))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -166,6 +155,17 @@ public class ToAddMedical extends javax.swing.JFrame {
                         .addGap(472, 472, 472)
                         .addComponent(addMedicalSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 58, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(addMedicalApproveButton)
+                        .addGap(39, 39, 39)
+                        .addComponent(addMedicalRejectButton)
+                        .addGap(295, 295, 295))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 699, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(165, 165, 165))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -211,6 +211,47 @@ public class ToAddMedical extends javax.swing.JFrame {
     }//GEN-LAST:event_addMedicalRequestTypeActionPerformed
 
     private void addMedicalAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMedicalAddButtonActionPerformed
+        
+            int row = sessionResultShowTable.getSelectedRow();
+
+            if (row == -1) {
+                JOptionPane.showMessageDialog(this, "Select a session first!");
+                return;
+            }
+            
+            
+            String studentId = AddMedicalStudentId.getText();
+            String courseCode = addMedicalCourseCode.getSelectedItem().toString();
+            String reason = addMedicalReason.getText();
+            String requestType = addMedicalRequestType.getSelectedItem().toString();
+
+            if (studentId.isEmpty() || reason.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Fill all fields!");
+                return;
+            }
+            
+            int sessionId = (int) sessionResultShowTable.getValueAt(row, 0);
+
+            String sql = "INSERT INTO medical_record (ST_Id, Course_code, Session_Id, Request_Type, Date_Submit, Reason, Status) VALUES (?, ?, ?, ?, CURDATE(), ?, 'Pending')";
+            
+            try (Connection con = ToConnect.getConnection();
+               PreparedStatement pst = con.prepareStatement(sql)) {
+
+               pst.setString(1, studentId);
+               pst.setString(2, courseCode);
+               pst.setInt(3, sessionId);
+               pst.setString(4, requestType);
+               pst.setString(5, reason);
+
+               pst.executeUpdate();
+
+               JOptionPane.showMessageDialog(this, "Medical added!");
+
+               loadPending(); // refresh bottom table
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            }
         // TODO add your handling code here:
     }//GEN-LAST:event_addMedicalAddButtonActionPerformed
 
@@ -292,4 +333,31 @@ public class ToAddMedical extends javax.swing.JFrame {
     private javax.swing.JTable medicalRecordsShowTable;
     private javax.swing.JTable sessionResultShowTable;
     // End of variables declaration//GEN-END:variables
+
+    private void loadPending() {
+        
+        String sql = "SELECT Record_Id, ST_Id, Course_code, Request_Type, Reason, Status FROM medical_record WHERE Status = 'Pending'";
+
+        try (Connection con = ToConnect.getConnection();
+             PreparedStatement pst = con.prepareStatement(sql);
+             ResultSet rs = pst.executeQuery()) {
+
+            DefaultTableModel model = (DefaultTableModel) medicalRecordsShowTable.getModel();
+            model.setRowCount(0);
+
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getInt("Record_Id"),
+                    rs.getString("ST_Id"),
+                    rs.getString("Course_code"),
+                    rs.getString("Request_Type"),
+                    rs.getString("Reason"),
+                    rs.getString("Status")
+                });
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
 }
