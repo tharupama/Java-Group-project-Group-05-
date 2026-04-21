@@ -173,7 +173,7 @@ public class ToRemoveAttendance extends javax.swing.JFrame {
                 Connection con = ToConnect.getConnection();
 
                 String sql = "SELECT a.Attendance_Id, a.ST_Id, s.Course_code, s.Session_Date, s.Session_Type, a.Status " +
-                             "FROM attendance a " +
+                             "FROM toattendance a " +
                              "JOIN session s ON a.Session_Id = s.Session_Id " +
                              "WHERE a.ST_Id=? AND s.Course_code=? AND s.Week_Number=? AND s.Session_Type=?";
 
@@ -232,7 +232,7 @@ public class ToRemoveAttendance extends javax.swing.JFrame {
                 jTable1.getValueAt(selectedRow, 0).toString()
             );
 
-            String sql = "DELETE FROM attendance WHERE attendance_id=?";
+            String sql = "DELETE FROM toattendance WHERE attendance_id=?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setInt(1, attendanceId);
 

@@ -226,7 +226,7 @@ public class ToAddAttendance extends javax.swing.JFrame {
 
                     // 3. INSERT ATTENDANCE
                     PreparedStatement pst1 = con.prepareStatement(
-                        "INSERT INTO attendance (ST_Id, Session_Id, Status) VALUES (?, ?, ?)"
+                        "INSERT INTO toattendance (ST_Id, Session_Id, Status) VALUES (?, ?, ?)"
                     );
 
                     pst1.setString(1, AttendanceStudentId.getText()); // student id
