@@ -107,7 +107,7 @@ CREATE TABLE session (
 
 
 
-CREATE TABLE attendance (
+CREATE TABLE toattendance (
     Attendance_Id INT AUTO_INCREMENT PRIMARY KEY,
     ST_Id VARCHAR(20) NOT NULL,
     Session_Id INT NOT NULL,
@@ -127,7 +127,7 @@ CREATE TABLE attendance (
 
 
 
-CREATE TABLE medical_record (
+CREATE TABLE tomedical_record (
     Record_Id INT NOT NULL AUTO_INCREMENT,
     ST_Id VARCHAR(20) NOT NULL,
     Course_code VARCHAR(15) NOT NULL,
@@ -273,7 +273,7 @@ CALL generate_week_sessions(15);
 
 
 
-INSERT INTO attendance (ST_Id, Session_Id, Status)
+INSERT INTO toattendance (ST_Id, Session_Id, Status)
 SELECT 
     u.U_Id,
     s.Session_Id,
@@ -305,7 +305,7 @@ WITH StudentScenario AS (
     SELECT 
         ST_Id,
         FLOOR(1 + RAND() * 5) AS scenario_id
-    FROM (SELECT DISTINCT ST_Id FROM attendance WHERE Status = 'Present') AS students
+    FROM (SELECT DISTINCT ST_Id FROM toattendance WHERE Status = 'Present') AS students
 ),
 RankedRecords AS (
     -- Randomly rank each student's attendance records
@@ -314,11 +314,11 @@ RankedRecords AS (
         a.Session_Id,
         s.scenario_id,
         ROW_NUMBER() OVER (PARTITION BY a.ST_Id ORDER BY RAND()) AS rn
-    FROM attendance a
+    FROM toattendance a
     JOIN StudentScenario s ON a.ST_Id = s.ST_Id
     WHERE a.Status = 'Present'
 )
-UPDATE attendance att
+UPDATE toattendance att
 JOIN RankedRecords rr ON att.ST_Id = rr.ST_Id AND att.Session_Id = rr.Session_Id
 SET att.Status = CASE
     -- Scenario 1: >80% attendance (13-15 Present), 0 Medical → Keep all Present
@@ -353,7 +353,7 @@ END;
 -- 🔁 Auto-select a random student with enough 'Present' records to modify
 SET @TargetStudent = (
     SELECT ST_Id 
-    FROM attendance 
+    FROM toattendance 
     WHERE Status = 'Present' 
     GROUP BY ST_Id 
     HAVING COUNT(*) >= 70 
@@ -362,11 +362,11 @@ SET @TargetStudent = (
 );
 
 -- Update 70 records: 2 Medical + 68 Absent → drops attendance to 79.7%
-UPDATE attendance a
+UPDATE toattendance a
 JOIN (
     SELECT ST_Id, Session_Id, 
            ROW_NUMBER() OVER (ORDER BY RAND()) AS rn
-    FROM attendance
+    FROM toattendance
     WHERE ST_Id = @TargetStudent AND Status = 'Present'
 ) AS ranked
 ON a.ST_Id = ranked.ST_Id AND a.Session_Id = ranked.Session_Id
@@ -424,7 +424,7 @@ SELECT
             THEN '<80% With Medical'
     END AS Scenario
 
-FROM attendance 
+FROM toattendance 
 GROUP BY ST_Id 
 ORDER BY ST_Id;
 
@@ -443,7 +443,7 @@ ORDER BY ST_Id;
 
 
 
-INSERT INTO medical_record (
+INSERT INTO tomedical_record (
     ST_Id,
     Course_code,
     Session_Id,
@@ -469,7 +469,7 @@ SELECT
 
     DATE_ADD(s.Session_Date, INTERVAL 2 DAY) AS Approved_Date
 
-FROM attendance a
+FROM toattendance a
 JOIN session s ON a.Session_Id = s.Session_Id
 WHERE a.Status = 'Medical';
 
@@ -498,7 +498,7 @@ SELECT
         ELSE 'Not Eligible'
     END AS Eligibility_Status
 
-FROM attendance a
+FROM toattendance a
 JOIN session s ON a.Session_Id = s.Session_Id
 
 GROUP BY a.ST_Id, s.Course_Code;
