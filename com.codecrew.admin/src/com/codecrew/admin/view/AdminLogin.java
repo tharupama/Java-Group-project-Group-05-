@@ -4,6 +4,20 @@
  */
 package com.codecrew.admin.view;
 
+
+
+import com.codecrew.admin.auth.Auth;
+import com.codecrew.admin.controller.AccountController;
+import com.codecrew.admin.db.DbConnection;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import java.sql.ResultSet;
+
+
 /**
  *
  * @author USER
@@ -15,6 +29,7 @@ public class AdminLogin extends javax.swing.JFrame {
      */
     public AdminLogin() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -50,7 +65,7 @@ public class AdminLogin extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(204, 0, 51));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("User Name");
+        jLabel3.setText("Admin Id");
         jLabel3.setOpaque(true);
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 150, 40));
 
@@ -99,7 +114,31 @@ public class AdminLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-        // TODO add your handling code here:
+        
+        String uName = uNameBox.getText();
+        String pWord = pWordBox.getText();
+        
+        ResultSet authenticatedUser;
+  
+        try {
+            authenticatedUser = Auth.getAuth(uName,pWord);
+            if(authenticatedUser==null){
+                JOptionPane.showMessageDialog(rootPane, "username or password incorrect !");
+            }
+            if(authenticatedUser.getString("Role").equals("Admin")){
+                AdminPanel ap = new AdminPanel();
+                ap.setVisible(true);
+                this.dispose();
+            
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "you are not a admin !");
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AdminLogin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AdminLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+ 
     }//GEN-LAST:event_loginBtnActionPerformed
 
     /**
