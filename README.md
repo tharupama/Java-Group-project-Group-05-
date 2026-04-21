@@ -476,3 +476,44 @@ WHERE a.Status = 'Medical';
 
 
 
+
+///////////////////////// create view /////////////////////////////////////////
+
+
+
+
+
+
+
+CREATE VIEW attendance_summary AS
+SELECT 
+    a.ST_Id,
+    s.Course_Code,
+    
+    ROUND(SUM(a.Status = 'Present') / COUNT(*) * 100, 1) AS Eligibility_Percentage,
+
+    CASE 
+        WHEN SUM(a.Status = 'Present') / COUNT(*) >= 0.8 
+        THEN 'Eligible'
+        ELSE 'Not Eligible'
+    END AS Eligibility_Status
+
+FROM attendance a
+JOIN session s ON a.Session_Id = s.Session_Id
+
+GROUP BY a.ST_Id, s.Course_Code;
+
+
+
+
+
+
+SELECT * FROM attendance_summary;
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
