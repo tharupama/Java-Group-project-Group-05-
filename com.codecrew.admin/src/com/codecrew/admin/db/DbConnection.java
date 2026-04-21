@@ -8,6 +8,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author USER
@@ -15,13 +18,19 @@ import java.sql.SQLException;
 public class DbConnection {
     private static DbConnection dbObj;
     private Connection conn;
-    private String uName;
-    private String pWord;
-    
-    private DbConnection() throws ClassNotFoundException, SQLException{
+
+    private DbConnection(){
    
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3309/posdb",uName,pWord);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3309/student_management","root","1234");
+        } catch (SQLException ex) {
+            Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public Connection getConn(){
@@ -37,10 +46,5 @@ public class DbConnection {
         return dbObj;
         
     }
-    public void setUname(String uName){
-        this.uName=uName;
-    }
-        public void setPassword(String pWord){
-        this.pWord=pWord;
-    }
+
 }
