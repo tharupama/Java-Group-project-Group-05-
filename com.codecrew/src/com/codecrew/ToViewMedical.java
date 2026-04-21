@@ -43,7 +43,7 @@ public class ToViewMedical extends javax.swing.JFrame {
         viewMedicalStudentId = new javax.swing.JTextField();
         viewMedicalStatus = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("View Medical Records");
 
