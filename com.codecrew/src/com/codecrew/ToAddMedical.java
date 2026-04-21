@@ -3,7 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.codecrew;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author nipun
@@ -32,29 +38,31 @@ public class ToAddMedical extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        medicalRecordsShowTable = new javax.swing.JTable();
+        addMedicalApproveButton = new javax.swing.JButton();
+        addMedicalRejectButton = new javax.swing.JButton();
+        addMedicalAddButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
+        sessionResultShowTable = new javax.swing.JTable();
+        AddMedicalStudentId = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        addMedicalReason = new javax.swing.JTextField();
+        addMedicalCourseCode = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        addMedicalRequestType = new javax.swing.JComboBox<>();
         jSeparator1 = new javax.swing.JSeparator();
+        addMedicalSearchButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("ADD MEDICAL");
 
         jLabel2.setText("Student ID");
 
         jLabel3.setText("Course Code");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        medicalRecordsShowTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -65,17 +73,18 @@ public class ToAddMedical extends javax.swing.JFrame {
                 "Student ID", "Course Code", "Request Type", "Reason", "Status"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(medicalRecordsShowTable);
 
-        jButton1.setText("Approve");
+        addMedicalApproveButton.setText("Approve");
 
-        jButton2.setText("Reject");
+        addMedicalRejectButton.setText("Reject");
 
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton3.setText("Add Medical");
-        jButton3.addActionListener(this::jButton3ActionPerformed);
+        addMedicalAddButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        addMedicalAddButton.setText("Add ");
+        addMedicalAddButton.setActionCommand("Add ");
+        addMedicalAddButton.addActionListener(this::addMedicalAddButtonActionPerformed);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        sessionResultShowTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -86,17 +95,20 @@ public class ToAddMedical extends javax.swing.JFrame {
                 "Date", "Session No", "Session_Type", "Time "
             }
         ));
-        jTable2.setToolTipText("date");
-        jScrollPane2.setViewportView(jTable2);
+        sessionResultShowTable.setToolTipText("date");
+        jScrollPane2.setViewportView(sessionResultShowTable);
 
         jLabel4.setText("Reason");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ICT1212", "ICT1222", "ICT1233", "ICT1242", "ICT1253", "ICT2122", "TCS1212", "TMS1213", "TMS1222", "TMS1231", "TMS1233", "TMS1242", "TMS1253", "TMS1261", "ENT1212", "ENG1222", "BST1272", "BST1262", "BST1253", "BST1242", "BST1232", "BST1222", "BST1212" }));
+        addMedicalCourseCode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ICT1212", "ICT1222", "ICT1233", "ICT1242", "ICT1253", "ICT2122", "TCS1212", "TMS1213", "TMS1222", "TMS1231", "TMS1233", "TMS1242", "TMS1253", "TMS1261", "ENT1212", "ENG1222", "BST1272", "BST1262", "BST1253", "BST1242", "BST1232", "BST1222", "BST1212" }));
 
         jLabel5.setText("Request Type");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Attendance", "CA", "Final_Exam", "Quiz" }));
-        jComboBox2.addActionListener(this::jComboBox2ActionPerformed);
+        addMedicalRequestType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Attendance", "CA", "Final_Exam", "Quiz" }));
+        addMedicalRequestType.addActionListener(this::addMedicalRequestTypeActionPerformed);
+
+        addMedicalSearchButton.setText("Search");
+        addMedicalSearchButton.addActionListener(this::addMedicalSearchButtonActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,94 +118,134 @@ public class ToAddMedical extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(addMedicalApproveButton)
                         .addGap(39, 39, 39)
-                        .addComponent(jButton2)
+                        .addComponent(addMedicalRejectButton)
                         .addGap(295, 295, 295))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(440, 440, 440))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(174, 174, 174))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(266, 266, 266)
+                        .addComponent(addMedicalReason, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(218, 218, 218)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 645, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(256, 256, 256)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(AddMedicalStudentId, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(139, 139, 139)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(38, 38, 38)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(214, 214, 214)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 645, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(addMedicalCourseCode, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(503, 503, 503)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(441, 441, 441)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(addMedicalAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(53, 53, 53)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 989, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(469, 469, 469)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(addMedicalRequestType, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(491, 491, 491)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(472, 472, 472)
+                        .addComponent(addMedicalSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 58, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(266, 266, 266)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(60, 60, 60)
+                .addGap(45, 45, 45)
                 .addComponent(jLabel1)
-                .addGap(33, 33, 33)
+                .addGap(48, 48, 48)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                    .addComponent(addMedicalCourseCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(AddMedicalStudentId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(addMedicalSearchButton)
+                .addGap(32, 32, 32)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3)
+                .addComponent(addMedicalReason)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(addMedicalRequestType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(addMedicalAddButton)
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(addMedicalApproveButton)
+                    .addComponent(addMedicalRejectButton))
                 .addGap(50, 50, 50))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+    private void addMedicalRequestTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMedicalRequestTypeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
+    }//GEN-LAST:event_addMedicalRequestTypeActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void addMedicalAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMedicalAddButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_addMedicalAddButtonActionPerformed
+
+    private void addMedicalSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMedicalSearchButtonActionPerformed
+         
+            String courseCode = addMedicalCourseCode.getSelectedItem().toString();
+            String studentId = AddMedicalStudentId.getText();
+            
+            String sql = "SELECT s.Session_Id, s.Session_Date, s.Session_Number, s.Session_Type FROM session s WHERE s.Course_code = ? AND NOT EXISTS (    SELECT 1 FROM medical_record m   WHERE m.Session_Id = s.Session_Id AND m.ST_Id = ? )";
+            
+            try (Connection con = ToConnect.getConnection();
+                PreparedStatement pst = con.prepareStatement(sql)) {
+
+               pst.setString(1, courseCode);
+               pst.setString(2, studentId);
+
+               ResultSet rs = pst.executeQuery();
+
+               DefaultTableModel model = (DefaultTableModel) sessionResultShowTable.getModel();
+               model.setRowCount(0);
+
+               while (rs.next()) {
+                   model.addRow(new Object[]{
+                       rs.getInt("Session_Id"),
+                       rs.getDate("Session_Date"),
+                       rs.getInt("Session_Number"),
+                       rs.getString("Session_Type")
+                   });
+            }
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            }
+// TODO add your handling code here:
+    }//GEN-LAST:event_addMedicalSearchButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -221,11 +273,14 @@ public class ToAddMedical extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JTextField AddMedicalStudentId;
+    private javax.swing.JButton addMedicalAddButton;
+    private javax.swing.JButton addMedicalApproveButton;
+    private javax.swing.JComboBox<String> addMedicalCourseCode;
+    private javax.swing.JTextField addMedicalReason;
+    private javax.swing.JButton addMedicalRejectButton;
+    private javax.swing.JComboBox<String> addMedicalRequestType;
+    private javax.swing.JButton addMedicalSearchButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -234,9 +289,7 @@ public class ToAddMedical extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTable medicalRecordsShowTable;
+    private javax.swing.JTable sessionResultShowTable;
     // End of variables declaration//GEN-END:variables
 }
