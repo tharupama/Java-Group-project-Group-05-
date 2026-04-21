@@ -245,7 +245,7 @@ public class ToAddMedical extends javax.swing.JFrame {
             
             int sessionId = (int) sessionResultShowTable.getValueAt(row, 0);
 
-            String sql = "INSERT INTO medical_record (ST_Id, Course_code, Session_Id, Request_Type, Date_Submit, Reason, Status) VALUES (?, ?, ?, ?, CURDATE(), ?, 'Pending')";
+            String sql = "INSERT INTO tomedical_record (ST_Id, Course_code, Session_Id, Request_Type, Date_Submit, Reason, Status) VALUES (?, ?, ?, ?, CURDATE(), ?, 'Pending')";
             
             try (Connection con = ToConnect.getConnection();
                PreparedStatement pst = con.prepareStatement(sql)) {
@@ -273,7 +273,7 @@ public class ToAddMedical extends javax.swing.JFrame {
             String courseCode = addMedicalCourseCode.getSelectedItem().toString();
             String studentId = AddMedicalStudentId.getText();
             
-            String sql = "SELECT s.Session_Id, s.Session_Date, s.Session_Number, s.Session_Type FROM session s WHERE s.Course_code = ? AND NOT EXISTS (    SELECT 1 FROM medical_record m   WHERE m.Session_Id = s.Session_Id AND m.ST_Id = ? )";
+            String sql = "SELECT s.Session_Id, s.Session_Date, s.Session_Number, s.Session_Type FROM session s WHERE s.Course_code = ? AND NOT EXISTS (    SELECT 1 FROM tomedical_record m   WHERE m.Session_Id = s.Session_Id AND m.ST_Id = ? )";
             
             try (Connection con = ToConnect.getConnection();
                 PreparedStatement pst = con.prepareStatement(sql)) {
@@ -313,10 +313,10 @@ public class ToAddMedical extends javax.swing.JFrame {
 
             int recordId = (int) medicalRecordsShowTable.getValueAt(row, 0);
 
-            String updateMedical = "UPDATE medical_record SET Status='Approved', Approved_By='Chathura Fernando', Approved_Date=CURDATE() WHERE Record_Id=?";
+            String updateMedical = "UPDATE tomedical_record SET Status='Approved', Approved_By='Chathura Fernando', Approved_Date=CURDATE() WHERE Record_Id=?";
 
-            String getData = "SELECT ST_Id, Session_Id FROM medical_record WHERE Record_Id=?";
-            String updateAttendance = "UPDATE attendance SET Status='Medical' WHERE ST_Id=? AND Session_Id=?";
+            String getData = "SELECT ST_Id, Session_Id FROM tomedical_record WHERE Record_Id=?";
+            String updateAttendance = "UPDATE toattendance SET Status='Medical' WHERE ST_Id=? AND Session_Id=?";
 
             Connection con = null;
 
@@ -385,7 +385,7 @@ public class ToAddMedical extends javax.swing.JFrame {
 
         int recordId = (int) medicalRecordsShowTable.getValueAt(row, 0);
 
-        String sql = "UPDATE medical_record SET " +
+        String sql = "UPDATE tomedical_record SET " +
                      "Status='Rejected', " +
                      "Approved_By='Chathura Fernando', " +
                      "Approved_Date=CURDATE() " +
@@ -463,7 +463,7 @@ public class ToAddMedical extends javax.swing.JFrame {
 
     private void loadPending() {
         
-        String sql = "SELECT Record_Id, ST_Id, Course_code, Request_Type, Reason, Status FROM medical_record WHERE Status = 'Pending'";
+        String sql = "SELECT Record_Id, ST_Id, Course_code, Request_Type, Reason, Status FROM tomedical_record WHERE Status = 'Pending'";
 
         try (Connection con = ToConnect.getConnection();
              PreparedStatement pst = con.prepareStatement(sql);

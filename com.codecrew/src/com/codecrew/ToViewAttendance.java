@@ -130,7 +130,7 @@ public class ToViewAttendance extends javax.swing.JFrame {
         if (stId.isEmpty()) stId = null;
         if (courseCode.isEmpty()) courseCode = null;
         
-        String sql = "SELECT  a.ST_Id,   s.Course_Code,   COUNT(*) AS TotalSessions,   SUM(a.Status = 'Present') AS PresentCount,   ROUND(SUM(a.Status = 'Present') / COUNT(*) * 100, 1) AS Eligibility FROM attendance a JOIN session s ON a.Session_Id = s.Session_Id WHERE   (a.ST_Id = ? OR ? IS NULL)  AND (s.Course_Code = ? OR ? IS NULL) GROUP BY a.ST_Id, s.Course_Code;";
+        String sql = "SELECT  a.ST_Id,   s.Course_Code,   COUNT(*) AS TotalSessions,   SUM(a.Status = 'Present') AS PresentCount,   ROUND(SUM(a.Status = 'Present') / COUNT(*) * 100, 1) AS Eligibility FROM toattendance a JOIN session s ON a.Session_Id = s.Session_Id WHERE   (a.ST_Id = ? OR ? IS NULL)  AND (s.Course_Code = ? OR ? IS NULL) GROUP BY a.ST_Id, s.Course_Code;";
         
          try (
          Connection con = ToConnect.getConnection();

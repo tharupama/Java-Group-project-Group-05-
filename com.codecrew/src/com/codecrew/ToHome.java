@@ -33,7 +33,6 @@ public class ToHome extends javax.swing.JFrame {
         attendanceButton = new javax.swing.JButton();
         medicalButton = new javax.swing.JButton();
         timeTablesButton = new javax.swing.JButton();
-        logOutButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,9 +51,6 @@ public class ToHome extends javax.swing.JFrame {
         timeTablesButton.setText("Time Tables");
         timeTablesButton.addActionListener(this::timeTablesButtonActionPerformed);
 
-        logOutButton.setText("Log Out");
-        logOutButton.addActionListener(this::logOutButtonActionPerformed);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -69,13 +65,8 @@ public class ToHome extends javax.swing.JFrame {
                 .addContainerGap(768, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(noticeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(103, 103, 103))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(logOutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(62, 62, 62))))
+                .addComponent(noticeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(103, 103, 103))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -90,9 +81,7 @@ public class ToHome extends javax.swing.JFrame {
                 .addComponent(medicalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addComponent(timeTablesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
-                .addComponent(logOutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40))
+                .addContainerGap(202, Short.MAX_VALUE))
         );
 
         pack();
@@ -130,13 +119,6 @@ public class ToHome extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_timeTablesButtonActionPerformed
 
-    private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutButtonActionPerformed
-        
-        new ToLogin().setVisible(true);
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_logOutButtonActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -164,7 +146,6 @@ public class ToHome extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton attendanceButton;
-    private javax.swing.JButton logOutButton;
     private javax.swing.JButton medicalButton;
     private javax.swing.JButton noticeButton;
     private javax.swing.JButton timeTablesButton;

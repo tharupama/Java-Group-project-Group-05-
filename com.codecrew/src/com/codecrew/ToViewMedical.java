@@ -130,7 +130,7 @@ public class ToViewMedical extends javax.swing.JFrame {
 
         if (stId.isEmpty()) stId = null;
 
-        String sql = "SELECT * FROM medical_record WHERE (ST_Id = ? OR ? IS NULL) AND (Status = ? OR ? = 'All')";
+        String sql = "SELECT * FROM tomedical_record WHERE (ST_Id = ? OR ? IS NULL) AND (Status = ? OR ? = 'All')";
         
         try (
          Connection con = ToConnect.getConnection();

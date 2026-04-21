@@ -151,7 +151,7 @@ public class ToRemoveMedical extends javax.swing.JFrame {
         String courseCode = removeMedicalCourseCode.getSelectedItem().toString();
         String status = removeMedicalStatus.getSelectedItem().toString();
 
-        String sql = "SELECT m.Record_Id, m.ST_Id, m.Course_code, s.Session_Date, s.Session_Number, s.Session_Type, m.Status, m.Reason FROM medical_record m  JOIN session s ON m.Session_Id = s.Session_Id WHERE m.ST_Id LIKE ? AND m.Course_code LIKE ? AND m.Status LIKE ?";
+        String sql = "SELECT m.Record_Id, m.ST_Id, m.Course_code, s.Session_Date, s.Session_Number, s.Session_Type, m.Status, m.Reason FROM tomedical_record m  JOIN session s ON m.Session_Id = s.Session_Id WHERE m.ST_Id LIKE ? AND m.Course_code LIKE ? AND m.Status LIKE ?";
 
         try (Connection con = ToConnect.getConnection();
              PreparedStatement pst = con.prepareStatement(sql)) {
@@ -207,9 +207,9 @@ public class ToRemoveMedical extends javax.swing.JFrame {
             return;
         }
 
-        String getSessionSql = "SELECT Session_Id FROM medical_record WHERE Record_Id=?";
-        String updateAttendanceSql = "UPDATE attendance SET Status='Absent' WHERE ST_Id=? AND Session_Id=?";
-        String deleteSql = "DELETE FROM medical_record WHERE Record_Id=?";
+        String getSessionSql = "SELECT Session_Id FROM tomedical_record WHERE Record_Id=?";
+        String updateAttendanceSql = "UPDATE toattendance SET Status='Absent' WHERE ST_Id=? AND Session_Id=?";
+        String deleteSql = "DELETE FROM tomedical_record WHERE Record_Id=?";
 
         try (Connection con = ToConnect.getConnection()) {
 
@@ -295,7 +295,7 @@ public class ToRemoveMedical extends javax.swing.JFrame {
          String courseCode = removeMedicalCourseCode.getSelectedItem().toString();
          String status = removeMedicalStatus.getSelectedItem().toString();
 
-         String sql = "SELECT m.Record_Id, m.ST_Id, m.Course_code, s.Session_Date, s.Session_Number, s.Session_Type, m.Status, m.Reason FROM medical_record m  JOIN session s ON m.Session_Id = s.Session_Id WHERE m.ST_Id LIKE ? AND m.Course_code LIKE ? AND m.Status LIKE ?";
+         String sql = "SELECT m.Record_Id, m.ST_Id, m.Course_code, s.Session_Date, s.Session_Number, s.Session_Type, m.Status, m.Reason FROM tomedical_record m  JOIN session s ON m.Session_Id = s.Session_Id WHERE m.ST_Id LIKE ? AND m.Course_code LIKE ? AND m.Status LIKE ?";
 
          try (Connection con = ToConnect.getConnection();
               PreparedStatement pst = con.prepareStatement(sql)) {
