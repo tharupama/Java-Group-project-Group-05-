@@ -33,6 +33,7 @@ public class ToHome extends javax.swing.JFrame {
         attendanceButton = new javax.swing.JButton();
         medicalButton = new javax.swing.JButton();
         timeTablesButton = new javax.swing.JButton();
+        logoutButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,6 +52,11 @@ public class ToHome extends javax.swing.JFrame {
         timeTablesButton.setText("Time Tables");
         timeTablesButton.addActionListener(this::timeTablesButtonActionPerformed);
 
+        logoutButton.setText("Logout");
+        logoutButton.setBackground(new java.awt.Color(255, 0, 0));
+        logoutButton.setForeground(new java.awt.Color(255, 255, 255));
+        logoutButton.addActionListener(this::logoutButtonActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -67,6 +73,10 @@ public class ToHome extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(noticeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(103, 103, 103))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -81,7 +91,9 @@ public class ToHome extends javax.swing.JFrame {
                 .addComponent(medicalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addComponent(timeTablesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(202, Short.MAX_VALUE))
+                .addGap(44, 44, 44)
+                .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(108, Short.MAX_VALUE))
         );
 
         pack();
@@ -119,6 +131,12 @@ public class ToHome extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_timeTablesButtonActionPerformed
 
+    private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        com.codecrew.view.login loginForm = new com.codecrew.view.login();
+        loginForm.setVisible(true);
+        this.dispose();
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -146,6 +164,7 @@ public class ToHome extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton attendanceButton;
+    private javax.swing.JButton logoutButton;
     private javax.swing.JButton medicalButton;
     private javax.swing.JButton noticeButton;
     private javax.swing.JButton timeTablesButton;
