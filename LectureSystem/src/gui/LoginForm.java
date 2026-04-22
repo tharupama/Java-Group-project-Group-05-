@@ -4,6 +4,7 @@
  */
 package gui;
 import service.LoginService;
+import service.LecturerSession;
 import model.Lecturer;
 import javax.swing.JOptionPane;
 /**
@@ -124,8 +125,9 @@ public class LoginForm extends javax.swing.JFrame {
     Lecturer lec = ls.login(username, password);
 
     if (lec != null) {
+        LecturerSession.setSession(lec.getId(), lec.getName(), lec.getEmail(), lec.getDepartment());
         JOptionPane.showMessageDialog(this, "Welcome " + lec.getName());
-        LecturerDashboard dash = new LecturerDashboard();
+        LecturerDashboard dash = new LecturerDashboard(lec);
         dash.setVisible(true);
         this.dispose();
     } else {
