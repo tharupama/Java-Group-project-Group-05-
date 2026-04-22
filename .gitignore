@@ -1,0 +1,10 @@
+/java-mini-project/nbproject/private/
+/java-mini-project-admin/nbproject/private/
+/com.codecrew/nbproject/private/
+/com.codecrew.admin/nbproject/private/
+/com.codecrew/build/
+/com.codecrew/dist/
+
+build/
+*.jar
+*.class
