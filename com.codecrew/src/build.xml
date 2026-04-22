@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="com.codecrew" default="run" basedir=".">
+    <description>FOT Student Management System - CodeCrew Group 05</description>
+
+    <property name="src.dir"     value="src"/>
+    <property name="build.dir"   value="build/classes"/>
+    <property name="dist.dir"    value="dist"/>
+    <property name="lib.dir"     value="lib"/>
+    <property name="main.class"  value="com.codecrew.ComCodecrew"/>
+    <property name="jar.name"    value="CodeCrew-SMS.jar"/>
+
+    <path id="classpath">
+        <fileset dir="${lib.dir}" includes="*.jar"/>
+        <pathelement location="${build.dir}"/>
+    </path>
+
+    <target name="init">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+    </target>
+
+    <target name="compile" depends="init">
+        <javac srcdir="${src.dir}" destdir="${build.dir}"
+               classpathref="classpath" includeantruntime="false"
+               source="17" target="17" encoding="UTF-8"/>
+    </target>
+
+    <target name="jar" depends="compile">
+        <jar destfile="${dist.dir}/${jar.name}" basedir="${build.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main.class}"/>
+                <attribute name="Class-Path" value="lib/mysql-connector-j-8.x.x.jar"/>
+            </manifest>
+        </jar>
+        <echo>Built: ${dist.dir}/${jar.name}</echo>
+    </target>
+
+    <target name="run" depends="compile">
+        <java classname="${main.class}" classpathref="classpath" fork="true">
+            <jvmarg value="-Dfile.encoding=UTF-8"/>
+        </java>
+    </target>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+    </target>
+</project>
