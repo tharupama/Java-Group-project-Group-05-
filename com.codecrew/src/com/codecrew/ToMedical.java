@@ -34,13 +34,25 @@ public class ToMedical extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jButton5.setBackground(new java.awt.Color(255, 153, 0));
+        jButton5.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jButton5.setForeground(new java.awt.Color(255, 255, 255));
         jButton5.setText("Add Medical");
+        jButton5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton5.addActionListener(this::jButton5ActionPerformed);
 
+        jButton6.setBackground(new java.awt.Color(255, 153, 0));
+        jButton6.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jButton6.setForeground(new java.awt.Color(255, 255, 255));
         jButton6.setText("Remove Medical");
+        jButton6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton6.addActionListener(this::jButton6ActionPerformed);
 
+        jButton7.setBackground(new java.awt.Color(255, 153, 0));
+        jButton7.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jButton7.setForeground(new java.awt.Color(255, 255, 255));
         jButton7.setText("View Medical");
+        jButton7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton7.addActionListener(this::jButton7ActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -48,23 +60,27 @@ public class ToMedical extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(188, 188, 188)
-                .addComponent(jButton5)
-                .addGap(99, 99, 99)
-                .addComponent(jButton6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
-                .addComponent(jButton7)
-                .addGap(368, 368, 368))
+                .addContainerGap(369, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(349, 349, 349))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(334, 334, 334)))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(82, 82, 82)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton7)
-                    .addComponent(jButton5)
-                    .addComponent(jButton6))
-                .addContainerGap(655, Short.MAX_VALUE))
+                .addGap(102, 102, 102)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(77, 77, 77)
+                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(66, 66, 66)
+                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(261, Short.MAX_VALUE))
         );
 
         pack();

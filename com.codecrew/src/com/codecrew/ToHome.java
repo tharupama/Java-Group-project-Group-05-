@@ -35,53 +35,74 @@ public class ToHome extends javax.swing.JFrame {
         timeTablesButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1100, 760));
 
+        noticeButton.setBackground(new java.awt.Color(255, 153, 0));
+        noticeButton.setFont(new java.awt.Font("Segoe UI", 3, 36)); // NOI18N
+        noticeButton.setForeground(new java.awt.Color(255, 255, 255));
         noticeButton.setText("Notice");
+        noticeButton.setBorder(null);
         noticeButton.addActionListener(this::noticeButtonActionPerformed);
 
+        updateProfileButton.setBackground(new java.awt.Color(255, 153, 0));
+        updateProfileButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        updateProfileButton.setForeground(new java.awt.Color(255, 255, 255));
         updateProfileButton.setText("Update Profile");
+        updateProfileButton.setBorder(null);
         updateProfileButton.addActionListener(this::updateProfileButtonActionPerformed);
 
+        attendanceButton.setBackground(new java.awt.Color(255, 153, 0));
+        attendanceButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        attendanceButton.setForeground(new java.awt.Color(255, 255, 255));
         attendanceButton.setText("Attendance");
+        attendanceButton.setBorder(null);
         attendanceButton.addActionListener(this::attendanceButtonActionPerformed);
 
+        medicalButton.setBackground(new java.awt.Color(255, 153, 0));
+        medicalButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        medicalButton.setForeground(new java.awt.Color(255, 255, 255));
         medicalButton.setText("Medical");
+        medicalButton.setBorder(null);
         medicalButton.addActionListener(this::medicalButtonActionPerformed);
 
+        timeTablesButton.setBackground(new java.awt.Color(255, 153, 0));
+        timeTablesButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        timeTablesButton.setForeground(new java.awt.Color(255, 255, 255));
         timeTablesButton.setText("Time Tables");
+        timeTablesButton.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         timeTablesButton.addActionListener(this::timeTablesButtonActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(242, 242, 242)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(updateProfileButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(attendanceButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(medicalButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(timeTablesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(768, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(noticeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(103, 103, 103))
+                .addGap(685, 685, 685)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(timeTablesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(updateProfileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(attendanceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(medicalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(155, 155, 155))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addComponent(noticeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(84, 84, 84)
+                .addGap(48, 48, 48)
                 .addComponent(noticeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70)
-                .addComponent(updateProfileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
-                .addComponent(attendanceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54)
-                .addComponent(medicalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addComponent(timeTablesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(202, Short.MAX_VALUE))
+                .addGap(39, 39, 39)
+                .addComponent(updateProfileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(78, 78, 78)
+                .addComponent(attendanceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(73, 73, 73)
+                .addComponent(medicalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60)
+                .addComponent(timeTablesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
