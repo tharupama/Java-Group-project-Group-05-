@@ -70,4 +70,14 @@
     nbproject/build-impl.xml file. 
 
     -->
+    
+    <!-- Copy image resources to build directory -->
+    <target name="-post-compile">
+        <copy todir="${build.classes.dir}/com/codecrew">
+            <fileset dir="src/com/codecrew" includes="*.jpg"/>
+        </copy>
+        <copy todir="${build.classes.dir}/com/codecrew/view">
+            <fileset dir="src/com/codecrew/view" includes="*.jpg"/>
+        </copy>
+    </target>
 </project>

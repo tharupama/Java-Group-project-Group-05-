@@ -11,6 +11,7 @@ package com.codecrew.view;
  */
 
 import com.codecrew.admin.auth.Auth;
+import com.codecrew.LecturerSession;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -91,7 +92,19 @@ public class login extends javax.swing.JFrame {
         });
         getContentPane().add(loginBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 270, 110, 40));
 
-        backgroundImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/codecrew/view/360_F_566235195_nhDDuQpommcxK9SBtY2gq5IxvsJxCIdE.jpg"))); // NOI18N
+        try {
+            String imagePath = System.getProperty("user.dir") + "/src/com/codecrew/view/360_F_566235195_nhDDuQpommcxK9SBtY2gq5IxvsJxCIdE.jpg";
+            java.io.File imgFile = new java.io.File(imagePath);
+            if (imgFile.exists()) {
+                backgroundImage.setIcon(new javax.swing.ImageIcon(imgFile.getAbsolutePath()));
+            } else {
+                backgroundImage.setBackground(new java.awt.Color(240, 240, 240));
+                backgroundImage.setOpaque(true);
+            }
+        } catch (Exception e) {
+            backgroundImage.setBackground(new java.awt.Color(240, 240, 240));
+            backgroundImage.setOpaque(true);
+        }
         getContentPane().add(backgroundImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 370));
 
         pack();
@@ -107,14 +120,31 @@ public class login extends javax.swing.JFrame {
             authenticatedUser = Auth.getAuth(uName,pWord);
             if(authenticatedUser==null){
                 JOptionPane.showMessageDialog(rootPane, "username or password incorrect !");
+                return;
             }
             if(authenticatedUser.getString("Role").equals("Student")){
                 
                 JOptionPane.showMessageDialog(null, "You are student!");
             }else if(authenticatedUser.getString("Role").equals("Technical Officer")){
                 JOptionPane.showMessageDialog(null, "You are technical officer!");
+                com.codecrew.ToHome toHome = new com.codecrew.ToHome();
+                toHome.setVisible(true);
+                this.dispose();
             }else if(authenticatedUser.getString("Role").equals("Lecturer")){
-                JOptionPane.showMessageDialog(null, "You are technical lecturer!");
+                LecturerSession.setSession(
+                    authenticatedUser.getString("U_Id"),
+                    authenticatedUser.getString("Uname"),
+                    authenticatedUser.getString("Email"),
+                    authenticatedUser.getString("Department")
+                );
+                com.codecrew.LecturerDashboard dash = new com.codecrew.LecturerDashboard(
+                    authenticatedUser.getString("U_Id"),
+                    authenticatedUser.getString("Uname"),
+                    authenticatedUser.getString("Email"),
+                    authenticatedUser.getString("Department")
+                );
+                dash.setVisible(true);
+                this.dispose();
             }
             
             else{
