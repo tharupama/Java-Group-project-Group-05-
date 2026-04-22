@@ -8,10 +8,12 @@ import java.util.logging.Logger;
 
 public class ToConnect {
 
-    public static Connection getConnection() {
+    public static Connection getConnection(){
         Connection con = null;
 
         try {
+            
+
             con = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/mis?useSSL=false&serverTimezone=UTC",
                 "root",
