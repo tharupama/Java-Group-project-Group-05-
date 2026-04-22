@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import service.LecturerSession;
 public class login extends javax.swing.JFrame {
 
     /**
@@ -102,6 +103,7 @@ public class login extends javax.swing.JFrame {
             authenticatedUser = Auth.getAuth(uName,pWord);
             if(authenticatedUser==null){
                 JOptionPane.showMessageDialog(rootPane, "username or password incorrect !");
+                return;
             }
             if(authenticatedUser.getString("Role").equals("Student")){
                 
@@ -109,8 +111,19 @@ public class login extends javax.swing.JFrame {
             }else if(authenticatedUser.getString("Role").equals("Technical Officer")){
                 JOptionPane.showMessageDialog(null, "You are technical officer!");
             }else if(authenticatedUser.getString("Role").equals("Lecturer")){
+                        LecturerSession.setSession(
+                            authenticatedUser.getString("U_Id"),
+                            authenticatedUser.getString("Uname"),
+                            authenticatedUser.getString("Email"),
+                            authenticatedUser.getString("Department")
+                        );
                 
-                            gui.LecturerDashboard dash = new gui.LecturerDashboard();
+                        gui.LecturerDashboard dash = new gui.LecturerDashboard(
+                            authenticatedUser.getString("U_Id"),
+                            authenticatedUser.getString("Uname"),
+                            authenticatedUser.getString("Email"),
+                            authenticatedUser.getString("Department")
+                        );
                             dash.setVisible(true);
                             this.dispose();
             }

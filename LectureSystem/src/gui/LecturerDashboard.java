@@ -4,10 +4,14 @@
  */
 package gui;
 
-import gui.UploadMarksForm;
-import gui.LoginForm;
-import gui.UploadMarksForm;
+import java.awt.GridLayout;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import model.Lecturer;
+import service.LecturerProfileService;
+import service.LecturerSession;
 
 /**
  *
@@ -15,11 +19,154 @@ import javax.swing.JOptionPane;
  */
 public class LecturerDashboard extends javax.swing.JFrame {
 
+    private String loggedUserId;
+    private String loggedUserName;
+    private String loggedUserEmail;
+    private String loggedUserDepartment;
+    private JLabel lblLoggedUser;
+    private javax.swing.JButton btnUpdateProfile;
+    private javax.swing.JButton btnLogout;
+
     /**
      * Creates new form LecturerDashboard
      */
     public LecturerDashboard() {
+        loadSessionData();
         initComponents();
+        setupLoggedUserSection();
+    }
+
+    public LecturerDashboard(Lecturer lecturer) {
+        this(
+            lecturer.getId(),
+            lecturer.getName(),
+            lecturer.getEmail(),
+            lecturer.getDepartment()
+        );
+    }
+
+    public LecturerDashboard(String userId, String userName, String email, String department) {
+        this.loggedUserId = userId;
+        this.loggedUserName = userName;
+        this.loggedUserEmail = email;
+        this.loggedUserDepartment = department;
+        LecturerSession.setSession(userId, userName, email, department);
+        initComponents();
+        setupLoggedUserSection();
+    }
+
+    private void loadSessionData() {
+        if (LecturerSession.hasSession()) {
+            loggedUserId = LecturerSession.getUserId();
+            loggedUserName = LecturerSession.getUserName();
+            loggedUserEmail = LecturerSession.getEmail();
+            loggedUserDepartment = LecturerSession.getDepartment();
+        }
+    }
+
+    private void setupLoggedUserSection() {
+        lblLoggedUser = new JLabel();
+        lblLoggedUser.setFont(new java.awt.Font("Segoe UI", 1, 16));
+        lblLoggedUser.setForeground(new java.awt.Color(255, 255, 255));
+        lblLoggedUser.setOpaque(true);
+        lblLoggedUser.setBackground(new java.awt.Color(0, 0, 0, 160));
+        refreshLoggedUserLabel();
+        getContentPane().add(lblLoggedUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 530, 300, 40));
+
+        btnUpdateProfile = new javax.swing.JButton("UPDATE PROFILE");
+        btnUpdateProfile.setBackground(new java.awt.Color(249, 122, 0));
+        btnUpdateProfile.setFont(new java.awt.Font("Segoe UI", 1, 16));
+        btnUpdateProfile.setForeground(new java.awt.Color(255, 255, 255));
+        btnUpdateProfile.setBorderPainted(false);
+        btnUpdateProfile.addActionListener((java.awt.event.ActionEvent evt) -> {
+            btnUpdateProfileActionPerformed(evt);
+        });
+        getContentPane().add(btnUpdateProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 580, 300, 45));
+
+        btnLogout = new javax.swing.JButton("LOGOUT");
+        btnLogout.setBackground(new java.awt.Color(254, 209, 106));
+        btnLogout.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        btnLogout.setForeground(new java.awt.Color(51, 51, 51));
+        btnLogout.addActionListener((java.awt.event.ActionEvent evt) -> {
+            btnLogoutActionPerformed(evt);
+        });
+        getContentPane().add(btnLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 590, 110, 35));
+
+        // Keep dynamic components above background label in AbsoluteLayout.
+        getContentPane().setComponentZOrder(lblLoggedUser, 0);
+        getContentPane().setComponentZOrder(btnUpdateProfile, 0);
+        getContentPane().setComponentZOrder(btnLogout, 0);
+        getContentPane().revalidate();
+        getContentPane().repaint();
+    }
+
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {
+        LecturerSession.clear();
+        codecrew.view.login loginForm = new codecrew.view.login();
+        loginForm.setVisible(true);
+        this.dispose();
+    }
+
+    private void refreshLoggedUserLabel() {
+        if (loggedUserName == null || loggedUserName.trim().isEmpty()) {
+            lblLoggedUser.setText("Logged User: Lecturer");
+        } else {
+            lblLoggedUser.setText("Logged User: " + loggedUserName);
+        }
+    }
+
+    private void btnUpdateProfileActionPerformed(java.awt.event.ActionEvent evt) {
+        if (loggedUserId == null || loggedUserId.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Logged user id not found.");
+            return;
+        }
+
+        JTextField txtName = new JTextField(loggedUserName == null ? "" : loggedUserName);
+        JTextField txtEmail = new JTextField(loggedUserEmail == null ? "" : loggedUserEmail);
+        JTextField txtDepartment = new JTextField(loggedUserDepartment == null ? "" : loggedUserDepartment);
+
+        JPanel panel = new JPanel(new GridLayout(0, 1, 4, 4));
+        panel.add(new JLabel("Name"));
+        panel.add(txtName);
+        panel.add(new JLabel("Email"));
+        panel.add(txtEmail);
+        panel.add(new JLabel("Department"));
+        panel.add(txtDepartment);
+
+        int result = JOptionPane.showConfirmDialog(
+            this,
+            panel,
+            "Update My Profile",
+            JOptionPane.OK_CANCEL_OPTION,
+            JOptionPane.PLAIN_MESSAGE
+        );
+
+        if (result != JOptionPane.OK_OPTION) {
+            return;
+        }
+
+        String newName = txtName.getText().trim();
+        String newEmail = txtEmail.getText().trim();
+        String newDepartment = txtDepartment.getText().trim();
+
+        if (newName.isEmpty() || newEmail.isEmpty() || newDepartment.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "All fields are required.");
+            return;
+        }
+
+        LecturerProfileService profileService = new LecturerProfileService();
+        boolean updated = profileService.updateLoggedLecturer(loggedUserId, newName, newEmail, newDepartment);
+
+        if (updated) {
+            loggedUserName = newName;
+            loggedUserEmail = newEmail;
+            loggedUserDepartment = newDepartment;
+            LecturerSession.setSession(loggedUserId, loggedUserName, loggedUserEmail, loggedUserDepartment);
+            refreshLoggedUserLabel();
+            JOptionPane.showMessageDialog(this, "Profile updated successfully.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Profile update failed.");
+        }
     }
 
     /**

@@ -15,7 +15,7 @@ public class ToConnect {
             
 
             con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/mis?useSSL=false&serverTimezone=UTC",
+                "jdbc:mysql://localhost:3306/student_management?useSSL=false&serverTimezone=UTC",
                 "root",
                 "1234"
             );
