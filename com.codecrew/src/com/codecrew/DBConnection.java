@@ -9,7 +9,7 @@ public class DBConnection {
 
         try {
             Connection con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/student_management",
+                "jdbc:mysql://localhost:3309/student_management",
                 "root",
                 "1234"  
             );

@@ -1,4 +1,4 @@
-/*
+ /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
@@ -124,9 +124,9 @@ public class login extends javax.swing.JFrame {
             }
             if(authenticatedUser.getString("Role").equals("Student")){
                 
-                JOptionPane.showMessageDialog(null, "You are student!");
+               
             }else if(authenticatedUser.getString("Role").equals("Technical Officer")){
-                JOptionPane.showMessageDialog(null, "You are technical officer!");
+               
                 com.codecrew.ToHome toHome = new com.codecrew.ToHome();
                 toHome.setVisible(true);
                 this.dispose();
