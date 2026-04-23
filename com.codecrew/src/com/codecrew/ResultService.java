@@ -71,13 +71,13 @@ private double calculateFinalExam(double finalTheory,double finalPractical,
 //calculate Grade
 private String calculateGrade(double caMarks,double finalExam60,double finalMarks){
 
-    if(caMarks<16 &&finalExam60<25){
+    if(caMarks<16 &&finalExam60<21){
         return "E(CA&ESA)";
     }
     if(caMarks<16){
         return "E(CA)";
     }
-     if(finalExam60<25){
+     if(finalExam60<21){
      return "E(ESA)";
     }
      if(finalMarks>=85)return "A+";
