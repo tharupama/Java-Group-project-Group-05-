@@ -7,6 +7,7 @@
             <file>file:/D:/java%20project/Java-Group-project-Group-05-/com.codecrew/src/com/codecrew/ResultService.java</file>
             <file>file:/D:/java%20project/Java-Group-project-Group-05-/com.codecrew/src/com/codecrew/GradeService.java</file>
             <file>file:/D:/java%20project/Java-Group-project-Group-05-/com.codecrew/src/com/codecrew/ToHome.java</file>
+            <file>file:/D:/java%20project/Java-Group-project-Group-05-/com.codecrew/src/com/codecrew/ToAddMedical.java</file>
             <file>file:/D:/java%20project/Java-Group-project-Group-05-/com.codecrew/src/com/codecrew/ViewMarksForm_Stub.java</file>
             <file>file:/D:/java%20project/Java-Group-project-Group-05-/com.codecrew/src/com/codecrew/view/DbConnection.java</file>
             <file>file:/D:/java%20project/Java-Group-project-Group-05-/com.codecrew/src/com/codecrew/ToConnect.java</file>
@@ -20,6 +21,7 @@
             <file>file:/D:/java%20project/Java-Group-project-Group-05-/com.codecrew/src/com/codecrew/TimetableFormNew.java</file>
             <file>file:/D:/java%20project/Java-Group-project-Group-05-/com.codecrew/src/com/codecrew/UploadMarksFormNew.java</file>
             <file>file:/D:/java%20project/Java-Group-project-Group-05-/com.codecrew/src/com/codecrew/DBConnection.java</file>
+            <file>file:/D:/java%20project/Java-Group-project-Group-05-/com.codecrew/src/com/codecrew/LecturerSession.java</file>
             <file>file:/D:/java%20project/Java-Group-project-Group-05-/com.codecrew/src/com/codecrew/TimetableForm.java</file>
             <file>file:/D:/java%20project/Java-Group-project-Group-05-/com.codecrew/src/com/codecrew/LoginService.java</file>
             <file>file:/D:/java%20project/Java-Group-project-Group-05-/com.codecrew/src/com/codecrew/ToMedical.java</file>
@@ -28,6 +30,7 @@
             <file>file:/D:/java%20project/Java-Group-project-Group-05-/com.codecrew/src/com/codecrew/view/login.java</file>
             <file>file:/D:/java%20project/Java-Group-project-Group-05-/com.codecrew/src/com/codecrew/NoticeFormNew.java</file>
             <file>file:/D:/java%20project/Java-Group-project-Group-05-/com.codecrew/src/com/codecrew/ToViewAttendance.java</file>
+            <file>file:/D:/java%20project/Java-Group-project-Group-05-/com.codecrew/src/com/codecrew/ToAddAttendance.java</file>
             <file>file:/D:/java%20project/Java-Group-project-Group-05-/com.codecrew/src/com/codecrew/ViewMarksForm.java</file>
             <file>file:/D:/java%20project/Java-Group-project-Group-05-/com.codecrew/src/com/codecrew/LecturerDashboard.java</file>
         </group>

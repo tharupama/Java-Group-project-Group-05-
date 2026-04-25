@@ -4,9 +4,16 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/java%20project/Java-Group-project-Group-05-/LectureSystem/src/codecrew/view/login.java</file>
+            <file>file:/D:/java%20project/Java-Group-project-Group-05-/LectureSystem/src/service/LecturerProfileService.java</file>
             <file>file:/D:/java%20project/Java-Group-project-Group-05-/LectureSystem/src/service/NoticeService.java</file>
+            <file>file:/D:/java%20project/Java-Group-project-Group-05-/LectureSystem/src/service/TimetableService.java</file>
+            <file>file:/D:/java%20project/Java-Group-project-Group-05-/LectureSystem/src/service/LecturerSession.java</file>
+            <file>file:/D:/java%20project/Java-Group-project-Group-05-/LectureSystem/src/service/GradeService.java</file>
+            <file>file:/D:/java%20project/Java-Group-project-Group-05-/LectureSystem/src/service/GPAService.java</file>
+            <file>file:/D:/java%20project/Java-Group-project-Group-05-/LectureSystem/src/service/LoginService.java</file>
             <file>file:/D:/java%20project/Java-Group-project-Group-05-/LectureSystem/src/gui/LecturerDashboard.java</file>
             <file>file:/D:/java%20project/Java-Group-project-Group-05-/LectureSystem/src/service/ResultService.java</file>
+            <file>file:/D:/java%20project/Java-Group-project-Group-05-/LectureSystem/src/service/MarksService.java</file>
         </group>
     </open-files>
 </project-private>
