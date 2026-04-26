@@ -606,7 +606,7 @@ public class AdminPanel extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(accountTable);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(512, 200, 670, 400));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(512, 230, 670, 370));
 
         searchBox.setBackground(new java.awt.Color(255, 255, 255));
         searchBox.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -707,7 +707,7 @@ public class AdminPanel extends javax.swing.JFrame {
         profileImg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         profileImg.setText("No profile image");
         profileImg.setOpaque(true);
-        jPanel2.add(profileImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, 160, 180));
+        jPanel2.add(profileImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, 160, 210));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/codecrew/admin/view/university-of-ruhuna.jpg"))); // NOI18N
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, -1, 638));

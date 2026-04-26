@@ -67,7 +67,7 @@ public static AccountController getInstance(){
             }
         }
         
-        if (account.getPassword() != null) {
+        if (!account.getPassword().equals("")) {
             String sql = "Update user SET Uname=?, Contact=?, Email=?, Password=?, Role=?, Department=?, image_data=? WHERE U_Id=?";
 
             int results;
@@ -87,7 +87,7 @@ public static AccountController getInstance(){
             
 
         } else {
-            String sql = "Update user SET Uname=?, Contact=?, Email=?, Role=?, Department=? WHERE U_Id=?";
+            String sql = "Update user SET Uname=?, Contact=?, Email=?, Role=?, Department=?, image_data=? WHERE U_Id=?";
 
             int results;
             try (PreparedStatement pst = conn.prepareStatement(sql)) {
@@ -96,7 +96,8 @@ public static AccountController getInstance(){
                 pst.setString(3, account.getEmail());
                 pst.setString(4, account.getRole());
                 pst.setString(5, account.getDept());
-                pst.setString(6, account.getId());
+                pst.setBytes(6, account.getProfilePicture());
+                pst.setString(7, account.getId());
                 results = pst.executeUpdate();
             }
             return results > 0;

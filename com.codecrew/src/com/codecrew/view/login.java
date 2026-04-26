@@ -90,21 +90,9 @@ public class login extends javax.swing.JFrame {
                 loginBtnActionPerformed(evt);
             }
         });
-        getContentPane().add(loginBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 270, 110, 40));
+        getContentPane().add(loginBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 280, 110, 40));
 
-        try {
-            String imagePath = System.getProperty("user.dir") + "/src/com/codecrew/view/360_F_566235195_nhDDuQpommcxK9SBtY2gq5IxvsJxCIdE.jpg";
-            java.io.File imgFile = new java.io.File(imagePath);
-            if (imgFile.exists()) {
-                backgroundImage.setIcon(new javax.swing.ImageIcon(imgFile.getAbsolutePath()));
-            } else {
-                backgroundImage.setBackground(new java.awt.Color(240, 240, 240));
-                backgroundImage.setOpaque(true);
-            }
-        } catch (Exception e) {
-            backgroundImage.setBackground(new java.awt.Color(240, 240, 240));
-            backgroundImage.setOpaque(true);
-        }
+        backgroundImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/codecrew/view/360_F_566235195_nhDDuQpommcxK9SBtY2gq5IxvsJxCIdE.jpg"))); // NOI18N
         getContentPane().add(backgroundImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 370));
 
         pack();
@@ -123,7 +111,9 @@ public class login extends javax.swing.JFrame {
                 return;
             }
             if(authenticatedUser.getString("Role").equals("Student")){
-                
+                StudentPannel sp = new StudentPannel(authenticatedUser.getString("U_Id"), authenticatedUser.getString("Uname"), Long.parseLong(authenticatedUser.getString("Contact")) , authenticatedUser.getString("Email"), authenticatedUser.getBytes("image_data"), authenticatedUser.getString("Department"));
+                sp.setVisible(true);
+                this.dispose();
                
             }else if(authenticatedUser.getString("Role").equals("Technical Officer")){
                
