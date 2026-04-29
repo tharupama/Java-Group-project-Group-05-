@@ -181,46 +181,41 @@ public class ToUpdateProfile extends javax.swing.JFrame {
 
     private void updateProfileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateProfileButtonActionPerformed
         
-        String userId = id.getText();   // U_Id (important)
-    String username = userName.getText();
-    String contactStr = contact.getText();
-    String emaill = email.getText();
-    String hashedPassword = BCrypt.hashpw(password.getText(), BCrypt.gensalt(12));
-    String departmentt = department.getText();
+        try {
+        ToUserProfile profile = new ToUserProfile(
+            id.getText(),
+            userName.getText(),
+            email.getText(),
+            department.getText(),
+            Long.parseLong(contact.getText().trim()),
+            password.getPassword()
+        );
 
-    long contact = Long.parseLong(contactStr);
-
-    try {
-       Connection con = ToConnect.getConnection();
-
-        String sql = "UPDATE user SET Uname=?, Contact=?, Email=?, Password=?, Department=? WHERE U_Id=?";
-
-        PreparedStatement pst = con.prepareStatement(sql);
-
-        pst.setString(1, username);
-        pst.setLong(2, contact);
-        pst.setString(3, emaill);
-        pst.setString(4, hashedPassword); // (better: hash it)
-        pst.setString(5, departmentt);
-
-
-        pst.setString(6, userId);
-
-        int rows = pst.executeUpdate();
+        ToUserProfileService service = new ToUserProfileService();
+        int rows = service.updateProfile(profile);
 
         if (rows > 0) {
             JOptionPane.showMessageDialog(this, "Profile updated successfully!");
         } else {
             JOptionPane.showMessageDialog(this, "User ID not found!");
         }
+        
+        
+       //AttendanceStudentId.setText("");
+       
+       userName.setText("");
+       email.setText("");
+      department.setText("");
+      contact.setText("");
+      password.setText("");
 
-        con.close();
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error updating profile: " + e.getMessage());
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "Contact must be numeric.");
+    } catch (IllegalArgumentException ex) {
+        JOptionPane.showMessageDialog(this, ex.getMessage());
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error updating profile: " + ex.getMessage());
     }
-        // TODO add your handling code here:
     }//GEN-LAST:event_updateProfileButtonActionPerformed
 
     /**

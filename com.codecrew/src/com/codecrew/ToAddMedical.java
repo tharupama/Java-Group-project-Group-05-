@@ -151,24 +151,20 @@ public class ToAddMedical extends javax.swing.JFrame {
                 .addGap(88, 88, 88)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(171, 171, 171)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(AddMedicalStudentId, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(61, 61, 61)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(addMedicalCourseCode, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(358, 358, 358)
-                                .addComponent(addMedicalSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(169, 169, 169))
+                        .addGap(171, 171, 171)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(AddMedicalStudentId, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(61, 61, 61)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(addMedicalCourseCode, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(358, 358, 358)
+                        .addComponent(addMedicalSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(257, 257, 257)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 308, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(326, 326, 326)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -183,8 +179,7 @@ public class ToAddMedical extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(medicalRefreshButton, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 699, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(80, 80, 80))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 699, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(177, 177, 177)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,8 +196,7 @@ public class ToAddMedical extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(149, 149, 149)
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(165, 165, 165)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(165, 165, 165))))
                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 808, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 922, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(90, Short.MAX_VALUE))
@@ -253,6 +247,30 @@ public class ToAddMedical extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void applyMedicalDecision(boolean approve) {
+    int row = medicalRecordsShowTable.getSelectedRow();
+
+    if (row == -1) {
+        JOptionPane.showMessageDialog(this, "Select a record!");
+        return;
+    }
+
+    int recordId = (int) medicalRecordsShowTable.getValueAt(row, 0);
+    String approvedBy = "Chathura Fernando";
+
+    ToMedicalDecision decision = approve
+            ? new ToApproveMedicalDecision()
+            : new ToRejectMedicalDecision();
+
+    try {
+        decision.apply(recordId, approvedBy);
+        JOptionPane.showMessageDialog(this, approve ? "Approved!" : "Rejected!");
+        loadPending();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, ex.getMessage());
+    }
+}
+    
     private void addMedicalRequestTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMedicalRequestTypeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_addMedicalRequestTypeActionPerformed
@@ -337,108 +355,12 @@ public class ToAddMedical extends javax.swing.JFrame {
 
     private void addMedicalApproveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMedicalApproveButtonActionPerformed
 
-
-            int row = medicalRecordsShowTable.getSelectedRow();
-
-            if (row == -1) {
-                JOptionPane.showMessageDialog(this, "Select a record!");
-                return;
-            }
-
-            int recordId = (int) medicalRecordsShowTable.getValueAt(row, 0);
-
-            String updateMedical = "UPDATE tomedical_record SET Status='Approved', Approved_By='Chathura Fernando', Approved_Date=CURDATE() WHERE Record_Id=?";
-
-            String getData = "SELECT ST_Id, Session_Id FROM tomedical_record WHERE Record_Id=?";
-            String updateAttendance = "UPDATE toattendance SET Status='Medical' WHERE ST_Id=? AND Session_Id=?";
-
-            Connection con = null;
-
-            try {
-                con = ToConnect.getConnection();
-                con.setAutoCommit(false);
-
-                // 1. Get student + session
-                PreparedStatement pst1 = con.prepareStatement(getData);
-                pst1.setInt(1, recordId);
-                ResultSet rs = pst1.executeQuery();
-
-                String stId = null;
-                int sessionId = 0;
-
-                if (rs.next()) {
-                    stId = rs.getString("ST_Id");
-                    sessionId = rs.getInt("Session_Id");
-                }
-
-                // 2. Update medical record
-                PreparedStatement pst2 = con.prepareStatement(updateMedical);
-                pst2.setInt(1, recordId);
-                pst2.executeUpdate();
-
-                // 3. Update attendance
-                PreparedStatement pst3 = con.prepareStatement(updateAttendance);
-                pst3.setString(1, stId);
-                pst3.setInt(2, sessionId);
-                pst3.executeUpdate();
-
-                con.commit();
-
-                JOptionPane.showMessageDialog(this, "Approved & Attendance Updated!");
-
-                loadPending();
-
-            } catch (Exception e) {
-                try {
-                    if (con != null) con.rollback();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-
-                JOptionPane.showMessageDialog(this, e.getMessage());
-
-            } finally {
-                try {
-                    if (con != null) con.setAutoCommit(true);
-                    if (con != null) con.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        // TODO add your handling code here:
+        applyMedicalDecision(true);
+            
     }//GEN-LAST:event_addMedicalApproveButtonActionPerformed
 
     private void addMedicalRejectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMedicalRejectButtonActionPerformed
-
-         int row = medicalRecordsShowTable.getSelectedRow();
-
-        if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Select a record!");
-            return;
-        }
-
-        int recordId = (int) medicalRecordsShowTable.getValueAt(row, 0);
-
-        String sql = "UPDATE tomedical_record SET " +
-                     "Status='Rejected', " +
-                     "Approved_By='Chathura Fernando', " +
-                     "Approved_Date=CURDATE() " +
-                     "WHERE Record_Id=?";
-
-        try (Connection con = ToConnect.getConnection();
-             PreparedStatement pst = con.prepareStatement(sql)) {
-
-            pst.setInt(1, recordId);
-            pst.executeUpdate();
-
-            JOptionPane.showMessageDialog(this, "Rejected!");
-
-            loadPending();
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }
-        // TODO add your handling code here:
+        applyMedicalDecision(false);
     }//GEN-LAST:event_addMedicalRejectButtonActionPerformed
 
     private void medicalRefreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_medicalRefreshButtonActionPerformed
