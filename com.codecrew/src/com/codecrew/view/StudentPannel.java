@@ -90,7 +90,7 @@ public class StudentPannel extends javax.swing.JFrame {
         examNTable.setRowCount(0);
         while (rs.next()) {
 
-            examNTable.addRow(new Object[]{String.valueOf(rs.getString("created_at")),String.valueOf(rs.getString("updated_at")),rs.getString("title"),rs.getString("download_link"),rs.getString("content"),rs.getString("course_id"),String.valueOf(rs.getDate("exam_date")),String.valueOf(rs.getTime("time_from")),String.valueOf(rs.getTime("time_to"))});
+            examNTable.addRow(new Object[]{rs.getString("created_at"),rs.getString("updated_at"),rs.getString("title"),rs.getString("download_link"),rs.getString("content"),rs.getString("course_id"),String.valueOf(rs.getDate("exam_date")),String.valueOf(rs.getTime("time_from")),String.valueOf(rs.getTime("time_to"))});
         }
         conn.close();
         pst.close();
@@ -109,7 +109,7 @@ public class StudentPannel extends javax.swing.JFrame {
         gNTable.setRowCount(0);
         while (rs.next()) {
 
-            gNTable.addRow(new Object[]{String.valueOf(rs.getString("created_at")),String.valueOf(rs.getString("updated_at")),rs.getString("title"),rs.getString("download_link"),rs.getString("content")});
+            gNTable.addRow(new Object[]{rs.getString("created_at"),rs.getString("updated_at"),rs.getString("title"),rs.getString("download_link"),rs.getString("content")});
         }
         conn.close();
         pst.close();
@@ -207,7 +207,7 @@ public class StudentPannel extends javax.swing.JFrame {
         conn.close();
         pst.close();
     }
-    
+    //polimopisom without parameeter
     private void attendanceTableLoad() throws SQLException {
         
         String sql = "SELECT Attendance_Id, Course_code, Session_Date, Week_Number, Session_Type,Status FROM attendance WHERE ST_Id = ?";
@@ -226,7 +226,7 @@ public class StudentPannel extends javax.swing.JFrame {
         conn.close();
         pst.close();
    }
-    
+    //polimopisom with parameeter
     private void attendanceTableLoad(String text) throws SQLException {
         
         String sql = "SELECT Attendance_Id, Course_code, Session_Date, Week_Number, Session_Type,Status FROM attendance WHERE ST_Id = ? AND Course_code LIKE ?";
@@ -692,7 +692,7 @@ public class StudentPannel extends javax.swing.JFrame {
                 bos.write(buf,0,readNum);
             }
             profileImg = bos.toByteArray();
-            
+             
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e);
         }
@@ -701,6 +701,7 @@ public class StudentPannel extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         StudentProfileController spc = new StudentProfileController();
         try {
+            // this is abstraction geting into controller 
             StudentProfileEncapsulated studentProfileEncapsulated = new StudentProfileEncapsulated(contactBox.getText(),emailBox.getText(),profileImg,IdLabel.getText());
             //spc.updateStudent(contactBox.getText(),emailBox.getText(),profileImg,IdLabel.getText());
             spc.updateStudent(studentProfileEncapsulated);

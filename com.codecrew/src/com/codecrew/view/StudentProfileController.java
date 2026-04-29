@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
  *
  * @author USER
  */
+                                        // methana thama inheritenss gaththae inter fase enen
 public class StudentProfileController implements StudentProfileControllerInterface{
 
     public void updateStudent(StudentProfileEncapsulated studentProfileEncapsulated) throws ClassNotFoundException, SQLException {

@@ -14,6 +14,7 @@ import com.codecrew.admin.enums.Day;
 
 import com.codecrew.admin.exception.CourseCodeNotFoundException;
 import com.codecrew.admin.exception.AcountNotFoundException;
+import com.codecrew.admin.exception.LastAdminCannotDeleteException;
 import com.codecrew.admin.model.AccountModel;
 import com.codecrew.admin.model.CourseModel;
 import com.codecrew.admin.model.NoticeModel;
@@ -59,7 +60,7 @@ public class AdminPanel extends javax.swing.JFrame {
         courseTableLoad();
         noticeTableLoad();
         timeTableLoad();
-        profileImg.setIcon(new ImageIcon("C:\\projects\\Java-Group-project-Group-05-\\com.codecrew.admin\\src\\com\\codecrew\\admin\\view\\ppimg.jpg"));
+        profileImg.setIcon(new ImageIcon("D:\\Java-Group-project-Group-05-\\com.codecrew.admin\\src\\com\\codecrew\\admin\\view\\ppimg.jpg"));
         //theoryHoursLabel.setVisible(false);
         practicalHoursLabel.setVisible(false);
         //theoryHoursBox.setVisible(false);
@@ -1577,7 +1578,7 @@ public class AdminPanel extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(rootPane, "Delete error!");
                 }
 
-            } catch (ClassNotFoundException | SQLException | AcountNotFoundException ex) {
+            } catch (ClassNotFoundException | SQLException | AcountNotFoundException | LastAdminCannotDeleteException ex) {
                 Logger.getLogger(AdminPanel.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(rootPane, ex.getMessage());
             }

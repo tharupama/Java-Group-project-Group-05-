@@ -10,6 +10,8 @@ import java.sql.SQLException;
  *
  * @author USER
  */
+
+// interface ikiyannae abstrack call ekata maiiii
 public interface StudentProfileControllerInterface {
     void updateStudent(StudentProfileEncapsulated studentProfileEncapsulated) throws ClassNotFoundException, SQLException ;
 }

@@ -6,6 +6,7 @@ package com.codecrew.admin.controller;
 
 import com.codecrew.admin.db.DbConnection;
 import com.codecrew.admin.exception.AcountNotFoundException;
+import com.codecrew.admin.exception.LastAdminCannotDeleteException;
 
 import com.codecrew.admin.model.AccountModel;
 import java.sql.Connection;
@@ -110,11 +111,23 @@ public static AccountController getInstance(){
         String sql = "DELETE FROM user WHERE U_Id = ?";
         Connection conn = DbConnection.getInstance().getConn();
         String sql2 = "SELECT * FROM user WHERE U_Id = ?";
+        
         try(PreparedStatement pst2 = conn.prepareStatement(sql2)){
             pst2.setString(1, id);
             ResultSet rst = pst2.executeQuery();
             if(!rst.next()){
                 throw new AcountNotFoundException(id);
+            }else if(rst.getString("Role").equals("Admin")){
+                String sql3 = "SELECT COUNT(*) AS adminCount FROM user WHERE Role = ?";
+                PreparedStatement pst3 = conn.prepareStatement(sql3);
+                pst3.setString(1, "Admin");
+                ResultSet rst3 = pst3.executeQuery();
+                if(rst3.next()){
+                    int count = rst3.getInt("adminCount");
+                    if(count==1){
+                        throw new LastAdminCannotDeleteException();
+                    }
+                }
             }
         }
         int result;

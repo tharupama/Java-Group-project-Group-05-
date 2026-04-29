@@ -20,6 +20,7 @@ public class ToConnect {
                 "1234"
             );
             System.out.println("Connected!");
+            
         } catch (SQLException ex) {
             Logger.getLogger(ToConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
