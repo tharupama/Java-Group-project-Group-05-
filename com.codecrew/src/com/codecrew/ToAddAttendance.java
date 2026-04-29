@@ -16,7 +16,8 @@ import java.sql.Statement;
 public class ToAddAttendance extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ToAddAttendance.class.getName());
-
+    
+    private final ToAttendanceService attendanceService = new ToAttendanceServiceDb();
     /**
      * Creates new form ToAddAttendance
      */
@@ -218,7 +219,7 @@ public class ToAddAttendance extends javax.swing.JFrame {
              AttendanceStatu.requestFocus();
          }*/
          else{
-             
+            /* 
              try {
                     Connection con = ToConnect.getConnection();
                     
@@ -283,11 +284,38 @@ public class ToAddAttendance extends javax.swing.JFrame {
          }
          
         // TODO add your handling code here:
-    }//GEN-LAST:event_AttendanceAddButtonActionPerformed
+        
+        */
+            
+            try {
+    attendanceService.addAttendance(
+        AttendanceStudentId.getText().trim(),
+        AttendanceCourseCode.getSelectedItem().toString(),
+        Integer.parseInt(AttendanceWeekNo.getText().trim()),
+        Integer.parseInt(AttendanceSessionNo.getText().trim()),
+        AttendanceSessionDate.getText().trim(),
+        AttendanceSessionType.getSelectedItem().toString(),
+        AttendanceStatus.getSelectedItem().toString()
+    );
 
+    JOptionPane.showMessageDialog(this, "Attendance Saved Successfully!");
+    AttendanceStudentId.setText("");
+    AttendanceSessionDate.setText("");
+    AttendanceSessionNo.setText("");
+    AttendanceWeekNo.setText("");
+
+} catch (NumberFormatException ex) {
+    JOptionPane.showMessageDialog(this, "Week No and Session No must be numbers.");
+} catch (SQLException ex) {
+    JOptionPane.showMessageDialog(this, "Error saving attendance: " + ex.getMessage());
+}
+    }//GEN-LAST:event_AttendanceAddButtonActionPerformed
+    }
     /**
      * @param args the command line arguments
      */
+    
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
