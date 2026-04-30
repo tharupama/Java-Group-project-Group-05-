@@ -2001,14 +2001,16 @@ public class AdminPanel extends javax.swing.JFrame {
             if (noticeTitle.getText().equals("") || downloadLinkField.getText().equals("") || contentArea.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "All fields must fill accourding to your selection type!");
             } else {
-                //NoticeController noticeController = new NoticeController();
+                NoticeController noticeController = new NoticeController();
                 NoticeModel noticeModel = new NoticeModel(type, noticeTitle.getText(), downloadLinkField.getText(), contentArea.getText());
                 System.out.println(noticeModel.getType());
                 System.out.println(noticeModel.getTitle());
                 System.out.println(noticeModel.getDownloadLink());
                 System.out.println(noticeModel.getContent());
                 try {
-                    boolean affectedRows = NoticeController.getInstance().saveNotice(noticeModel);
+                    
+                    boolean affectedRows = noticeController.saveNotice(noticeModel);
+                    //boolean affectedRows = NoticeController.getInstance().saveNotice(noticeModel);
                     if (affectedRows == true) {
                         noticeTableLoad();
                         noticeFieldClear();
@@ -2028,13 +2030,15 @@ public class AdminPanel extends javax.swing.JFrame {
             if (noticeTitle.getText().equals("") || downloadLinkField.getText().equals("") || contentArea.getText().equals("")||courseIdField.getText().equals("")||DateField.getDate()==null) {
                 JOptionPane.showMessageDialog(null, "All fields must fill accourding to your selection type!");
             }else{
-                //NoticeController noticeController = new ExamNoticeController();
+                NoticeController noticeController = new ExamNoticeController();
             LocalTime timeFrom = LocalTime.of((int)hourSpinner.getValue(),(int)minuteSpinner.getValue());
             LocalTime timeTo = LocalTime.of((int)hourToSpinner.getValue(),(int)minuteToSpinner.getValue()) ;
             //System.out.println(timeFrom);
             NoticeModel noticeModel = new NoticeModel(type, noticeTitle.getText(), downloadLinkField.getText(), contentArea.getText(), courseIdField.getText(), DateField.getDate(), timeFrom, timeTo);
             try {
-                boolean affectedRows = ExamNoticeController.getInstance().saveNotice(noticeModel);
+                
+                boolean affectedRows = noticeController.saveNotice(noticeModel);
+                //boolean affectedRows = ExamNoticeController.getInstance().saveNotice(noticeModel);
                 if(affectedRows==true){
                     noticeTableLoad();
                     noticeFieldClear();
@@ -2059,11 +2063,11 @@ public class AdminPanel extends javax.swing.JFrame {
             if (noticeTitle.getText().equals("") || downloadLinkField.getText().equals("") || contentArea.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "All fields must fill accourding to your selection type!");
             } else {
-                //NoticeController noticeController = new NoticeController();
+                NoticeController noticeController = new NoticeController();
                 NoticeModel noticeModel = new NoticeModel(type, noticeTitle.getText(), downloadLinkField.getText(), contentArea.getText(), Integer.parseInt(idLabel.getText()));
 
                 try {
-                    boolean affectedRows = NoticeController.getInstance().updateNotice(noticeModel);
+                    boolean affectedRows = noticeController.updateNotice(noticeModel);
                     if (affectedRows == true) {
                         noticeTableLoad();
                         noticeFieldClear();
@@ -2083,13 +2087,13 @@ public class AdminPanel extends javax.swing.JFrame {
             if (noticeTitle.getText().equals("") || downloadLinkField.getText().equals("") || contentArea.getText().equals("") || courseIdField.getText().equals("") || DateField.getDate()==null) {
                 JOptionPane.showMessageDialog(null, "All fields must fill accourding to your selection type!");
             } else {
-                //NoticeController noticeController = new ExamNoticeController();
+                NoticeController noticeController = new ExamNoticeController();
                 LocalTime timeFrom = LocalTime.of((int) hourSpinner.getValue(), (int) minuteSpinner.getValue());
                 LocalTime timeTo = LocalTime.of((int) hourToSpinner.getValue(), (int) minuteToSpinner.getValue());
 
                 NoticeModel noticeModel = new NoticeModel(type, noticeTitle.getText(), downloadLinkField.getText(), contentArea.getText(), courseIdField.getText(), DateField.getDate(), timeFrom, timeTo, Integer.parseInt(idLabel.getText()));
                 try {
-                    boolean affectedRows = ExamNoticeController.getInstance().updateNotice(noticeModel);
+                    boolean affectedRows = noticeController.updateNotice(noticeModel);
                     if (affectedRows == true) {
                         noticeTableLoad();
                         noticeFieldClear();
